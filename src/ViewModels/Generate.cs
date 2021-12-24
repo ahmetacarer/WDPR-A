@@ -10,6 +10,7 @@ public class Generate
 
     public string RandomString(int length)
     {
+        if (length < 0) throw new Exception("number must be bigger or equal to 0");
         var allowedCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*".ToCharArray();
         string randomWord = "";
         for (int i = 0; i < length; i++)
@@ -19,6 +20,4 @@ public class Generate
         }
         return randomWord;
     }
-
-    
 }

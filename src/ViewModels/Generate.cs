@@ -20,4 +20,10 @@ public class Generate
         }
         return randomWord;
     }
+
+    public string RandomChatCode()
+    {
+        int fixedLength = 8;
+        return RandomString(fixedLength);
+    }
 }

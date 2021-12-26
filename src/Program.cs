@@ -8,7 +8,7 @@ var connectionString = builder.Configuration.GetConnectionString("WDPRContextCon
 builder.Services.AddDbContext<WDPRContext>(options => options.UseSqlite(connectionString));
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<WDPRContext>();
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddTransient<Random>(); // injects a new instance to every service that uses it
 var app = builder.Build();
 
 

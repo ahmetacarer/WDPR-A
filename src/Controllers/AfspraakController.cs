@@ -12,7 +12,7 @@ public class AfspraakController : Controller
     {
         _logger = logger;
     }
-
+//
     public IActionResult Index()
     {
         return View();

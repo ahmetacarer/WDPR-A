@@ -1,29 +1,37 @@
+@model WDPR_A.Models.Guardian
+
 @{
     ViewData["Title"] = "Dashboard";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welkom meneer/mevrouw Naam</h1>
+    <h1 class="display-4"><strong>Dashboard</strong></h1>
+    <h2 class="display-8">Welkom @Model.FirstName</h2>
 </div>
 
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-12">
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title"><strong>Kind(eren)</strong></h5>
-        <li class="list-group-item">Alex, 14 jaar</li>
+        <h5 class="card-title"><strong>Kind(eren) binnen de kliniek</strong></h5>
+        <div class="accordion" id="accordionExample">
+          @for (int i = 0; i < Model.Clients.Count; i++)
+          {
+             <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#abc" aria-expanded="true" aria-controls="collapseOne">
+                @Model.Clients[i].FirstName @Model.Clients[i].LastName
+              </button>
+            </h2>
+            <div id="abc" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <div>Aandoening: @Model.Clients[i].Condition</div> 
+              </div>
+            </div>
+          </div> 
+        }
+          <small>Let op: er is geen chat-frequentie voor kinderen die 16 jaar of ouder zijn.</small>  
       </div>
     </div>
   </div>
-  <div class="col-md-6">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title"><strong>Chat-frequentie van kind(eren)</strong></h5>
-        <p class="card-text" style="font-size: 12px;">Er is geen chat-frequentie voor kinderen die 16 jaar of ouder zijn.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
-      </div>
-    </div>
-  </div>
-
-  
 </div>

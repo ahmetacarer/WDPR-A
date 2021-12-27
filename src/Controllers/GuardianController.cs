@@ -19,15 +19,20 @@ public class GuardianController : Controller
 
     public IActionResult Dashboard()
     {
+        // dummy data
+        var a = new Client() { FirstName = "Erik", LastName = "Bommel", Condition = "ADHD" };
+        var b = new Client() { FirstName = "Jordy", LastName = "Bommel", Condition = "Autisme" };
+
+        b.DecideAgeCategory(16);
+        a.DecideAgeCategory(14);
+
         Guardian guardian = new Guardian()
         {
             FirstName = "Willem",
             LastName = "Bommel",
-            Clients = new List<Client> {
-        new Client() { FirstName = "Erik", LastName = "Bommel", Condition = "ADHD" },
-        new Client() { FirstName = "Jordy", LastName = "Bommel", Condition = "Autisme" }
-        }
+            Clients = new List<Client> { a, b }
         };
+
         return View(guardian);
     }
 

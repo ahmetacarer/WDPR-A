@@ -25,7 +25,18 @@
             </h2>
             <div id="collapse@(i)" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
               <div class="accordion-body">
-                <div>Aandoening: @Model.Clients[i].Condition</div> 
+                <p>Aandoening: @Model.Clients[i].Condition</p>
+                
+                  @{
+                    if (Model.Clients[i].AgeCategory.Equals(WDPR_A.Models.AgeCategory.Oudste))
+                      {
+                        <p>Dit kind is 16 jaar of ouder. Hierdoor is het inzien van een chat-frequentie niet beschikbaar.</p>
+                      }
+
+                  else {
+                    <p>Chat-frequentie: </p>
+                  }
+                }   
               </div>
             </div>
           </div> 

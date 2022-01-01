@@ -20,6 +20,15 @@ public class Manage
         await _context.SaveChangesAsync();
     }
 
+    public async Task CreateChatAsync(Orthopedagogue orthopedagogue, Client client)
+    {
+        var code = GetUniqueChatCode();
+        var chat = new Chat() { Code = code, Orthopedagogue = orthopedagogue};
+        client.ChatCode = code;
+        await _context.Chats.AddAsync(chat);
+        await _context.SaveChangesAsync();
+    }
+
     public string GetUniqueChatCode()
     {
         string chatCode = _generate.RandomChatCode();

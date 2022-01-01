@@ -1,7 +1,7 @@
 using System.Configuration;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-
+using WDPR_A.ViewModels;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("WDPRContextConnection");
@@ -9,6 +9,7 @@ builder.Services.AddDbContext<WDPRContext>(options => options.UseSqlite(connecti
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<WDPRContext>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<Random>(); // injects a new instance to every service that uses it
+builder.Services.AddScoped<Generate>();
 var app = builder.Build();
 
 

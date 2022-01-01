@@ -15,12 +15,12 @@ public class Manage
 
     public async Task CreateChat(Orthopedagogue orthopedagogue)
     {
-        var chat = new Chat() { Code = UniqueChatCode(), Orthopedagogue = orthopedagogue};
+        var chat = new Chat() { Code = GetUniqueChatCode(), Orthopedagogue = orthopedagogue};
         await _context.Chats.AddAsync(chat);
         await _context.SaveChangesAsync();
     }
 
-    public string UniqueChatCode()
+    public string GetUniqueChatCode()
     {
         string chatCode = _generate.RandomChatCode();
         bool isUnique = !_context.Chats.Any(c => c.Code == chatCode);

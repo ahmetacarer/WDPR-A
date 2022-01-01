@@ -13,7 +13,7 @@ public class Manage
         _context = context;
     }
 
-    public async Task CreateChat(Orthopedagogue orthopedagogue)
+    public async Task CreateChatAsync(Orthopedagogue orthopedagogue)
     {
         var chat = new Chat() { Code = GetUniqueChatCode(), Orthopedagogue = orthopedagogue};
         await _context.Chats.AddAsync(chat);

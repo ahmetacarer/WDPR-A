@@ -13,9 +13,11 @@ public class Manage
         _context = context;
     }
 
-    public void CreateChat(Orthopedagogue orthopedagogue)
+    public async Task CreateChat(Orthopedagogue orthopedagogue)
     {
-        Chat chat = new Chat() { Code = UniqueChatCode(), Orthopedagogue = orthopedagogue};
+        var chat = new Chat() { Code = UniqueChatCode(), Orthopedagogue = orthopedagogue};
+        await _context.Chats.AddAsync(chat);
+        await _context.SaveChangesAsync();
     }
 
     public string UniqueChatCode()

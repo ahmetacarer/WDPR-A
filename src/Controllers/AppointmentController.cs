@@ -22,10 +22,10 @@ public class AppointmentController : Controller
         return View();
     }
 
+
     [HttpPost]
-    public async Task Index([Bind("FirstName, LastName, Email")] Client client)
+    public async Task<IActionResult> Index([Bind("FirstName, LastName, Email")] Client client)
     {
-        RedirectToAction("Index");
         // tijdelijk
         // uitbreidbaar naar orthopedagoog met minste appointments
         Orthopedagogue orthopedagogue = new Orthopedagogue { FirstName = "", LastName = "", Specialty = "ADHD" };
@@ -45,7 +45,7 @@ public class AppointmentController : Controller
         _context.Appointments.Add(appointment);
         _context.SaveChanges();
 
-        RedirectToAction("Succes");
+        return RedirectToAction("Succes");
     }
 
     public IActionResult Succes()

@@ -4,15 +4,15 @@ using WDPR_A.Models;
 
 namespace WDPR_A.Controllers;
 
-public class AfspraakController : Controller
+public class AppointmentController : Controller
 {
-    private readonly ILogger<AfspraakController> _logger;
+    private readonly ILogger<AppointmentController> _logger;
 
-    public AfspraakController(ILogger<AfspraakController> logger)
+    public AppointmentController(ILogger<AppointmentController> logger)
     {
         _logger = logger;
     }
-//
+    //
     public IActionResult Index()
     {
         return View();

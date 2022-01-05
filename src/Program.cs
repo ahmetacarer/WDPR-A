@@ -8,7 +8,6 @@ var connectionString = builder.Configuration.GetConnectionString("WDPRContextCon
 builder.Services.AddDbContext<WDPRContext>(options => options.UseSqlite(connectionString));
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<WDPRContext>();
 builder.Services.AddControllersWithViews();
-
 var app = builder.Build();
 
 

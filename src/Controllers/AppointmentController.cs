@@ -1,19 +1,54 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using WDPR_A.Models;
+using System.Linq;
 
 namespace WDPR_A.Controllers;
 
 public class AppointmentController : Controller
 {
+    private readonly WDPRContext _context;
     private readonly ILogger<AppointmentController> _logger;
 
-    public AppointmentController(ILogger<AppointmentController> logger)
+    public AppointmentController(ILogger<AppointmentController> logger, WDPRContext context)
     {
         _logger = logger;
+        _context = context;
     }
-    //
+
+    [HttpGet]
     public IActionResult Index()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public async Task Index([Bind("FirstName, LastName, Email")] Client client)
+    {
+        RedirectToAction("Index");
+        // tijdelijk
+        // uitbreidbaar naar orthopedagoog met minste appointments
+        Orthopedagogue orthopedagogue = new Orthopedagogue { FirstName = "", LastName = "", Specialty = "ADHD" };
+        await _context.Orthopedagogues.AddAsync(orthopedagogue);
+        await _context.SaveChangesAsync();
+        // var orthopedagogue = _context.Orthopedagogues.FirstOrDefault(o => o.Specialty == client.Condition);
+        Appointment appointment = new Appointment()
+        {
+            AppointmentDate = DateTime.Now,
+            IncomingClient = client,
+            Guardians = client.Guardians,
+            Orthopedagogue = orthopedagogue,
+            OrthopedagogueId = orthopedagogue.Id
+        };
+        System.Console.WriteLine(client.FirstName + client.LastName);
+
+        _context.Appointments.Add(appointment);
+        _context.SaveChanges();
+
+        RedirectToAction("Succes");
+    }
+
+    public IActionResult Succes()
     {
         return View();
     }

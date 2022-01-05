@@ -2,29 +2,29 @@
     ViewData["Title"] = "Afspraak maken";
 }
 
-<h3>Aanmelden intake gesprek</h3>
+<h1>Aanmelden intake gesprek</h1>
 
 <form asp-action="Index" method="post">
   <br><div class="mb-3">
     <label for="firstNameInput" class="form-label">Voornaam</label>
-    <input type="text" class="form-control" aria-describedby="basic-addon1" id="firstNameInput">
+    <input type="text" class="form-control" aria-describedby="basic-addon1" id="firstNameInput" name="FirstName">
   </div><br>
 
   <div class="mb-3">
     <label for="lastNameInput" class="form-label">Achternaam</label>
-    <input type="text" class="form-control" aria-describedby="basic-addon1" id="lastNameInput">
+    <input type="text" class="form-control" aria-describedby="basic-addon1" id="lastNameInput" name="LastName">
   </div><br>
 
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Email</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="Email">
     <div id="emailHelp" class="form-text">We zullen je e-mailadres nooit met iemand anders delen.</div>
   </div><br>
 
 
  @* Condition dropdown section *@
   <div class="input-group mb-3">
-    <label class="input-group-text" for="inputGroupSelect01">Aanmelden voor aandoening </label>
+    <label class="input-group-text" for="inputGroupSelect01">Aandoening</label>
     <select class="form-select" id="inputGroupSelect01">
       <option selected>Kies...</option>
       <option value="1">ADHD</option>
@@ -37,7 +37,7 @@
 
  @* Younger than 16 section *@
   <div class="form-check">
-    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" onchange="changeParentVisibility()">
     <label class="form-check-label" for="flexCheckDefault">
       Ben je jonger dan 16 jaar?
     </label>
@@ -45,7 +45,7 @@
 
 
  @* ouders/voogd email section *@
-  <fieldset disabled >
+  <fieldset disabled id="parentEmailFieldSet">
       <div class="mb-3">
         <label for="disabledTextInput" class="form-label">Ouders/voogd email</label>
 
@@ -68,8 +68,24 @@
       <input type="datetime-local" id="intakeDateTime" aria-describedby="emailHelp">
     </div>
   </div>
-
-  
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
+
+<script>
+    // $('#intakeDateTime').datepicker({ 
+    //     startDate: new Date()
+    // });
+
+  function changeParentVisibility(){
+    let checkbox = document.getElementById("flexCheckDefault");
+    let fieldset = document.getElementById("parentEmailFieldSet");
+    if (checkbox.checked) {
+      fieldset.disabled = false;
+    }
+    else{
+      fieldset.disabled = true;
+    }
+
+  }
+</script>

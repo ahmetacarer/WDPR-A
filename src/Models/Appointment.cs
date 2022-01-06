@@ -5,6 +5,7 @@ namespace WDPR_A.Models
     public class Appointment
     {
         public int Id { get; set; }
+        [Required]
         public DateTime AppointmentDate { get; set; }
 
         [NotMapped]
@@ -16,7 +17,7 @@ namespace WDPR_A.Models
 
         [Required]
         public string? OrthopedagogueId { get; set; }
-        
+
         [Required]
         public Orthopedagogue Orthopedagogue { get; set; }
     }

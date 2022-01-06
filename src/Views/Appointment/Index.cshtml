@@ -10,12 +10,12 @@
 <form asp-action="Index" method="post">
   <br><div class="mb-3">
     <label for="firstNameInput" class="form-label">Voornaam</label>
-    <input type="text" class="form-control" aria-describedby="basic-addon1" id="firstNameInput" name="FirstName">
+    <input type="text" class="form-control" asp-validation-for="FirstName" aria-describedby="basic-addon1" id="firstNameInput" name="FirstName">
   </div><br>
 
   <div class="mb-3">
     <label for="lastNameInput" class="form-label">Achternaam</label>
-    <input type="text" class="form-control" aria-describedby="basic-addon1" id="lastNameInput" name="LastName">
+    <input type="text" class="form-control" asp aria-describedby="basic-addon1" id="lastNameInput" name="LastName">
   </div><br>
 
   <div class="mb-3">
@@ -58,7 +58,7 @@
             d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.496 6.033h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286a.237.237 0 0 0 .241.247zm2.325 6.443c.61 0 1.029-.394 1.029-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94 0 .533.425.927 1.01.927z" />
         </svg></span>
 
-        <input type="email" id="disabledTextInput" class="form-control" placeholder="Email van je ouder(s)/voogd">
+        <input type="email" id="disabledTextInput" class="form-control" placeholder="Email van je ouder(s)/voogd" name="emailOfParent">
       </div>
   </fieldset><br>
 
@@ -68,10 +68,10 @@
       <label for="intakeDateTime" class="form-label">Wanneer wil je het gesprek hebben?</label>
     </div>
     <div>
-      <input type="datetime-local" class="intakeDateTime">
+      <input type="datetime-local" class="intakeDateTime" asp-validation-for="AppointmentDate" name="appointmentDate">
     </div>
   </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="submit"  class="btn btn-primary">Submit</button>
 </form> 
 
 

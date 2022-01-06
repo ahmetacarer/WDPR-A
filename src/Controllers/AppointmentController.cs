@@ -24,12 +24,13 @@ public class AppointmentController : Controller
 
 
     [HttpPost]
-    public async Task<IActionResult> Index([Bind("FirstName, LastName, Email")] Client client)
+    public async Task<IActionResult> Index([Bind("FirstName, LastName, Email, Condition")] Client client)
     {
         // tijdelijk
         // uitbreidbaar naar orthopedagoog met minste appointments
 
         var orthopedagogue = _context.Orthopedagogues.FirstOrDefault(o => o.Specialty == client.Condition);
+        Console.WriteLine(orthopedagogue == null);
         Appointment appointment = new Appointment()
         {
             AppointmentDate = DateTime.Now,

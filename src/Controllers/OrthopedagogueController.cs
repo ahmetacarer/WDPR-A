@@ -15,14 +15,10 @@ public class OrthopedagogueController : Controller
         _context = context;
     }
 
-    public IActionResult Index()
+    public IActionResult Dashboard()
     {
-        return View();
-    }
-
-    public IActionResult Privacy()
-    {
-        return View();
+        Orthopedagogue Orthopedagogue = _context.Orthopedagogues.Where(o => o.Specialty == "ADHD").First();
+        return View(Orthopedagogue);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

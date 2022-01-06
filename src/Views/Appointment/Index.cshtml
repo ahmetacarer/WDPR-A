@@ -68,7 +68,7 @@
       <label for="intakeDateTime" class="form-label">Wanneer wil je het gesprek hebben?</label>
     </div>
     <div>
-      <input type="datetime-local" id="intakeDateTime" aria-describedby="emailHelp">
+      <input type="datetime-local" class="intakeDateTime">
     </div>
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
@@ -77,9 +77,9 @@
 
 
 <script>
-    // $('#intakeDateTime').datepicker({ 
-    //     startDate: new Date()
-    // });
+  let today = new Date().toISOString().slice(0, 16);
+
+  document.getElementsByClassName("intakeDateTime")[0].min = today;
 
   function changeParentVisibility(){
     let checkbox = document.getElementById("flexCheckDefault");

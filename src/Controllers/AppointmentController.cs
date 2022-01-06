@@ -28,10 +28,8 @@ public class AppointmentController : Controller
     {
         // tijdelijk
         // uitbreidbaar naar orthopedagoog met minste appointments
-        Orthopedagogue orthopedagogue = new Orthopedagogue { FirstName = "", LastName = "", Specialty = "ADHD" };
-        await _context.Orthopedagogues.AddAsync(orthopedagogue);
-        await _context.SaveChangesAsync();
-        // var orthopedagogue = _context.Orthopedagogues.FirstOrDefault(o => o.Specialty == client.Condition);
+
+        var orthopedagogue = _context.Orthopedagogues.FirstOrDefault(o => o.Specialty == client.Condition);
         Appointment appointment = new Appointment()
         {
             AppointmentDate = DateTime.Now,

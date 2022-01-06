@@ -36,9 +36,10 @@ public class AppointmentController : Controller
         {
             AppointmentDate = appointmentDate,
             IncomingClient = client,
+            IncomingClientId = client.Id,
             Guardians = client.Guardians, // misschien null reference zonder parent
             Orthopedagogue = orthopedagogue,
-            OrthopedagogueId = orthopedagogue.Id
+            OrthopedagogueId = orthopedagogue.Id,
         };
         System.Console.WriteLine(client.FirstName + client.LastName);
 

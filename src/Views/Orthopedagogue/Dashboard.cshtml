@@ -32,7 +32,7 @@
                         @if (Model[i].Guardians.Where(c => c.Email != null).Any()) {
                             <p>Ouders/voogden Email:</p>
                             @foreach(var guardian in Model[i].Guardians){
-                                <p>@guardian</p>
+                                <p>@guardian.Email</p>
                             }
                         }
                         <a href="Registration/@Model[i].IncomingClientId">Registreren</a>

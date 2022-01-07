@@ -24,12 +24,12 @@ public class AppointmentController : Controller
 
 
     [HttpPost]
-    public async Task<IActionResult> Index([Bind("FirstName, LastName, Email, Condition")] Client client, [Bind("appointmentDate")] DateTime appointmentDate, [Bind("emailOfParent")] Guardian? guardian = null)
+    public async Task<IActionResult> Index([Bind("FirstName, LastName, Email, Condition")] Client client, [Bind("appointmentDate")] DateTime appointmentDate, string? emailOfParent = null)
     {
         // tijdelijk
         // uitbreidbaar naar orthopedagoog met minste appointments
-        if (guardian != null)
-            client.Guardians = new List<Guardian>() { guardian };
+        if (emailOfParent != null)
+            client.Guardians = new List<Guardian>() { new Guardian { Email = emailOfParent } };
         var orthopedagogue = _context.Orthopedagogues.FirstOrDefault(o => o.Specialty == client.Condition);
         Console.WriteLine(orthopedagogue == null);
         Appointment appointment = new Appointment()

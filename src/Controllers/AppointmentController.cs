@@ -2,10 +2,6 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using WDPR_A.Models;
 using System.Linq;
-using System.Net.Mail;
-using System.Net;
-using SendGrid;
-using SendGrid.Helpers.Mail;
 
 namespace WDPR_A.Controllers;
 
@@ -48,8 +44,6 @@ public class AppointmentController : Controller
 
         _context.Appointments.Add(appointment);
         _context.SaveChanges();
-        
-        await Execute(client.Email);
 
         return RedirectToAction("Succes");
     }
@@ -58,22 +52,6 @@ public class AppointmentController : Controller
     {
         return View();
     }
-
-
-    static async Task Execute(string receiverEmail)
-    {
-        var apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
-        Console.WriteLine(apiKey);
-        var client = new SendGridClient(apiKey);
-        var from = new EmailAddress("HIERKOMTEMAIL", "Example User");
-        var subject = "Sending with SendGrid is Fun";
-        var to = new EmailAddress(receiverEmail, "Example User");
-        var plainTextContent = "and easy to do anywhere, even with C#";
-        var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
-        var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
-        var response = await client.SendEmailAsync(msg);
-    }
-
 
     public IActionResult Privacy()
     {

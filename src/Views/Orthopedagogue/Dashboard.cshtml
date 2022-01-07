@@ -1,0 +1,46 @@
+@model List<WDPR_A.Models.Appointment>
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="text-center">
+    <h1 class="display-4"><strong>Dashboard</strong></h1>
+    <h2 class="display-8">Welkom @Model.First().Orthopedagogue.FirstName.First(). @Model.First().Orthopedagogue.LastName</h2>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title"><strong>Afspraken</strong></h5>
+        <div class="accordion" id="accordionExample">
+          @for (int i = 0; i < Model.Count; i++)
+          {
+
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading@(i)"> 
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse@(i)" aria-expanded="true" aria-controls="collapse@(i)">
+                        @Model[i].AppointmentDate | @Model[i].IncomingClient.FirstName.First().  @Model[i].IncomingClient.LastName
+                    </button>
+                    </h2>
+                    <div id="collapse@(i)" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <p>Client voornaam: @Model[i].IncomingClient.FirstName</p>
+                        <p>Client achternaam: @Model[i].IncomingClient.LastName</p>
+                        
+                        @if (Model[i].Guardians.Where(c => c.Email != null).Any()) {
+                            <p>Ouders/voogden Email:</p>
+                            @foreach(var guardian in Model[i].Guardians){
+                                <p>@guardian.Email</p>
+                            }
+                        }
+                        <a href="Registration/@Model[i].Id">Registreren</a>
+                    </div>
+                </div>
+            </div> 
+        }
+      </div>
+    </div>
+  </div>
+</div>

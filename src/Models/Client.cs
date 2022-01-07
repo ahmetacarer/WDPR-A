@@ -8,6 +8,7 @@ namespace WDPR_A.Models
         public AgeCategory AgeCategory { get; set; }
         public string? ChatCode { get; set; }  //Eenmalige code
         public IList<Guardian>? Guardians { get; set; }
+        public IList<Chat>? Chats { get; set; }
 
         public AgeCategory DecideAgeCategory(int age)
         {

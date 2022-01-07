@@ -5,13 +5,14 @@ namespace WDPR_A.Models
     {
         [Required]
         public String? Condition { get; set; }  //Aandoening
-        private AgeCategory AgeCategory { get; set; }
+        public AgeCategory AgeCategory { get; set; }
         public string? ChatCode { get; set; }  //Eenmalige code
         public IList<Guardian>? Guardians { get; set; }
+        public IList<Chat>? Chats { get; set; }
 
         public AgeCategory DecideAgeCategory(int age)
         {
-            if(age < 12) 
+            if (age < 12)
             {
                 return AgeCategory = AgeCategory.Jongste;
             }
@@ -19,7 +20,7 @@ namespace WDPR_A.Models
             {
                 return AgeCategory = AgeCategory.Middelste;
             }
-            return AgeCategory.Oudste;
+            return AgeCategory = AgeCategory.Oudste;
         }
     }
 }

@@ -23,6 +23,15 @@ public class OrthopedagogueController : Controller
         return View(appointments);
     }
 
+    public async Task<IActionResult> Registration(int appointmentId)
+    {
+        var appointment = await _context.Appointments
+                                        .Include(a => a.IncomingClient)
+                                        .Include(a => a.Guardians)
+                                        .FirstOrDefaultAsync(a => appointmentId == a.Id);
+        return View(appointment);
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {

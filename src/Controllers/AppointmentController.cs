@@ -49,7 +49,11 @@ public class AppointmentController : Controller
         _context.Appointments.Add(appointment);
         _context.SaveChanges();
         
-        await Execute(client.Email);
+        await Execute(client.Email, appointmentDate, false);
+
+        if (guardian.Email != null) {
+            await Execute(guardian.Email, appointmentDate, true);
+        }
 
         return RedirectToAction("Succes");
     }
@@ -60,16 +64,23 @@ public class AppointmentController : Controller
     }
 
 
-    static async Task Execute(string receiverEmail)
+    static async Task Execute(string receiverEmail, DateTime AppointmentDate, bool isParent)
     {
-        var apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
+        var apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY");                                //niet vergeten
         Console.WriteLine(apiKey);
         var client = new SendGridClient(apiKey);
-        var from = new EmailAddress("HIERKOMTEMAIL", "Example User");
-        var subject = "Sending with SendGrid is Fun";
-        var to = new EmailAddress(receiverEmail, "Example User");
-        var plainTextContent = "and easy to do anywhere, even with C#";
-        var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
+        var from = new EmailAddress("pietsinter90@gmail.com", "ZMDH Kliniek");  //Voer verzender email in
+        var subject = "ZMDH intakegesprek bevestiging";
+        var to = new EmailAddress(receiverEmail, "Intakegesprek cliënt");
+        var plainTextContent = "";
+        string htmlContent;
+
+        if (isParent) {
+            htmlContent = "U kind heeft zich aangemeld voor een intakegesprek op <strong>" + AppointmentDate + "</strong> met email " + receiverEmail ;
+        } else {
+            htmlContent = "Je hebt jezelf aangemeld voor een intakegesprek op <strong>" + AppointmentDate + "</strong> met email " + receiverEmail ;
+        }
+
         var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
         var response = await client.SendEmailAsync(msg);
     }

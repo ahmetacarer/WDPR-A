@@ -50,11 +50,13 @@ public class AppointmentController : Controller
         _context.Appointments.Add(appointment);
         _context.SaveChanges();
         
-        await Execute(client.Email, appointmentDate, false);
+        // BONUS
+        //
+        // await Execute(client.Email, appointmentDate, false);                 
 
-        if (emailOfParent != null) {
-            await Execute(emailOfParent, appointmentDate, true);
-        }
+        // if (emailOfParent != null) {
+        //     await Execute(emailOfParent, appointmentDate, true);
+        // }
 
         return RedirectToAction("Succes");
     }
@@ -65,27 +67,38 @@ public class AppointmentController : Controller
     }
 
 
-    static async Task Execute(string receiverEmail, DateTime AppointmentDate, bool isParent)
-    {
-        var apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);                                //niet vergeten
-        await Task.Delay(2000);
-        Console.WriteLine(apiKey);
-        var client = new SendGridClient(apiKey);
-        var from = new EmailAddress("pietsinter90@gmail.com", "ZMDH Kliniek");  //Voer verzender email in
-        var subject = "ZMDH intakegesprek bevestiging";
-        var to = new EmailAddress(receiverEmail, "Intakegesprek cliënt");
-        var plainTextContent = "";
-        string htmlContent;
+    //     BONUS
+    //
+    // static async Task Execute(string receiverEmail, DateTime AppointmentDate, bool isParent)
+    // {
+    //     //var apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY");                                //niet vergeten
+    //     var apiKey = await GetApiKey();
 
-        if (isParent) {
-            htmlContent = "U kind heeft zich aangemeld voor een intakegesprek op <strong>" + AppointmentDate + "</strong> met email " + receiverEmail ;
-        } else {
-            htmlContent = "Je hebt jezelf aangemeld voor een intakegesprek op <strong>" + AppointmentDate + "</strong> met email " + receiverEmail ;
-        }
+    //     Console.WriteLine("-------------------------------------------------------------------------------------------------------------------");
+    //     Console.WriteLine(apiKey);
+    //     Console.WriteLine("-------------------------------------------------------------------------------------------------------------------");
+    //     var client = new SendGridClient(apiKey);
+    //     var from = new EmailAddress("pietsinter90@gmail.com", "ZMDH Kliniek");  //Voer verzender email in
+    //     var subject = "ZMDH intakegesprek bevestiging";
+    //     var to = new EmailAddress(receiverEmail, "Intakegesprek cliënt");
+    //     var plainTextContent = "";
+    //     string htmlContent;
 
-        var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
-        var response = await client.SendEmailAsync(msg);
-    }
+    //     if (isParent) {
+    //         htmlContent = "U kind heeft zich aangemeld voor een intakegesprek op <strong>" + AppointmentDate + "</strong> met email " + receiverEmail ;
+    //     } else {
+    //         htmlContent = "Je hebt jezelf aangemeld voor een intakegesprek op <strong>" + AppointmentDate + "</strong> met email " + receiverEmail ;
+    //     }
+
+    //     var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+    //     var response = await client.SendEmailAsync(msg);
+    // }
+
+    // public static async Task<string> GetApiKey () {
+    //     var apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
+    //     //await Task.Run(){return apiKey};
+    //     return await Task.Run(() => { return apiKey; });
+    // }
 
 
     public IActionResult Privacy()

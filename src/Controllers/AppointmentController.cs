@@ -52,8 +52,8 @@ public class AppointmentController : Controller
         
         await Execute(client.Email, appointmentDate, false);
 
-        if (guardian.Email != null) {
-            await Execute(guardian.Email, appointmentDate, true);
+        if (emailOfParent != null) {
+            await Execute(emailOfParent, appointmentDate, true);
         }
 
         return RedirectToAction("Succes");
@@ -61,13 +61,14 @@ public class AppointmentController : Controller
 
     public IActionResult Succes()
     {
-        return View();
+        return View(); 
     }
 
 
     static async Task Execute(string receiverEmail, DateTime AppointmentDate, bool isParent)
     {
-        var apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY");                                //niet vergeten
+        var apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY", EnvironmentVariableTarget.User);                                //niet vergeten
+        await Task.Delay(2000);
         Console.WriteLine(apiKey);
         var client = new SendGridClient(apiKey);
         var from = new EmailAddress("pietsinter90@gmail.com", "ZMDH Kliniek");  //Voer verzender email in

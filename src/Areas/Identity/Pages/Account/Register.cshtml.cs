@@ -18,7 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
-
+using WDPR_A.ViewModels;
 /// <summary>
 ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
 ///     directly from your code. This API may change or be removed in future releases.
@@ -26,7 +26,7 @@ using Microsoft.Extensions.Logging;
 
 namespace WDPR_A.Areas.Identity.Pages.Account
 {
-    // [Authorize(Roles = "Orthopedadgogue"]
+    [Authorize(Roles = "Orthopedadgogue")]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;
@@ -36,13 +36,15 @@ namespace WDPR_A.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly WDPRContext _context;
+        private readonly RoleSystem _roleSystem;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             IUserStore<IdentityUser> userStore,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender, WDPRContext context)
+            IEmailSender emailSender, WDPRContext context,
+            RoleSystem roleSystem)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -51,6 +53,7 @@ namespace WDPR_A.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
             _context = context;
+            _roleSystem = roleSystem;
         }
 
 
@@ -101,14 +104,17 @@ namespace WDPR_A.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
+            await _roleSystem.SeedRoles();
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             var user = _context.Clients.SingleOrDefault(s => s.Email == Input.Email);
             await CompleteAccount(user, Input);
+            await _roleSystem.AddUserToRole(user, "Client");
             if (Input2 != null)
             {
                 var user2 = _context.Guardians.SingleOrDefault(s => s.Email == Input2.Email);
                 await CompleteAccount(user2, Input2);
+                await _roleSystem.AddUserToRole(user2, "Guardian");
             }
             return RedirectToPage("/Orthopedagogue/Dashboard");
         }

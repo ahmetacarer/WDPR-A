@@ -1,13 +1,14 @@
 using System.Configuration;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-
+using WDPR_A.ViewModels;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("WDPRContextConnection");
 builder.Services.AddDbContext<WDPRContext>(options => options.UseSqlite(connectionString));
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<WDPRContext>();
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<RoleSystem>();
 var app = builder.Build();
 
 
@@ -21,7 +22,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+app.
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();

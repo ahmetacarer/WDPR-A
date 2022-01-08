@@ -2,6 +2,7 @@ using System.Configuration;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WDPR_A.ViewModels;
+using WDPR_A.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("WDPRContextConnection");
@@ -11,7 +12,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddTransient<Random>(); // injects a new instance to every service that uses it
 builder.Services.AddScoped<Generate>();
-
+builder.Services.AddSignalR();
 var app = builder.Build();
 
 
@@ -34,4 +35,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
+app.MapHub<ChatHub>("/chatHub");
+
 app.Run();

@@ -1,4 +1,6 @@
 using System.Diagnostics;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WDPR_A.Models;
@@ -25,16 +27,26 @@ public class OrthopedagogueController : Controller
 
     public async Task<IActionResult> Registration(int appointmentId)
     {
+        System.Console.WriteLine(appointmentId);
         var appointment = await _context.Appointments
                                         .Include(a => a.IncomingClient)
-                                        .Include(a => a.Guardians)
-                                        .FirstOrDefaultAsync(a => appointmentId == a.Id);
-        return View(appointment);
+                                        .Include(a => a.Guardians) 
+                                        .SingleAsync(a => a.Id == appointmentId);
+        if (appointment.Guardians == null)
+            return RedirectToPage("/Account/Register", new { area = "Identity", email = appointment.IncomingClient.Email });
+        // only one guardian can register together with client
+        return RedirectToPage("/Account/Register", new { area = "Identity", email = appointment.IncomingClient.Email, guardianEmail =  appointment.Guardians[0].Email});
     }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
+    
+    public async Task CreateAccount(User user)
     {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+
     }
-}
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+    }

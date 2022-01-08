@@ -19,13 +19,14 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
+/// <summary>
+///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+///     directly from your code. This API may change or be removed in future releases.
+/// </summary>
 
 namespace WDPR_A.Areas.Identity.Pages.Account
 {
+    // [Authorize(Roles = "Orthopedadgogue"]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;
@@ -34,13 +35,14 @@ namespace WDPR_A.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<IdentityUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly WDPRContext _context;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             IUserStore<IdentityUser> userStore,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender, WDPRContext context)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -48,6 +50,7 @@ namespace WDPR_A.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _context = context;
         }
 
 
@@ -56,6 +59,8 @@ namespace WDPR_A.Areas.Identity.Pages.Account
         [BindProperty]
         public InputModel Input { get; set; }
 
+        [BindProperty]
+        public InputModel Input2 { get; set; }
 
 
         public string ReturnUrl { get; set; }
@@ -65,20 +70,8 @@ namespace WDPR_A.Areas.Identity.Pages.Account
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
-
-
-
         public class InputModel
         {
-
-            // [Required]
-            // [Display(Name = "Voornaam")]
-            // public string FirstName { get; set; }
-
-            // [Required]
-            // [Display(Name = "Achternaam")]
-            // public string LastName { get; set; }
-
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
@@ -94,13 +87,14 @@ namespace WDPR_A.Areas.Identity.Pages.Account
 
             [DataType(DataType.Password)]
             [Display(Name = "Voer wachtwoord opnieuw in")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Compare("Password", ErrorMessage = "De wachtwoord en bevestigingswachtwoord matchen niet.")]
             public string ConfirmPassword { get; set; }
         }
 
-
-        public async Task OnGetAsync(string returnUrl = null)
+        public async Task OnGetAsync(string returnUrl = null, string email = null, string guardianEmail = null)
         {
+            ViewData["email"] = email;
+            ViewData["guardianEmail"] = guardianEmail;
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
@@ -109,61 +103,28 @@ namespace WDPR_A.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-            if (ModelState.IsValid)
+            var user = _context.Clients.SingleOrDefault(s => s.Email == Input.Email);
+            await CompleteAccount(user, Input);
+            if (Input2 != null)
             {
-                var user = CreateUser();
-
-                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
-                await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
-                var result = await _userManager.CreateAsync(user, Input.Password);
-
-                if (result.Succeeded)
-                {
-                    _logger.LogInformation("User created a new account with password.");
-
-                    var userId = await _userManager.GetUserIdAsync(user);
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
-                        protocol: Request.Scheme);
-
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
-                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                    {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
-                    }
-                    else
-                    {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
-                    }
-                }
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
+                var user2 = _context.Guardians.SingleOrDefault(s => s.Email == Input2.Email);
+                await CompleteAccount(user2, Input2);
             }
-
-            // If we got this far, something failed, redisplay form
-            return Page();
+            return RedirectToPage("/Orthopedagogue/Dashboard");
         }
 
-        private IdentityUser CreateUser()
+        private async Task CompleteAccount(IdentityUser user, InputModel input)
         {
-            try
+            await _userStore.SetUserNameAsync(user, input.Email, CancellationToken.None);
+            await _emailStore.SetEmailAsync(user, input.Email, CancellationToken.None);
+            var result = await _userManager.AddPasswordAsync(user, input.Password);
+            if (result.Succeeded)
             {
-                return Activator.CreateInstance<IdentityUser>();
+                _logger.LogInformation("User created a new account with password.");
             }
-            catch
+            foreach (var error in result.Errors)
             {
-                throw new InvalidOperationException($"Can't create an instance of '{nameof(IdentityUser)}'. " +
-                    $"Ensure that '{nameof(IdentityUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
-                    $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
+                ModelState.AddModelError(string.Empty, error.Description);
             }
         }
 

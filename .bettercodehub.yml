@@ -3,4 +3,4 @@ languages:
 - name: csharp
   production:
     exclude:
-      - src/Migrations
+      - /src/Migrations

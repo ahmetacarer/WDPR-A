@@ -31,3 +31,4 @@ msbuild.wrn
 # Database files
 *.db-*
 *.db
+src/Development.db

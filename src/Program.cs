@@ -11,13 +11,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<WDPRContext>();
 builder.Services.AddControllersWithViews();
-builder.Services.AddTransient<Random>(); // injects a new instance to every service that uses it
-builder.Services.AddScoped<Generate>();
-
 builder.Services.AddSignalR();
-
-builder.Services.AddScoped<RoleSystem>();
-
 builder.Services.AddScoped<RoleSystem>();
 builder.Services.AddTransient<Random>(); // injects a new instance to every service that uses it
 builder.Services.AddScoped<Generate>();

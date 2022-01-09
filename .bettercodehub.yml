@@ -4,6 +4,4 @@ languages:
   production:
     exclude:
       - src\Migrations
-  development:
-    exclude:
-      - src\Migrations
+  

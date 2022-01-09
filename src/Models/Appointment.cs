@@ -8,11 +8,12 @@ namespace WDPR_A.Models
         [Required]
         public DateTime AppointmentDate { get; set; }
 
-        [NotMapped]
         [Required]
         public Client? IncomingClient { get; set; }
 
-        [NotMapped]
+        [Required]
+        public string? IncomingClientId { get; set; }
+
         public IList<Guardian>? Guardians { get; set; }
 
         [Required]

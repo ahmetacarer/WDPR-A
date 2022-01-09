@@ -18,6 +18,9 @@ builder.Services.AddSignalR();
 
 builder.Services.AddScoped<RoleSystem>();
 
+builder.Services.AddScoped<RoleSystem>();
+builder.Services.AddTransient<Random>(); // injects a new instance to every service that uses it
+builder.Services.AddScoped<Generate>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

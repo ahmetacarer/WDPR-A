@@ -1,7 +1,9 @@
 component_depth: 1
 languages:
-- name: c#
+- name: csharp
   production:
     exclude:
       - src\Migrations
-  
+  development:
+    exclude:
+      - src\Migrations

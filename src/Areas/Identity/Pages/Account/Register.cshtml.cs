@@ -108,11 +108,11 @@ namespace WDPR_A.Areas.Identity.Pages.Account
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             var user = _context.Clients.SingleOrDefault(s => s.Email == Input.Email);
+            var user2 = _context.Guardians.SingleOrDefault(s => s.Email == Input2.Email);
             await CompleteAccount(user, Input);
             await _roleSystem.AddUserToRole(user, "Client");
-            if (Input2 != null)
+            if (user2 is not null)
             {
-                var user2 = _context.Guardians.SingleOrDefault(s => s.Email == Input2.Email);
                 await CompleteAccount(user2, Input2);
                 await _roleSystem.AddUserToRole(user2, "Guardian");
             }

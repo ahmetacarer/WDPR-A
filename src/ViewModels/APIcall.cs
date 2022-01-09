@@ -1,9 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
-using System.Net.Http.Headers;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace src.Controllers
 {
     public static class APIcall
@@ -28,7 +22,7 @@ namespace src.Controllers
         // need to make it.
         // public static async Task GetClientInfo()
         // {
-            //....code
+        //....code
         // }
     }
 }

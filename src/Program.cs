@@ -7,14 +7,18 @@ using WDPR_A.Hubs;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("WDPRContextConnection");
 builder.Services.AddDbContext<WDPRContext>(options => options.UseSqlite(connectionString));
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<WDPRContext>();
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<WDPRContext>();
 builder.Services.AddControllersWithViews();
-
 builder.Services.AddTransient<Random>(); // injects a new instance to every service that uses it
 builder.Services.AddScoped<Generate>();
-builder.Services.AddSignalR();
-var app = builder.Build();
 
+builder.Services.AddSignalR();
+
+builder.Services.AddScoped<RoleSystem>();
+
+var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

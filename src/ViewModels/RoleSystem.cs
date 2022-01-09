@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 
-namespace WDPR_A.RoleSystem;
+namespace WDPR_A.ViewModels;
 
 public class RoleSystem
 {
@@ -13,6 +13,14 @@ public class RoleSystem
         _context = context;
         _roleManager = roleManager;
         _userManager = userManager;
+    }
+
+    public async Task SeedRoles()
+    {
+        await CreateRole("Client");
+        await CreateRole("Guardian");
+        await CreateRole("Orthopedagogue");
+        await CreateRole("Moderator");
     }
 
     public async Task CreateRole(string roleName)
@@ -53,14 +61,4 @@ public class RoleSystem
             await _context.SaveChangesAsync();
         }
     }
-    
-    
-
-    /*
-        + AddUserToRole(IdentityUser user) : void
-        + RemoveRoleFromUser(IdentityRole role, IdentityUser user) : void
-        + RemoveRoleFromUser(string role, IdentityUser user) : void
-        + DeleteRole(IdentityRole role) : void
-        + DeleteRole(string role) : void
-    */
 }

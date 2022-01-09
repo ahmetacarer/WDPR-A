@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,27 +10,13 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace WDPR_A.Migrations
 {
     [DbContext(typeof(WDPRContext))]
-    partial class WDPRContextModelSnapshot : ModelSnapshot
+    [Migration("20220106141944_25")]
+    partial class _25
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.1");
-
-            modelBuilder.Entity("ChatClient", b =>
-                {
-                    b.Property<string>("ChatsCode")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ClientsId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("ChatsCode", "ClientsId");
-
-                    b.HasIndex("ClientsId");
-
-                    b.ToTable("ChatClient");
-                });
 
             modelBuilder.Entity("ClientGuardian", b =>
                 {
@@ -274,50 +261,6 @@ namespace WDPR_A.Migrations
                     b.ToTable("Appointments");
                 });
 
-            modelBuilder.Entity("WDPR_A.Models.Chat", b =>
-                {
-                    b.Property<string>("Code")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("OrthopedagogueId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Code");
-
-                    b.HasIndex("OrthopedagogueId");
-
-                    b.ToTable("Chats");
-                });
-
-            modelBuilder.Entity("WDPR_A.Models.Message", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("ChatCode")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("When")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ChatCode");
-
-                    b.ToTable("Messages");
-                });
-
             modelBuilder.Entity("WDPR_A.Models.Client", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
@@ -449,21 +392,6 @@ namespace WDPR_A.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ChatClient", b =>
-                {
-                    b.HasOne("WDPR_A.Models.Chat", null)
-                        .WithMany()
-                        .HasForeignKey("ChatsCode")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WDPR_A.Models.Client", null)
-                        .WithMany()
-                        .HasForeignKey("ClientsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("ClientGuardian", b =>
                 {
                     b.HasOne("WDPR_A.Models.Client", null)
@@ -564,8 +492,6 @@ namespace WDPR_A.Migrations
             modelBuilder.Entity("WDPR_A.Models.Orthopedagogue", b =>
                 {
                     b.Navigation("Appointments");
-
-                    b.Navigation("Chats");
                 });
 #pragma warning restore 612, 618
         }

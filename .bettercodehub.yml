@@ -1,6 +1,6 @@
 component_depth: 3
 languages:
-- csharp
+- name: csharp
   production:
     exclude:
-      - src\Migrations
+      - src/Migrations

@@ -6,5 +6,6 @@ namespace WDPR_A.Models
         [Required]
         public String? Specialty { get; set; }
         public IList<Appointment>? Appointments { get; set; }
+        public IList<Chat>? Chats { get; set; }
     }
 }

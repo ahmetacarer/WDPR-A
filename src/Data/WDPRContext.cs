@@ -8,6 +8,7 @@ public class WDPRContext : IdentityDbContext
         : base(options)
     {
     }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
@@ -34,4 +35,5 @@ public class WDPRContext : IdentityDbContext
     public DbSet<Guardian> Guardians { get; set; }
     public DbSet<Orthopedagogue> Orthopedagogues { get; set; }
     public DbSet<Client> Clients { get; set; }
+    public DbSet<Chat> Chats { get; set; }
 }

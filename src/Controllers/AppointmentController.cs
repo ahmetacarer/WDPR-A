@@ -2,10 +2,6 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using WDPR_A.Models;
 using System.Linq;
-using System.Net.Mail;
-using System.Net;
-using SendGrid;
-using SendGrid.Helpers.Mail;
 
 namespace WDPR_A.Controllers;
 
@@ -65,7 +61,6 @@ public class AppointmentController : Controller
     {
         return View(); 
     }
-
 
     //     BONUS
     //

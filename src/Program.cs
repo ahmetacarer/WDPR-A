@@ -22,7 +22,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-app.
+
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();

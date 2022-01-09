@@ -104,7 +104,7 @@ namespace WDPR_A.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            await _roleSystem.SeedRoles();
+            await _roleSystem.SeedRoles();  
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             var user = _context.Clients.SingleOrDefault(s => s.Email == Input.Email);

@@ -22,14 +22,7 @@ namespace src.Controllers
             var response = await client.GetAsync("https://zorgdomeinhhs.azurewebsites.net/referral/" + birthDate + "/" + bsn);
             var content = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
-            {
-                Console.WriteLine(content);
-            }
-            else if ((int)response.StatusCode == 500)
-            {
-                Console.WriteLine(content);
-            }
+            Console.WriteLine(content);
         }
 
         // need to make it.

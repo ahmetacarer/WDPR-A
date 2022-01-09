@@ -35,4 +35,5 @@ public class WDPRContext : IdentityDbContext
     public DbSet<Orthopedagogue> Orthopedagogues { get; set; }
     public DbSet<Client> Clients { get; set; }
     public DbSet<Chat> Chats { get; set; }
+    public DbSet<Message> Messages { get; set; }
 }

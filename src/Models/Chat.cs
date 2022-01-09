@@ -9,4 +9,6 @@ public class Chat
     [Required]
     public Orthopedagogue Orthopedagogue { get; set; }
     public IList<Client> Clients { get; set; }
+
+    public ICollection<Message> Messages { get; set; } = new HashSet<Message>();
 }

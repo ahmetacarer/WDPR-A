@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace WDPR_A.Migrations
 {
     [DbContext(typeof(WDPRContext))]
-    partial class WDPRContextModelSnapshot : ModelSnapshot
+    [Migration("20220108185917_1")]
+    partial class _1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.1");
@@ -257,17 +259,11 @@ namespace WDPR_A.Migrations
                     b.Property<DateTime>("AppointmentDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("IncomingClientId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("OrthopedagogueId")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IncomingClientId");
 
                     b.HasIndex("OrthopedagogueId");
 
@@ -352,9 +348,6 @@ namespace WDPR_A.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<int?>("AppointmentId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .ValueGeneratedOnUpdateSometimes()
@@ -364,8 +357,6 @@ namespace WDPR_A.Migrations
                         .IsRequired()
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("TEXT");
-
-                    b.HasIndex("AppointmentId");
 
                     b.HasDiscriminator().HasValue("Guardian");
                 });
@@ -393,13 +384,13 @@ namespace WDPR_A.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "2dfade34-5ba3-4bc2-b50d-c5d4e5d29027",
+                            Id = "b234a553-a0e4-4af7-9af6-2130d7de31b7",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5eb0bf2e-2da8-49a7-9a02-21eee0f9c5e2",
+                            ConcurrencyStamp = "aa5b1518-a4d9-4103-8f60-5c0fe02e973a",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "aecd87d1-927d-42f1-a4e1-90808961daf4",
+                            SecurityStamp = "62bd6e13-0a49-4868-9e98-8f2dea0e2535",
                             TwoFactorEnabled = false,
                             FirstName = "Karin",
                             LastName = "Kemper",
@@ -407,13 +398,13 @@ namespace WDPR_A.Migrations
                         },
                         new
                         {
-                            Id = "67f88bfb-409f-417d-8f7b-fec56e2fcca3",
+                            Id = "a953b137-09d8-4ea1-8a8e-808598968614",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "349593c8-3728-4372-b320-fe3c8f312f16",
+                            ConcurrencyStamp = "cd363cc2-cf57-4f35-ac93-6292a3cd49b2",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "1ed6963c-5866-4901-a5dd-41626d3d69b4",
+                            SecurityStamp = "b46e0986-bf95-4f99-b8ad-49d8eae2a571",
                             TwoFactorEnabled = false,
                             FirstName = "Johan",
                             LastName = "Lo",
@@ -421,13 +412,13 @@ namespace WDPR_A.Migrations
                         },
                         new
                         {
-                            Id = "536ffd33-7cd8-4443-93bd-1273895e55dd",
+                            Id = "17c5f728-1c3d-4256-a9de-0bfe465235b6",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8d01ea89-dea6-40b9-a004-6feb7f802f10",
+                            ConcurrencyStamp = "171f7824-bf72-4108-84bb-b6fc32c9733c",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "8e8d5f71-3839-42b3-822e-60a772eedc18",
+                            SecurityStamp = "2984f629-5333-4f14-9aef-cce84b594909",
                             TwoFactorEnabled = false,
                             FirstName = "Steven",
                             LastName = "Ito",
@@ -435,13 +426,13 @@ namespace WDPR_A.Migrations
                         },
                         new
                         {
-                            Id = "fdb08b90-f8bd-4f19-8c1e-f67a580491a2",
+                            Id = "d89f02cf-e741-42e3-b53a-d77738967d8e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5ac09d5d-08c8-47a6-bb13-5f45e12c875a",
+                            ConcurrencyStamp = "d88a2bd0-7ca2-44b9-b44a-0e2c566d6ac1",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "64242c79-45a1-4a08-ab1a-e30d6bac797a",
+                            SecurityStamp = "895be6b3-b514-477b-a769-fdc486fb997c",
                             TwoFactorEnabled = false,
                             FirstName = "Marianne",
                             LastName = "van Dijk",
@@ -532,33 +523,40 @@ namespace WDPR_A.Migrations
 
             modelBuilder.Entity("WDPR_A.Models.Appointment", b =>
                 {
-                    b.HasOne("WDPR_A.Models.Client", "IncomingClient")
-                        .WithMany()
-                        .HasForeignKey("IncomingClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("WDPR_A.Models.Orthopedagogue", "Orthopedagogue")
                         .WithMany("Appointments")
                         .HasForeignKey("OrthopedagogueId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("IncomingClient");
+                    b.Navigation("Orthopedagogue");
+                });
+
+            modelBuilder.Entity("WDPR_A.Models.Chat", b =>
+                {
+                    b.HasOne("WDPR_A.Models.Orthopedagogue", "Orthopedagogue")
+                        .WithMany("Chats")
+                        .HasForeignKey("OrthopedagogueId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Orthopedagogue");
                 });
 
-            modelBuilder.Entity("WDPR_A.Models.Guardian", b =>
+            modelBuilder.Entity("WDPR_A.Models.Message", b =>
                 {
-                    b.HasOne("WDPR_A.Models.Appointment", null)
-                        .WithMany("Guardians")
-                        .HasForeignKey("AppointmentId");
+                    b.HasOne("WDPR_A.Models.Chat", "Chat")
+                        .WithMany("Messages")
+                        .HasForeignKey("ChatCode")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Chat");
                 });
 
-            modelBuilder.Entity("WDPR_A.Models.Appointment", b =>
+            modelBuilder.Entity("WDPR_A.Models.Chat", b =>
                 {
-                    b.Navigation("Guardians");
+                    b.Navigation("Messages");
                 });
 
             modelBuilder.Entity("WDPR_A.Models.Orthopedagogue", b =>

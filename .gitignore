@@ -29,4 +29,5 @@ msbuild.err
 msbuild.wrn
 
 # Database files
-.db
+*.db
+*.db-*

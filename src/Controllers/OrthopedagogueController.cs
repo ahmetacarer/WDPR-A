@@ -32,7 +32,7 @@ public class OrthopedagogueController : Controller
                                         .Include(a => a.IncomingClient)
                                         .Include(a => a.Guardians) 
                                         .SingleAsync(a => a.Id == appointmentId);
-        if (appointment.Guardians == null)
+        if (appointment.Guardians?.Count == null || appointment.Guardians?.Count == 0)
             return RedirectToPage("/Account/Register", new { area = "Identity", email = appointment.IncomingClient.Email });
         // only one guardian can register together with client
         return RedirectToPage("/Account/Register", new { area = "Identity", email = appointment.IncomingClient.Email, guardianEmail =  appointment.Guardians[0].Email});

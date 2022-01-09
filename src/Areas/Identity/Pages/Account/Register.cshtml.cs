@@ -25,8 +25,9 @@ using WDPR_A.ViewModels;
 /// </summary>
 
 namespace WDPR_A.Areas.Identity.Pages.Account
-{
-    [Authorize(Roles = "Orthopedadgogue")]
+{   
+    // tijdelijk gecomment
+    // [Authorize(Roles = "Orthopedadgogue")]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;

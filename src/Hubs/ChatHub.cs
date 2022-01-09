@@ -15,8 +15,8 @@ namespace WDPR_A.Hubs
 
         public async Task SendMessage(string user, string message)
         {
-            // var currentUser = await _userManager.GetUserAsync(System.Security.Claims.ClaimsPrincipal.Current);
-            // user = currentUser.Email;
+            var currentUser = await _userManager.GetUserAsync(System.Security.Claims.ClaimsPrincipal.Current);
+            user = currentUser.Email;
             await Clients.All.SendAsync("ReceiveMessage", user, message);
         }
     }

@@ -1,2 +1,9 @@
-exclude:
-- src\Migrations
+component_depth: 1
+languages:
+- name: c#
+  production:
+    exclude:
+      - src\Migrations
+  development:
+    exclude:
+      - src\Migrations

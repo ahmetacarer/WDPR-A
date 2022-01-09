@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("WDPRContextConnection");
 builder.Services.AddDbContext<WDPRContext>(options => options.UseSqlite(connectionString));
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddRoles<IdentityUser>()
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<WDPRContext>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<RoleSystem>();

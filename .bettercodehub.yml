@@ -2,4 +2,4 @@ component_depth: 3
 languages:
 - name: csharp
   exclude:
-    - src/Migrations.csharp
+    - src/Migrations.cs

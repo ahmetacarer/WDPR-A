@@ -7,7 +7,7 @@ namespace WDPR_A.Models
         public int Id { get; set; }
 
         [Required]
-        public string UserName { get; set; }
+        public User Sender { get; set; }
 
         [Required]
         public string Text { get; set; }

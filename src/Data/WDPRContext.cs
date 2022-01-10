@@ -12,10 +12,6 @@ public class WDPRContext : IdentityDbContext
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        builder.Entity<Client>()
-               .HasIndex(c => c.ChatCode)
-               .IsUnique();
-
         builder.Entity<Orthopedagogue>().HasData(
 
             new Orthopedagogue { FirstName = "Karin", LastName = "Kemper", Specialty = "ADHD" },

@@ -16,7 +16,7 @@ namespace WDPR_A.Models
         public DateTime When { get; set; }
 
         [Required]
-        public string ChatCode { get; set; }
+        public string ChatRoomId { get; set; }
 
         [Required]
         public Chat Chat { get; set; }

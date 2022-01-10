@@ -22,25 +22,21 @@ public class ChatController : Controller
     public async Task<IActionResult> Index()
     {
         var currentUser = await _userManager.GetUserAsync(User);
-        // messages = await _context.Messages.ToListAsync();
-
-        // if (ModelState.IsValid)
-        // {
-
-
-        // }
-
-        return View();
+        var client = _context.Clients.FirstOrDefault(c => c.Id == currentUser.Id);
+        var chats = await _context.Chats.Include(c => c.Orthopedagogue)
+                                        .Include(c => c.Clients)
+                                        .Include(c => c.Messages)
+                                        .Where(c => c.Clients.Any(cl => cl.Id == client.Id))
+                                        .ToListAsync();
+        
+        chats = new List<Chat> {new Chat {RoomId = "1", PrivateChatToken = "1", Orthopedagogue = _context.Orthopedagogues.First(), Subject = "1", Clients = new List<Client> {client}}, 
+                                    new Chat {RoomId = "2", PrivateChatToken = "2", Orthopedagogue = _context.Orthopedagogues.First(), Subject = "1", Clients = new List<Client> {client}},
+                                    new Chat {RoomId = "3", PrivateChatToken = "3", Orthopedagogue = _context.Orthopedagogues.First(), Subject = "1", Clients = new List<Client> {client}}
+                                    };
+        await _context.Chats.AddRangeAsync(chats);
+        await _context.SaveChangesAsync();
+        return View(chats);
     }
-
-    // public async Task<IActionResult> Privacy()
-    // {
-    //     var currentUser = await _userManager.GetUserAsync(User);
-    //     ViewBag.CurrentUserName = currentUser,
-    //     var messages = await _context.Messages.ToListAsync();
-    //     return View();
-    // }
-
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {

@@ -15,29 +15,29 @@ public class Manage
 
     public async Task CreateChatAsync(Orthopedagogue orthopedagogue)
     {
-        var chat = new Chat() { Code = GetUniqueChatCode(), Orthopedagogue = orthopedagogue};
+        var chat = new Chat() { PrivateChatToken = GetUniquePrivateChatToken(), Orthopedagogue = orthopedagogue};
         await _context.Chats.AddAsync(chat);
         await _context.SaveChangesAsync();
     }
 
     public async Task CreateChatAsync(Orthopedagogue orthopedagogue, Client client)
     {
-        var code = GetUniqueChatCode();
-        var chat = new Chat() { Code = code, Orthopedagogue = orthopedagogue};
-        client.ChatCode = code;
+        var privateChatToken = GetUniquePrivateChatToken();
+        var chat = new Chat() { PrivateChatToken = privateChatToken, Orthopedagogue = orthopedagogue};
+        client.PrivateChatToken = privateChatToken;
         await _context.Chats.AddAsync(chat);
         await _context.SaveChangesAsync();
     }
 
-    public string GetUniqueChatCode()
+    public string GetUniquePrivateChatToken()
     {
-        string chatCode = _generate.RandomChatCode();
-        bool isUnique = !_context.Chats.Any(c => c.Code == chatCode);
+        string PrivateChatToken = _generate.RandomPrivateChatToken();
+        bool isUnique = !_context.Chats.Any(c => c.PrivateChatToken == PrivateChatToken);
         while (!isUnique)
         {
-            chatCode = _generate.RandomChatCode();
-            isUnique = !_context.Chats.Any(c => c.Code == chatCode);
+            PrivateChatToken = _generate.RandomPrivateChatToken();
+            isUnique = !_context.Chats.Any(c => c.PrivateChatToken == PrivateChatToken);
         }
-        return chatCode;
+        return PrivateChatToken;
     }
 }

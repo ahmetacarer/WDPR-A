@@ -9,18 +9,18 @@ public class ChatViewModel
 {
     private readonly WDPRContext _context;
     private readonly UserManager<IdentityUser> _userManager;
-    private readonly HttpContext _httpContext;
+    private readonly ClaimsPrincipal _userPrincipal;
 
-    public ChatViewModel(WDPRContext context, UserManager<IdentityUser> userManager, HttpContextAccessor accessor)
+    public ChatViewModel(WDPRContext context, UserManager<IdentityUser> userManager, IHttpContextAccessor accessor)
     {
         _context = context;
         _userManager = userManager;
-        _httpContext = accessor.HttpContext;
+        _userPrincipal = accessor.HttpContext.User;
     }
 
     public async Task<List<Chat>> GetChatsAsync()
     {
-        IdentityUser user = await _userManager.GetUserAsync(_httpContext.User);
+        IdentityUser user = await _userManager.GetUserAsync(_userPrincipal);
         return await _context.Chats.Where(c => c.Orthopedagogue.Id == user.Id || c.Clients.Any(cl => cl.Id == user.Id)).ToListAsync();
     }
 }

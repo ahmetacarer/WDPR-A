@@ -17,7 +17,7 @@ public class GenerateTest
     public void RandomString_NonNegativeNumber_ReturnsSameLength(int length)
     {
         var sut = new Generate(new Random());
-        
+
         var generatedString = sut.RandomString(length);
 
         Assert.Equal(length, generatedString.Length);
@@ -41,7 +41,7 @@ public class GenerateTest
 
         var sut = new Generate(new Random());
 
-        var chatCode = sut.RandomChatCode();
+        var chatCode = sut.RandomPrivateChatToken();
 
         Assert.Equal(expectedLength, chatCode.Length);
     }

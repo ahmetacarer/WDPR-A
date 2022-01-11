@@ -8,6 +8,7 @@ public class Chat
     public string RoomId { get; set; } // dit is de primaire sleutel van de chatroom
     public string PrivateChatToken { get; set; } // dit is de unieke code van de client om aan de chat deel te nemen
     public string Subject { get; set; }
+    public bool IsPrivate { get; set; }
     public AgeCategory AgeCategory { get; set; }
     [Required]
     public Orthopedagogue Orthopedagogue { get; set; }

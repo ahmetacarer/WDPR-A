@@ -24,7 +24,6 @@ public class AppointmentTest
 
         //Arrange
         var loggerMock = new Mock<ILogger<AppointmentController>>();
-        //var contextMock = new Mock<WDPRContext>(); //hier gaat het mis
 
         var controller = new AppointmentController(loggerMock.Object, WDPRContext);
 
@@ -75,7 +74,6 @@ public class AppointmentTest
         
 
         //Assert
-        //Assert.NotNull(WDPRContext.Appointments);  //DEZEE WERKT 
         Assert.NotNull(WDPRContext.Appointments.Where(c => c.IncomingClientId == client.Id).Select(g => g.Guardians));
         
 
@@ -104,7 +102,6 @@ public class AppointmentTest
 
 
         //Assert
-        //Assert.NotNull(WDPRContext.Appointments);  //DEZEE WERKT 
         Assert.Equal(0, WDPRContext.Appointments.Where(c => c.IncomingClientId == client.Id).Select(g => g.Guardians).Count());
 
     }

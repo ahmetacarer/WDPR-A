@@ -39,6 +39,7 @@ public class AppointmentController : Controller
 
         if (emailOfParent != null)
             client.Guardians = new List<Guardian>() { new Guardian { Email = emailOfParent } };
+            
         var orthopedagogue = _context.Orthopedagogues.FirstOrDefault(o => o.Specialty == client.Condition);
         Console.WriteLine(orthopedagogue == null);
         Appointment appointment = new Appointment()
@@ -52,6 +53,7 @@ public class AppointmentController : Controller
         };
 
         EmailTest(client.Email, appointmentDate, false);
+
         if (emailOfParent != null) {
              EmailTest(emailOfParent, appointmentDate, true);
         }
@@ -85,9 +87,9 @@ public class AppointmentController : Controller
         Console.WriteLine("-------------------------------------------------------");
         Console.WriteLine(tijd);
 
-         //execute powershell cmdlets or scripts using command arguments as process
-            ProcessStartInfo processInfo = new ProcessStartInfo();
-            processInfo.FileName = @"powershell.exe";
+        //execute powershell cmdlets or scripts using command arguments as process
+        ProcessStartInfo processInfo = new ProcessStartInfo();
+        processInfo.FileName = @"powershell.exe";
         //execute powershell script using script file
         //processInfo.Arguments = @"& {c:\temp\Get-EventLog.ps1}";
         //execute powershell command
@@ -132,7 +134,7 @@ public class AppointmentController : Controller
         } 
         else 
         { 
-            return firstName;
+            return firstName.ToUpper();
         }
     }
 

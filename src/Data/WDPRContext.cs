@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using WDPR_A.Models;
@@ -12,8 +13,10 @@ public class WDPRContext : IdentityDbContext
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        builder.Entity<Client>()
-               .HasIndex(c => c.ChatCode)
+
+               
+        builder.Entity<IdentityUser>()
+               .HasIndex(c => c.Email)
                .IsUnique();
 
         builder.Entity<Orthopedagogue>().HasData(

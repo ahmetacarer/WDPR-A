@@ -16,7 +16,7 @@ namespace WDPR_A.Models
 
         public IList<Guardian>? Guardians { get; set; }
 
-        [Required]
+        [Required] 
         public string? OrthopedagogueId { get; set; }
 
         [Required]

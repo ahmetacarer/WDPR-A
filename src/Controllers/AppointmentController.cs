@@ -26,6 +26,12 @@ public class AppointmentController : Controller
     [HttpPost]
     public async Task<IActionResult> Index([Bind("FirstName, LastName, Email, Condition")] Client client, [Bind("appointmentDate")] DateTime appointmentDate, string? emailOfParent = null)
     {
+
+        if (_context.Users.Any(b => b.Email == client.Email)) {
+            
+            return RedirectToAction("Index");
+        }
+
         // tijdelijk
         // uitbreidbaar naar orthopedagoog met minste appointments
         client.FirstName = MakeFirstNameCapitalLetter(client.FirstName);

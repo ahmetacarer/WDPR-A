@@ -108,7 +108,6 @@ public class AppointmentTest
         WDPRContext WDPRContext = new WDPRContext(options);
 
         //Arrange
-        var loggerMock = new Mock<ILogger<AppointmentController>>();
         var expected = 0;
 
         var sut = new AppointmentController(null, WDPRContext);

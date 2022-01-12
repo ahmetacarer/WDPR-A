@@ -19,7 +19,7 @@ public class Manage
         await _context.Chats.AddAsync(chat);
         await _context.SaveChangesAsync();
     }
-    \
+    
     public void DeleteChat(Chat chat)
     {
         _context.Chats.Remove(chat);

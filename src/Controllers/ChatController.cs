@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +7,7 @@ using WDPR_A.Models;
 
 namespace WDPR_A.Controllers;
 
+[Authorize(Roles = "Client, Orthopedagogue")]
 public class ChatController : Controller
 {
     private readonly ILogger<ChatController> _logger;
@@ -29,14 +31,15 @@ public class ChatController : Controller
                                         .Where(c => c.Clients.Any(cl => cl.Id == client.Id))
                                         .ToListAsync();
 
-        chats = new List<Chat> {new Chat {RoomId = "1", PrivateChatToken = "1", Orthopedagogue = _context.Orthopedagogues.First(), Subject = "1", Clients = new List<Client> {client}}, 
-                                    new Chat {RoomId = "2", PrivateChatToken = "2", Orthopedagogue = _context.Orthopedagogues.First(), Subject = "1", Clients = new List<Client> {client}},
-                                    new Chat {RoomId = "3", PrivateChatToken = "3", Orthopedagogue = _context.Orthopedagogues.First(), Subject = "1", Clients = new List<Client> {client}}
-                                    };
-        await _context.Chats.AddRangeAsync(chats);
-        await _context.SaveChangesAsync();
+        // chats = new List<Chat> {new Chat {RoomId = "1", PrivateChatToken = "1", Orthopedagogue = _context.Orthopedagogues.First(), Subject = "1", Clients = new List<Client> {client}}, 
+        //                             new Chat {RoomId = "2", PrivateChatToken = "2", Orthopedagogue = _context.Orthopedagogues.First(), Subject = "1", Clients = new List<Client> {client}},
+        //                             new Chat {RoomId = "3", PrivateChatToken = "3", Orthopedagogue = _context.Orthopedagogues.First(), Subject = "1", Clients = new List<Client> {client}}
+        //                             };
+        // await _context.Chats.AddRangeAsync(chats);
+        // await _context.SaveChangesAsync();
         return View(chats);
     }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {

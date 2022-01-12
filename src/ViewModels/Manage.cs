@@ -19,7 +19,7 @@ public class Manage
         await _context.Chats.AddAsync(chat);
         await _context.SaveChangesAsync();
     }
-    \
+
     public void DeleteChat(Chat chat)
     {
         _context.Chats.Remove(chat);
@@ -35,7 +35,7 @@ public class Manage
     public async Task CreateChatAsync(Orthopedagogue orthopedagogue, Client client)
     {
         var privateChatToken = GetUniquePrivateChatToken();
-        var chat = new Chat() { PrivateChatToken = privateChatToken, Orthopedagogue = orthopedagogue};
+        var chat = new Chat() { PrivateChatToken = privateChatToken, Orthopedagogue = orthopedagogue };
         client.PrivateChatToken = privateChatToken;
         await _context.Chats.AddAsync(chat);
         await _context.SaveChangesAsync();

@@ -187,8 +187,9 @@ namespace WDPR_A.Migrations
                 columns: table => new
                 {
                     RoomId = table.Column<string>(type: "TEXT", nullable: false),
-                    PrivateChatToken = table.Column<string>(type: "TEXT", nullable: false),
-                    Subject = table.Column<string>(type: "TEXT", nullable: false),
+                    RoomName = table.Column<string>(type: "TEXT", nullable: true),
+                    PrivateChatToken = table.Column<string>(type: "TEXT", nullable: true),
+                    Subject = table.Column<string>(type: "TEXT", nullable: true),
                     IsPrivate = table.Column<bool>(type: "INTEGER", nullable: false),
                     AgeCategory = table.Column<int>(type: "INTEGER", nullable: false),
                     OrthopedagogueId = table.Column<string>(type: "TEXT", nullable: false)
@@ -283,22 +284,22 @@ namespace WDPR_A.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Specialty", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "518005d2-8080-4bf6-83b4-e5890880e894", 0, "99dfd995-043f-4371-abeb-5e9c06e6ed92", "Orthopedagogue", null, false, "Karin", "Kemper", false, null, null, null, null, null, false, "d4a1dd4c-4d72-47aa-8c3b-24c777014bcb", "ADHD", false, null });
+                values: new object[] { "4953e73d-f695-4bf0-a6ab-95d81f8e4b4a", 0, "99c3f94e-1770-4699-9e1a-360fc901f7e0", "Orthopedagogue", null, false, "Karin", "Kemper", false, null, null, null, null, null, false, "727e981a-7fb5-4b0e-b256-d4589ccc3d4e", "ADHD", false, null });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Specialty", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "7bdc9100-760b-486f-b686-e19073b5adcb", 0, "0fd769f6-ade7-4611-b76e-626dfbd9267c", "Orthopedagogue", null, false, "Steven", "Ito", false, null, null, null, null, null, false, "0d2c1577-51c5-49db-a292-819a6ba06f07", "Eetstoornis", false, null });
+                values: new object[] { "6c0c96e5-8958-4fc2-aa41-f2771d820d6d", 0, "3419e1a6-3fae-435e-8d16-d2e4a6a3bfaf", "Orthopedagogue", null, false, "Johan", "Lo", false, null, null, null, null, null, false, "7facc0e5-bd07-4914-9025-0936ff80dd78", "Faalangst", false, null });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Specialty", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "99805d6a-cc48-4203-8ccd-419c93faec5e", 0, "9818c724-2dad-42eb-ba3b-2e7dbc28c9d9", "Orthopedagogue", null, false, "Johan", "Lo", false, null, null, null, null, null, false, "6f14b154-2365-4ce7-aab6-05def1236d7d", "Faalangst", false, null });
+                values: new object[] { "cea3e040-9604-4970-8512-bb96fe8c8ff3", 0, "fbada17c-6977-4010-8ef2-c2623b0d417b", "Orthopedagogue", null, false, "Steven", "Ito", false, null, null, null, null, null, false, "6b9f99cc-c8f6-4b17-903f-c876b74bb41a", "Eetstoornis", false, null });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Specialty", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "9fb6900e-91c2-48f6-9fbd-86e3aa801b60", 0, "b1710432-9f61-415f-8758-f3dc07426191", "Orthopedagogue", null, false, "Marianne", "van Dijk", false, null, null, null, null, null, false, "413b9208-cfa7-4b9c-bb9d-8c1e82c6c422", "Dyslexie", false, null });
+                values: new object[] { "d0e8944d-b908-4f9f-97f5-6b89b6d68667", 0, "043e0318-366e-4026-bafd-91d4ba15ede7", "Orthopedagogue", null, false, "Marianne", "van Dijk", false, null, null, null, null, null, false, "c1f37188-4232-4430-92c8-5d47e83b2cb6", "Dyslexie", false, null });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Appointments_IncomingClientId",

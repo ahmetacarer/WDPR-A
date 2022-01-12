@@ -3,6 +3,8 @@
   List<Chat> chats = await chatViewModel.GetChatsAsync();
 
 }
+
+
 <div class="d-flex flex-column align-items-stretch flex-shrink-0 text-white bg-dark" style="width: 380px;">
   <a href="#" class="d-flex align-items-center flex-shrink-0 p-3 link-white text-decoration-none border-bottom">
     <svg class="bi me-2" width="30" height="24">
@@ -42,9 +44,11 @@
   </div>
 </div>
 
+
 <div class="container">
   <div class="row">
-    <div class="col" id="messages">
+    <div class="col-3"></div>
+    <div class="col-6" id="messages">
 
     </div>
   </div>
@@ -58,9 +62,9 @@
       var chatRoomId = sidebar_buttons[i].id;
       var text = "@Url.Action("OnGetChatPartial", new { chatRoomId = "name"})";
       text = text.replace("name", chatRoomId);
-      
+
       $.get(text, function (data) {
-        $('#messages').replaceWith(data);
+        $('#messages').append(data);
       });
     })
   }

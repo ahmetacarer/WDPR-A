@@ -15,17 +15,16 @@ namespace test;
 
 public class AppointmentTest
 {
-    
+    //NameOfMethod_Scenario_Expected
+
     [Fact]
-    public void IndexTest () {
+    public void Index_ViewResultTest_True () {
 
         DbContextOptions<WDPRContext> options = new DbContextOptionsBuilder<WDPRContext>().UseInMemoryDatabase("MijnDatabase").Options;
         WDPRContext WDPRContext = new WDPRContext(options);
 
         //Arrange
-        var loggerMock = new Mock<ILogger<AppointmentController>>();
-
-        var controller = new AppointmentController(loggerMock.Object, WDPRContext);
+        var controller = new AppointmentController(null, WDPRContext);
 
         //Act
         var result = controller.Index();
@@ -35,7 +34,7 @@ public class AppointmentTest
     }
 
     [Fact]
-    public void MakeFirstNameCapitalLetter_Test_CapitalLetter () {
+    public void MakeFirstNameCapitalLetter_MakeCapitalLetter_True () {
 
         DbContextOptions<WDPRContext> options = new DbContextOptionsBuilder<WDPRContext>().UseInMemoryDatabase("MijnDatabase").Options;
         WDPRContext WDPRContext = new WDPRContext(options);
@@ -44,7 +43,6 @@ public class AppointmentTest
         var controller = new AppointmentController(null, WDPRContext);
 
         var firstName = "hAns";
-
 
         //Act
         var result = controller.MakeFirstNameCapitalLetter(firstName);
@@ -56,15 +54,12 @@ public class AppointmentTest
     }
 
     [Fact]
-    public void Appointment_WithParent_NotNull () {
+    public void Index_WithParent_NotNull () {
 
         DbContextOptions<WDPRContext> options = new DbContextOptionsBuilder<WDPRContext>().UseInMemoryDatabase("MijnDatabase").Options;
         WDPRContext WDPRContext = new WDPRContext(options);
 
         //Arrange
-        var loggerMock = new Mock<ILogger<AppointmentController>>();
-        var expected = 0;
-
         var sut = new AppointmentController(null, WDPRContext);
 
         var client = new Client {FirstName = "Hansie", LastName = "Bassie", Email = "testEmaghfghfghil@gmail.com", Condition = "ADHD"};
@@ -83,14 +78,13 @@ public class AppointmentTest
     }
 
     [Fact]
-    public void Appointment_WithoutParent_Zero()
+    public void Index_WithoutParent_Zero()
     {
 
         DbContextOptions<WDPRContext> options = new DbContextOptionsBuilder<WDPRContext>().UseInMemoryDatabase("MijnDatabase").Options;
         WDPRContext WDPRContext = new WDPRContext(options);
 
         //Arrange
-        var loggerMock = new Mock<ILogger<AppointmentController>>();
         var expected = 0;
 
         var sut = new AppointmentController(null, WDPRContext);
@@ -102,12 +96,12 @@ public class AppointmentTest
 
 
         //Assert
-        Assert.Equal(0, WDPRContext.Appointments.Where(c => c.IncomingClientId == client.Id).Select(g => g.Guardians).Count());
+        Assert.Equal(expected, WDPRContext.Appointments.Where(c => c.IncomingClientId == client.Id).Select(g => g.Guardians).Count());
 
     }
 
     [Fact]
-    public void Appointment_appointmentInContext_NotNull()
+    public void Index_AppointmentInContext_NotNull()
     {
 
         DbContextOptions<WDPRContext> options = new DbContextOptionsBuilder<WDPRContext>().UseInMemoryDatabase("MijnDatabase").Options;

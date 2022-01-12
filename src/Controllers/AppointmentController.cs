@@ -52,10 +52,10 @@ public class AppointmentController : Controller
             OrthopedagogueId = orthopedagogue.Id,
         };
 
-        EmailTest(client.Email, appointmentDate, false);
+        SendEmailThroughMailhog(client.Email, appointmentDate, false);
 
         if (emailOfParent != null) {
-             EmailTest(emailOfParent, appointmentDate, true);
+             SendEmailThroughMailhog(emailOfParent, appointmentDate, true);
         }
 
         System.Console.WriteLine(client.FirstName + " " + client.LastName);
@@ -79,7 +79,7 @@ public class AppointmentController : Controller
         return View(); 
     }
 
-    public void EmailTest (string receiverEmail, DateTime AppointmentDate, bool isParent) {
+    public void SendEmailThroughMailhog (string receiverEmail, DateTime AppointmentDate, bool isParent) {
         //AppointmentDate.ToString("MM/dd/yyyy hh:mm");
         string datum = AppointmentDate.ToString("MM/dd/yyyy");
         Console.WriteLine(datum);

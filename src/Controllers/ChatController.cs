@@ -47,4 +47,14 @@ public class ChatController : Controller
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
+
+    // nog niet async
+    public IActionResult OnGetChatPartial(string chatRoomId)
+    {
+        System.Console.WriteLine(chatRoomId);
+        var chat = _context.Chats.Include(c => c.Messages)
+                                 .Where(c => c.RoomId == chatRoomId)
+                                 .SingleOrDefault();
+        return PartialView("_ChatPartial", chat);
+    }
 }

@@ -10,13 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace WDPR_A.Migrations
 {
     [DbContext(typeof(WDPRContext))]
-<<<<<<< HEAD:src/Migrations/20220111092726_emailunique.Designer.cs
-    [Migration("20220111092726_emailunique")]
-    partial class emailunique
-=======
-    [Migration("20220112110913_1")]
+    [Migration("20220112141815_1")]
     partial class _1
->>>>>>> 83871fdde6a628a569398bf7d5776a60735f8794:src/Migrations/20220112110913_1.Designer.cs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -159,9 +154,6 @@ namespace WDPR_A.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Email")
-                        .IsUnique();
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -350,7 +342,6 @@ namespace WDPR_A.Migrations
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
                     b.Property<string>("FirstName")
-<<<<<<< HEAD:src/Migrations/20220111092726_emailunique.Designer.cs
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -368,38 +359,13 @@ namespace WDPR_A.Migrations
                     b.Property<int>("AgeCategory")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("ChatCode")
-                        .HasColumnType("TEXT");
-
-=======
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasDiscriminator().HasValue("User");
-                });
-
-            modelBuilder.Entity("WDPR_A.Models.Client", b =>
-                {
-                    b.HasBaseType("WDPR_A.Models.User");
-
-                    b.Property<int>("AgeCategory")
-                        .HasColumnType("INTEGER");
-
->>>>>>> 83871fdde6a628a569398bf7d5776a60735f8794:src/Migrations/20220112110913_1.Designer.cs
                     b.Property<string>("Condition")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-<<<<<<< HEAD:src/Migrations/20220111092726_emailunique.Designer.cs
-=======
                     b.Property<string>("PrivateChatToken")
                         .HasColumnType("TEXT");
 
->>>>>>> 83871fdde6a628a569398bf7d5776a60735f8794:src/Migrations/20220112110913_1.Designer.cs
                     b.HasDiscriminator().HasValue("Client");
                 });
 
@@ -428,23 +394,13 @@ namespace WDPR_A.Migrations
                     b.HasData(
                         new
                         {
-<<<<<<< HEAD:src/Migrations/20220111092726_emailunique.Designer.cs
-                            Id = "1846f376-ca44-43ca-8354-3bc4eb50645b",
+                            Id = "1067f243-95f4-4719-bd55-f5fad9ebd34b",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "156087a1-311e-4fd4-9b0a-109fdf828b03",
+                            ConcurrencyStamp = "ae6372f0-bf86-486e-a48c-8ea4aa910c23",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e4ebe808-cb81-4f29-9f9a-ee9fad4d16a5",
-=======
-                            Id = "4953e73d-f695-4bf0-a6ab-95d81f8e4b4a",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "99c3f94e-1770-4699-9e1a-360fc901f7e0",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "727e981a-7fb5-4b0e-b256-d4589ccc3d4e",
->>>>>>> 83871fdde6a628a569398bf7d5776a60735f8794:src/Migrations/20220112110913_1.Designer.cs
+                            SecurityStamp = "2cfd02d5-edfa-4210-a4f2-a286b3ab78a5",
                             TwoFactorEnabled = false,
                             FirstName = "Karin",
                             LastName = "Kemper",
@@ -452,23 +408,13 @@ namespace WDPR_A.Migrations
                         },
                         new
                         {
-<<<<<<< HEAD:src/Migrations/20220111092726_emailunique.Designer.cs
-                            Id = "329049af-e16b-4b09-9e66-7ce2c5021a5b",
+                            Id = "a1d71533-2518-4fd6-b503-1cdf27e259c0",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "db83ddff-9110-40c1-b60f-7c9f206db7e1",
+                            ConcurrencyStamp = "1b16e28f-ec5c-42cd-8783-5b5f5d749cd5",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "24ce9520-01f6-4090-96ef-dad47aacf1bc",
-=======
-                            Id = "6c0c96e5-8958-4fc2-aa41-f2771d820d6d",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "3419e1a6-3fae-435e-8d16-d2e4a6a3bfaf",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "7facc0e5-bd07-4914-9025-0936ff80dd78",
->>>>>>> 83871fdde6a628a569398bf7d5776a60735f8794:src/Migrations/20220112110913_1.Designer.cs
+                            SecurityStamp = "afbb58e8-ada0-4bb7-bbb9-5a09b15a16f3",
                             TwoFactorEnabled = false,
                             FirstName = "Johan",
                             LastName = "Lo",
@@ -476,23 +422,13 @@ namespace WDPR_A.Migrations
                         },
                         new
                         {
-<<<<<<< HEAD:src/Migrations/20220111092726_emailunique.Designer.cs
-                            Id = "9391018f-6043-4a98-94af-5548c6c03148",
+                            Id = "7f9ba7ac-9c06-41d3-8963-e655ae5d18f9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "db93429a-6568-45b4-8d73-bed682f010c3",
+                            ConcurrencyStamp = "561ba5d1-691c-44cf-9450-e97c93c6c02b",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "36d9295b-3f37-43e4-8bdb-bc863e48859d",
-=======
-                            Id = "cea3e040-9604-4970-8512-bb96fe8c8ff3",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "fbada17c-6977-4010-8ef2-c2623b0d417b",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "6b9f99cc-c8f6-4b17-903f-c876b74bb41a",
->>>>>>> 83871fdde6a628a569398bf7d5776a60735f8794:src/Migrations/20220112110913_1.Designer.cs
+                            SecurityStamp = "ab0318f4-b3a5-4ee6-ac9f-cff81cfe0528",
                             TwoFactorEnabled = false,
                             FirstName = "Steven",
                             LastName = "Ito",
@@ -500,23 +436,13 @@ namespace WDPR_A.Migrations
                         },
                         new
                         {
-<<<<<<< HEAD:src/Migrations/20220111092726_emailunique.Designer.cs
-                            Id = "986a8c41-850f-4baf-b3d1-f96de52d13ec",
+                            Id = "97160277-5861-40f7-b841-bdc7bd646aa8",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "103f5917-d6d7-48b7-8465-6cda3200d905",
+                            ConcurrencyStamp = "797a18ea-323e-4b94-90fd-7f7752d4353b",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "138e9d82-38b4-437b-bc70-097edbcdf82b",
-=======
-                            Id = "d0e8944d-b908-4f9f-97f5-6b89b6d68667",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "043e0318-366e-4026-bafd-91d4ba15ede7",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "c1f37188-4232-4430-92c8-5d47e83b2cb6",
->>>>>>> 83871fdde6a628a569398bf7d5776a60735f8794:src/Migrations/20220112110913_1.Designer.cs
+                            SecurityStamp = "612fc2b8-e0a3-43cd-af5c-fd8e7ef94d83",
                             TwoFactorEnabled = false,
                             FirstName = "Marianne",
                             LastName = "van Dijk",
@@ -652,18 +578,6 @@ namespace WDPR_A.Migrations
                     b.Navigation("Chat");
 
                     b.Navigation("Sender");
-                });
-
-            modelBuilder.Entity("WDPR_A.Models.Guardian", b =>
-                {
-                    b.HasOne("WDPR_A.Models.Appointment", null)
-                        .WithMany("Guardians")
-                        .HasForeignKey("AppointmentId");
-                });
-
-            modelBuilder.Entity("WDPR_A.Models.Appointment", b =>
-                {
-                    b.Navigation("Guardians");
                 });
 
             modelBuilder.Entity("WDPR_A.Models.Guardian", b =>

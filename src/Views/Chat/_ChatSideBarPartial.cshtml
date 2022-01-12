@@ -48,9 +48,7 @@
 <div class="container">
   <div class="row">
     <div class="col-3"></div>
-    <div class="col-6" id="messages">
-
-    </div>
+    <div id="messages"></div>
   </div>
 </div>
 
@@ -64,7 +62,8 @@
       text = text.replace("name", chatRoomId);
 
       $.get(text, function (data) {
-        $('#messages').append(data);
+        // append vervangen met replace with als het niet goed genoeg functioneerd
+        $('#messages').replaceWith(data);
       });
     })
   }

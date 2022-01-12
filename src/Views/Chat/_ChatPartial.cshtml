@@ -1,8 +1,15 @@
 @model Chat
 
-<h1>Hello test</h1>
-
 @foreach (var message in Model.Messages)
 {
-    <li>@message.Text</li>
+
+    <div class="card">
+        <div class="card-header">
+            @message.Sender.FirstName
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">@message.Text</h5>
+            <p class="card-text">@message.When</p>
+        </div>
+    </div>
 }

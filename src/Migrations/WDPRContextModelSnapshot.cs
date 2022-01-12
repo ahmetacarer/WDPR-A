@@ -18,13 +18,13 @@ namespace WDPR_A.Migrations
 
             modelBuilder.Entity("ChatClient", b =>
                 {
-                    b.Property<string>("ChatsCode")
+                    b.Property<string>("ChatsRoomId")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ClientsId")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("ChatsCode", "ClientsId");
+                    b.HasKey("ChatsRoomId", "ClientsId");
 
                     b.HasIndex("ClientsId");
 
@@ -279,14 +279,29 @@ namespace WDPR_A.Migrations
 
             modelBuilder.Entity("WDPR_A.Models.Chat", b =>
                 {
-                    b.Property<string>("Code")
+                    b.Property<string>("RoomId")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("AgeCategory")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsPrivate")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("OrthopedagogueId")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Code");
+                    b.Property<string>("PrivateChatToken")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("RoomName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Subject")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("RoomId");
 
                     b.HasIndex("OrthopedagogueId");
 
@@ -299,15 +314,15 @@ namespace WDPR_A.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("ChatCode")
+                    b.Property<string>("ChatRoomId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("SenderId")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Text")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -316,7 +331,9 @@ namespace WDPR_A.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ChatCode");
+                    b.HasIndex("ChatRoomId");
+
+                    b.HasIndex("SenderId");
 
                     b.ToTable("Messages");
                 });
@@ -343,11 +360,11 @@ namespace WDPR_A.Migrations
                     b.Property<int>("AgeCategory")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("ChatCode")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Condition")
                         .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PrivateChatToken")
                         .HasColumnType("TEXT");
 
                     b.HasDiscriminator().HasValue("Client");
@@ -378,13 +395,13 @@ namespace WDPR_A.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1846f376-ca44-43ca-8354-3bc4eb50645b",
+                            Id = "4953e73d-f695-4bf0-a6ab-95d81f8e4b4a",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "156087a1-311e-4fd4-9b0a-109fdf828b03",
+                            ConcurrencyStamp = "99c3f94e-1770-4699-9e1a-360fc901f7e0",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e4ebe808-cb81-4f29-9f9a-ee9fad4d16a5",
+                            SecurityStamp = "727e981a-7fb5-4b0e-b256-d4589ccc3d4e",
                             TwoFactorEnabled = false,
                             FirstName = "Karin",
                             LastName = "Kemper",
@@ -392,13 +409,13 @@ namespace WDPR_A.Migrations
                         },
                         new
                         {
-                            Id = "329049af-e16b-4b09-9e66-7ce2c5021a5b",
+                            Id = "6c0c96e5-8958-4fc2-aa41-f2771d820d6d",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "db83ddff-9110-40c1-b60f-7c9f206db7e1",
+                            ConcurrencyStamp = "3419e1a6-3fae-435e-8d16-d2e4a6a3bfaf",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "24ce9520-01f6-4090-96ef-dad47aacf1bc",
+                            SecurityStamp = "7facc0e5-bd07-4914-9025-0936ff80dd78",
                             TwoFactorEnabled = false,
                             FirstName = "Johan",
                             LastName = "Lo",
@@ -406,13 +423,13 @@ namespace WDPR_A.Migrations
                         },
                         new
                         {
-                            Id = "9391018f-6043-4a98-94af-5548c6c03148",
+                            Id = "cea3e040-9604-4970-8512-bb96fe8c8ff3",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "db93429a-6568-45b4-8d73-bed682f010c3",
+                            ConcurrencyStamp = "fbada17c-6977-4010-8ef2-c2623b0d417b",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "36d9295b-3f37-43e4-8bdb-bc863e48859d",
+                            SecurityStamp = "6b9f99cc-c8f6-4b17-903f-c876b74bb41a",
                             TwoFactorEnabled = false,
                             FirstName = "Steven",
                             LastName = "Ito",
@@ -420,13 +437,13 @@ namespace WDPR_A.Migrations
                         },
                         new
                         {
-                            Id = "986a8c41-850f-4baf-b3d1-f96de52d13ec",
+                            Id = "d0e8944d-b908-4f9f-97f5-6b89b6d68667",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "103f5917-d6d7-48b7-8465-6cda3200d905",
+                            ConcurrencyStamp = "043e0318-366e-4026-bafd-91d4ba15ede7",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "138e9d82-38b4-437b-bc70-097edbcdf82b",
+                            SecurityStamp = "c1f37188-4232-4430-92c8-5d47e83b2cb6",
                             TwoFactorEnabled = false,
                             FirstName = "Marianne",
                             LastName = "van Dijk",
@@ -438,7 +455,7 @@ namespace WDPR_A.Migrations
                 {
                     b.HasOne("WDPR_A.Models.Chat", null)
                         .WithMany()
-                        .HasForeignKey("ChatsCode")
+                        .HasForeignKey("ChatsRoomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -549,11 +566,19 @@ namespace WDPR_A.Migrations
                 {
                     b.HasOne("WDPR_A.Models.Chat", "Chat")
                         .WithMany("Messages")
-                        .HasForeignKey("ChatCode")
+                        .HasForeignKey("ChatRoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WDPR_A.Models.User", "Sender")
+                        .WithMany()
+                        .HasForeignKey("SenderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Chat");
+
+                    b.Navigation("Sender");
                 });
 
             modelBuilder.Entity("WDPR_A.Models.Guardian", b =>

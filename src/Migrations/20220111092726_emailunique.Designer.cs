@@ -10,13 +10,28 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace WDPR_A.Migrations
 {
     [DbContext(typeof(WDPRContext))]
-    [Migration("20211223135315_4")]
-    partial class _4
+    [Migration("20220111092726_emailunique")]
+    partial class emailunique
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.1");
+
+            modelBuilder.Entity("ChatClient", b =>
+                {
+                    b.Property<string>("ChatsCode")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ClientsId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ChatsCode", "ClientsId");
+
+                    b.HasIndex("ClientsId");
+
+                    b.ToTable("ChatClient");
+                });
 
             modelBuilder.Entity("ClientGuardian", b =>
                 {
@@ -140,6 +155,9 @@ namespace WDPR_A.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Email")
+                        .IsUnique();
+
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -244,20 +262,88 @@ namespace WDPR_A.Migrations
                     b.Property<DateTime>("AppointmentDate")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("IncomingClientId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("OrthopedagogueId")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("IncomingClientId");
+
                     b.HasIndex("OrthopedagogueId");
 
                     b.ToTable("Appointments");
                 });
 
-            modelBuilder.Entity("WDPR_A.Models.Client", b =>
+            modelBuilder.Entity("WDPR_A.Models.Chat", b =>
+                {
+                    b.Property<string>("Code")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("OrthopedagogueId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Code");
+
+                    b.HasIndex("OrthopedagogueId");
+
+                    b.ToTable("Chats");
+                });
+
+            modelBuilder.Entity("WDPR_A.Models.Message", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ChatCode")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("When")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChatCode");
+
+                    b.ToTable("Messages");
+                });
+
+            modelBuilder.Entity("WDPR_A.Models.User", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasDiscriminator().HasValue("User");
+                });
+
+            modelBuilder.Entity("WDPR_A.Models.Client", b =>
+                {
+                    b.HasBaseType("WDPR_A.Models.User");
+
+                    b.Property<int>("AgeCategory")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("ChatCode")
                         .HasColumnType("TEXT");
@@ -266,58 +352,103 @@ namespace WDPR_A.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("TEXT");
-
-                    b.HasIndex("ChatCode")
-                        .IsUnique();
-
                     b.HasDiscriminator().HasValue("Client");
                 });
 
             modelBuilder.Entity("WDPR_A.Models.Guardian", b =>
                 {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+                    b.HasBaseType("WDPR_A.Models.User");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("TEXT");
+                    b.Property<int?>("AppointmentId")
+                        .HasColumnType("INTEGER");
 
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("TEXT");
+                    b.HasIndex("AppointmentId");
 
                     b.HasDiscriminator().HasValue("Guardian");
                 });
 
             modelBuilder.Entity("WDPR_A.Models.Orthopedagogue", b =>
                 {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("TEXT");
+                    b.HasBaseType("WDPR_A.Models.User");
 
                     b.Property<string>("Specialty")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasDiscriminator().HasValue("Orthopedagogue");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1846f376-ca44-43ca-8354-3bc4eb50645b",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "156087a1-311e-4fd4-9b0a-109fdf828b03",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "e4ebe808-cb81-4f29-9f9a-ee9fad4d16a5",
+                            TwoFactorEnabled = false,
+                            FirstName = "Karin",
+                            LastName = "Kemper",
+                            Specialty = "ADHD"
+                        },
+                        new
+                        {
+                            Id = "329049af-e16b-4b09-9e66-7ce2c5021a5b",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "db83ddff-9110-40c1-b60f-7c9f206db7e1",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "24ce9520-01f6-4090-96ef-dad47aacf1bc",
+                            TwoFactorEnabled = false,
+                            FirstName = "Johan",
+                            LastName = "Lo",
+                            Specialty = "Faalangst"
+                        },
+                        new
+                        {
+                            Id = "9391018f-6043-4a98-94af-5548c6c03148",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "db93429a-6568-45b4-8d73-bed682f010c3",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "36d9295b-3f37-43e4-8bdb-bc863e48859d",
+                            TwoFactorEnabled = false,
+                            FirstName = "Steven",
+                            LastName = "Ito",
+                            Specialty = "Eetstoornis"
+                        },
+                        new
+                        {
+                            Id = "986a8c41-850f-4baf-b3d1-f96de52d13ec",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "103f5917-d6d7-48b7-8465-6cda3200d905",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "138e9d82-38b4-437b-bc70-097edbcdf82b",
+                            TwoFactorEnabled = false,
+                            FirstName = "Marianne",
+                            LastName = "van Dijk",
+                            Specialty = "Dyslexie"
+                        });
+                });
+
+            modelBuilder.Entity("ChatClient", b =>
+                {
+                    b.HasOne("WDPR_A.Models.Chat", null)
+                        .WithMany()
+                        .HasForeignKey("ChatsCode")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WDPR_A.Models.Client", null)
+                        .WithMany()
+                        .HasForeignKey("ClientsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ClientGuardian", b =>
@@ -388,8 +519,27 @@ namespace WDPR_A.Migrations
 
             modelBuilder.Entity("WDPR_A.Models.Appointment", b =>
                 {
+                    b.HasOne("WDPR_A.Models.Client", "IncomingClient")
+                        .WithMany()
+                        .HasForeignKey("IncomingClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("WDPR_A.Models.Orthopedagogue", "Orthopedagogue")
                         .WithMany("Appointments")
+                        .HasForeignKey("OrthopedagogueId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("IncomingClient");
+
+                    b.Navigation("Orthopedagogue");
+                });
+
+            modelBuilder.Entity("WDPR_A.Models.Chat", b =>
+                {
+                    b.HasOne("WDPR_A.Models.Orthopedagogue", "Orthopedagogue")
+                        .WithMany("Chats")
                         .HasForeignKey("OrthopedagogueId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -397,9 +547,39 @@ namespace WDPR_A.Migrations
                     b.Navigation("Orthopedagogue");
                 });
 
+            modelBuilder.Entity("WDPR_A.Models.Message", b =>
+                {
+                    b.HasOne("WDPR_A.Models.Chat", "Chat")
+                        .WithMany("Messages")
+                        .HasForeignKey("ChatCode")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Chat");
+                });
+
+            modelBuilder.Entity("WDPR_A.Models.Guardian", b =>
+                {
+                    b.HasOne("WDPR_A.Models.Appointment", null)
+                        .WithMany("Guardians")
+                        .HasForeignKey("AppointmentId");
+                });
+
+            modelBuilder.Entity("WDPR_A.Models.Appointment", b =>
+                {
+                    b.Navigation("Guardians");
+                });
+
+            modelBuilder.Entity("WDPR_A.Models.Chat", b =>
+                {
+                    b.Navigation("Messages");
+                });
+
             modelBuilder.Entity("WDPR_A.Models.Orthopedagogue", b =>
                 {
                     b.Navigation("Appointments");
+
+                    b.Navigation("Chats");
                 });
 #pragma warning restore 612, 618
         }

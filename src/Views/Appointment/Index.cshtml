@@ -11,13 +11,13 @@
 
   <br><div class="mb-3">
     <label for="firstNameInput" class="form-label">Voornaam</label>
-    <input type="text" class="form-control" asp-validation-for="FirstName" aria-describedby="basic-addon1" id="firstNameInput" name="FirstName" pattern="^[a-z]+$" minlength="2" maxlength="40">
+    <input type="text" class="form-control" asp-validation-for="FirstName" aria-describedby="basic-addon1" id="firstNameInput" name="FirstName" pattern="^[a-zA-Z]+$" minlength="2" maxlength="40">
     <div id="firstNameHelp" class="form-text">Voornaam moet minstens 2 karakters lang zijn en geen nummers bevatten</div>
   </div><br>
 
   <div class="mb-3">
     <label for="lastNameInput" class="form-label">Achternaam</label>
-    <input type="text" class="form-control" asp aria-describedby="basic-addon1" id="lastNameInput" name="LastName" pattern="^[a-z]+$" minlength="2" maxlength="40">
+    <input type="text" class="form-control" asp aria-describedby="basic-addon1" id="lastNameInput" name="LastName" pattern="^[a-zA-Z]+$" minlength="2" maxlength="40">
     <div id="lastNameHelp" class="form-text">Achternaam moet minstens 2 karakters lang zijn en geen nummers bevatten</div>
   </div><br>
 
@@ -84,7 +84,8 @@
 
   document.getElementsByClassName("intakeDateTime")[0].min = today;
 
-  function changeParentVisibility(){
+  function changeParentVisibility() {
+    
     let checkbox = document.getElementById("flexCheckDefault");
     let fieldset = document.getElementById("parentEmailFieldSet");
     if (checkbox.checked) {

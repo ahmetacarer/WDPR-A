@@ -53,6 +53,8 @@ public class ChatController : Controller
     {
         System.Console.WriteLine(chatRoomId);
         var chat = _context.Chats.Include(c => c.Messages)
+                                 .Include(c => c.Clients)
+                                 .Include(c => c.Orthopedagogue)
                                  .Where(c => c.RoomId == chatRoomId)
                                  .SingleOrDefault();
         return PartialView("_ChatPartial", chat);

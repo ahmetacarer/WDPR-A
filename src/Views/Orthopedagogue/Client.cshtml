@@ -4,7 +4,7 @@
 
 
 <div class="row">
-    <form action="#" onsubmit="test();return false">
+    <form action="#" onsubmit="AjaxCall();return false">
         <div class="col-md-4">
             <label>Voer BSN nummer</label>
             <input class="form-control BSN" type="number" placeholder="BSN nummer" aria-label="BSN" name="BSN">
@@ -21,41 +21,28 @@
 </div>
 
 <div class="row">
-    Hier moet dossier komen van client
-</div>
-@ViewData["result"]
-
-<div id="pDiv">
-
+    <div id="PartialViewClientFile"></div>
 </div>
 
 @section scripts
 {
 <script>
-    function test() {
-        text = text.replace("@Url.Action("OnGetPartial")", hello);
-        $.get(text, function (data) {
-            $('#pDiv').replaceWith(data);
-        });
-    }
-
-    @* function voeruit() {
+    function AjaxCall() {
         $.ajax({
             type: "POST",
-            url: "@Url.Action("result")",
+            url: "@Url.Action("OnPostPartial")",
             data: {
                 BSN: $(".BSN").val(),
                 birthDate: $(".birthDate").val()
             },
             dataType: "text",
             success: function (msg) {
-                console.log(msg);
-                document.getElementById("spanMsg").Text = msg;
+                $("#PartialViewClientFile").replaceWith(msg);
             },
             error: function (req, status, error) {
                 console.log(error)
             }
         });
-    } *@
+    }
 </script>
 }

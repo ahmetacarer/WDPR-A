@@ -7,9 +7,12 @@ using Microsoft.EntityFrameworkCore;
 using src.Controllers;
 using WDPR_A.Models;
 using WDPR_A.ViewModels;
+using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WDPR_A.Controllers;
 
+// [Authorize(Roles = "Orthopedagogue")]
 public class OrthopedagogueController : Controller
 {
     private readonly ILogger<OrthopedagogueController> _logger;
@@ -53,27 +56,23 @@ public class OrthopedagogueController : Controller
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 
-    public IActionResult Client(string? result)
+    public IActionResult Client()
     {
-        ViewData["result"] = result;
         return View();
     }
 
     [HttpPost]
-    public async Task<IActionResult> result(int BSN, DateTime birthDate)
+    public async Task<IActionResult> OnPostPartial(int BSN, DateTime birthDate)
     {
-        string answer = await APIcall.GetClientFile(birthDate.ToString("dd MM yyyy"), BSN);
-        System.Console.WriteLine(answer);
+        string result = await APIcall.GetClientFile(birthDate.ToString("dd MM yyyy"), BSN);
+        Console.WriteLine(result);
 
-        return RedirectToAction("Client", new { result = answer });
-    }
+        if (result.Equals("Error"))
+        {
+            return PartialView("_ClientFile", model:null);
+        }
+        ClientFile clientFile = JsonSerializer.Deserialize<ClientFile>(result);
 
-    public IActionResult OnGetPartial(string user)
-    {
-
-        System.Console.WriteLine();
-        ClientFile clientFile = new ClientFile();
-        
-        return PartialView("_ClientFile", clientFile);
+        return PartialView("_ClientFile", model: clientFile);
     }
 }

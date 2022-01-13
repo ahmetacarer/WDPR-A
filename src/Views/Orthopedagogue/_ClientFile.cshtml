@@ -1,7 +1,31 @@
-@model WDPR_A.ViewModels.ClientFile;
+@model WDPR_A.ViewModels.ClientFile?;
 
-<div class="row">
-    @Model.FullName;
-    @Model.Address;
-    partialview ahmet
+<div id="pDiv">
+    @if (Model != null)
+    {
+
+        <div class="card border-light mb-3" style="max-width: 18rem;">
+            <div class="card-header">@Model.PersonDetails.FullName</div>
+            <div class="card-body">
+                <h5 class="card-title">Light card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                    content.</p>
+            </div>
+        </div>
+
+        <p>@Model.PersonDetails.BSN</p>
+        <p>@Model.PersonDetails.FullName</p>
+        <p>@Model.PersonDetails.BirthDate</p>
+        <p>@Model.PersonDetails.Address</p>
+        <p>@Model.PersonDetails.Residence</p>
+        <p>@Model.PersonDetails.ZipCode</p>
+        <p>@Model.ReasonForReferral</p>
+        <p>@Model.insurance</p>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            Geen dossier gevonden.
+        </div>
+    }
 </div>

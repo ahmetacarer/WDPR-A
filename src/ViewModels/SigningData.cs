@@ -7,7 +7,16 @@ namespace src.Controllers
     {
         public static string encryptData(string message)
         {
-            byte[] RSAkey = Convert.FromBase64String(System.IO.File.ReadAllText(@"C:\Users\Public\HHSKeys\WriteText.txt"));
+            byte[] RSAkey;
+
+            try
+            {
+                RSAkey = Convert.FromBase64String(System.IO.File.ReadAllText(@"C:\Users\Public\HHSKeys\WriteText.txt"));
+            }
+            catch (FileNotFoundException ex)
+            {
+                throw new Exception("Can't find private key", ex);
+            }
 
             /// The array to store the signed message in bytes
             byte[] signedBytes;

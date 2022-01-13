@@ -44,12 +44,6 @@ public class OrthopedagogueController : Controller
         return RedirectToPage("/Account/Register", new { area = "Identity", email = appointment.IncomingClient.Email, guardianEmail = appointment.Guardians[0].Email });
     }
 
-
-    public async Task CreateAccount(User user)
-    {
-
-    }
-
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
@@ -66,7 +60,6 @@ public class OrthopedagogueController : Controller
     {
         Console.WriteLine(birthDate.ToString("dd MM yyyy"));
         string result = await APIcall.GetClientFile(birthDate.ToString("dd MM yyyy"), BSN);
-        Console.WriteLine(result);
 
         if (result.Equals("Error"))
         {

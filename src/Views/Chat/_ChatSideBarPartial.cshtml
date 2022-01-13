@@ -21,7 +21,7 @@
           @foreach (var chat in chats)
           {
             <a href="javascript:void(0)" id="@Html.Raw(chat.RoomId)"
-          class="sidebar_button list-group-item list-group-item-action py-3 lh-tight" style="background-color: #ececec"
+          class="sidebar_button list-group-item list-group-item-action py-3 lh-tight" 
           aria-current="true">
               <div class="d-flex w-100 align-items-center justify-content-between">
                 @if (chat.IsPrivate)

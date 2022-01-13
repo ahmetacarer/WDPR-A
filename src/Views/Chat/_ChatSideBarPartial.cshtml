@@ -5,51 +5,49 @@
 }
 
 
-<div class="d-flex flex-column align-items-stretch flex-shrink-0 text-white bg-dark" style="width: 380px;">
-  <a href="#" class="d-flex align-items-center flex-shrink-0 p-3 link-white text-decoration-none border-bottom">
-    <svg class="bi me-2" width="30" height="24">
-      <use xlink:href="#bootstrap"></use>
-    </svg>
-    <span class="fs-5 fw-bold text-white">Chats</span>
-  </a>
-  <div class="list-group list-group-flush border-bottom scrollarea">
-    @if (chats != null)
-    {
-      @foreach (var chat in chats)
-      {
-        <a href="javascript:void(0)" id="@Html.Raw(chat.RoomId)"
-      class="sidebar_button list-group-item list-group-item-action py-3 lh-tight" style="background-color: #ececec"
-      aria-current="true">
-          <div class="d-flex w-100 align-items-center justify-content-between">
-            @if (chat.IsPrivate)
-            {
-              <strong class="mb-1">@chat.Orthopedagogue.FirstName @chat.Orthopedagogue.LastName</strong>
-            }
-            else
-            {
-              <strong class="mb-2">@chat.RoomName</strong>
-            }
-          </div>
-          <div class="col-10 mb-1 small">
-            @if (chat.Messages.Any())
-            {
-              <p style="display:inline-block; margin-right:60%">@(chat.Messages.LastOrDefault().Text)</p>
-              <small>@chat.Messages.LastOrDefault().When.Hour:@chat.Messages.LastOrDefault().When.Minute</small>
-            }
-          </div>
-        </a>
-      }
-    }
-    }
-  </div>
-</div>
-
 
 <div class="container">
   <div class="row">
-    <div class="col-3"></div>
+    <div class="d-flex flex-column align-items-stretch flex-shrink-0 text-white bg-dark col-3">
+      <a href="#" class="d-flex align-items-center flex-shrink-0 p-3 link-white text-decoration-none border-bottom">
+        <svg class="bi me-2" width="30" height="24">
+          <use xlink:href="#bootstrap"></use>
+        </svg>
+        <span class="fs-5 fw-bold text-white">Chats</span>
+      </a>
+      <div class="list-group list-group-flush border-bottom scrollarea">
+        @if (chats != null)
+        {
+          @foreach (var chat in chats)
+          {
+            <a href="javascript:void(0)" id="@Html.Raw(chat.RoomId)"
+          class="sidebar_button list-group-item list-group-item-action py-3 lh-tight" style="background-color: #ececec"
+          aria-current="true">
+              <div class="d-flex w-100 align-items-center justify-content-between">
+                @if (chat.IsPrivate)
+                {
+                  <strong class="mb-1">@chat.Orthopedagogue.FirstName @chat.Orthopedagogue.LastName</strong>
+                }
+                else
+                {
+                  <strong class="mb-2">@chat.RoomName</strong>
+                }
+              </div>
+              <div class="col-10 mb-1 small">
+                @if (chat.Messages.Any())
+                {
+                  <p style="display:inline-block; margin-right:60%">@(chat.Messages.LastOrDefault().Text)</p>
+                  <small>@chat.Messages.LastOrDefault().When.Hour:@chat.Messages.LastOrDefault().When.Minute</small>
+                }
+              </div>
+            </a>
+          }
+        }
+      </div>
+    </div>
     <div id="messages"></div>
   </div>
+
 </div>
 
 <script>
@@ -61,7 +59,7 @@
       var text = "@Url.Action("OnGetChatPartial", new { chatRoomId = "name"})";
       text = text.replace("name", chatRoomId);
 
-      $.get(text, function (data) {
+      $.post(text, function (data) {
         // append vervangen met replace with als het niet goed genoeg functioneerd
         $('#messages').replaceWith(data);
       });

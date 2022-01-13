@@ -10,6 +10,7 @@ namespace WDPR_A.Models
         public IList<Guardian>? Guardians { get; set; }
         public IList<Chat>? Chats { get; set; }
 
+
         public AgeCategory DecideAgeCategory(int age)
         {
             if (age < 12)

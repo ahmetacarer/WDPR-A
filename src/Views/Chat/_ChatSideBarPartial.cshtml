@@ -54,15 +54,21 @@
   let sidebar_buttons = document.getElementsByClassName("sidebar_button");
   for (let i = 0; i < sidebar_buttons.length; i++) {
     sidebar_buttons[i].addEventListener("click", function () {
-
-      var chatRoomId = sidebar_buttons[i].id;
+      let current_button = sidebar_buttons[i]
+      var chatRoomId = current_button.id;
       var text = "@Url.Action("OnGetChatPartial", new { chatRoomId = "name"})";
       text = text.replace("name", chatRoomId);
-
-      $.post(text, function (data) {
-        // append vervangen met replace with als het niet goed genoeg functioneerd
-        $('#messages').replaceWith(data);
-      });
+  
+      if (!current_button.classList.contains("active")) {
+        $.post(text, function (data) {
+          // append vervangen met replace with als het niet goed genoeg functioneerd
+          $('#messages').replaceWith(data);
+        });
+        Array.from(sidebar_buttons).forEach((el) => el.classList.remove('active'));
+        current_button.classList.add("active");
+      }
     })
   }
 </script>
+
+<style></style>

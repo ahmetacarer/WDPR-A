@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace WDPR_A.Migrations
 {
     [DbContext(typeof(WDPRContext))]
-    partial class WDPRContextModelSnapshot : ModelSnapshot
+    [Migration("20220113205552_3")]
+    partial class _3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.1");
@@ -384,29 +386,29 @@ namespace WDPR_A.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "42613d89-76a5-4aa2-9daa-a31416d6af18",
+                            Id = "e6e540c9-ae2e-4da2-bee1-0f77b315ed80",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a0e9a0b5-dbfe-4789-8ca6-6503547555f4",
+                            ConcurrencyStamp = "8aee4870-d23d-46b0-a686-6badc610e3b9",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e5fa2bb8-2865-46ea-a326-3a81e3ebe7e7",
+                            SecurityStamp = "0040695d-e97e-43fe-8d66-cf350bfa988a",
                             TwoFactorEnabled = false,
                             FirstName = "Karin",
                             LastName = "Kemper",
-                            OrthopedagogueWebText = "<h1>Karin Kemper</h1> <br><br>\r\n\r\n<article>\r\n    <h3>Even voorstellen</h3>\r\n    <section>Ik heet Karin Kemper, geboren in 1972 in Almere en ben het enige kind.  Mijn vader is Argentijns en mijn moeder is Nederlands. Ik ben heel nieuwsgierig naar mensen met ADHD; naar wat hun motiveert, wat hun concentratievermogen is en hoe ik ze persoonlijk kan helpen. Toen ik jong was begon ik al met hulp aanbieden bij kinderen met ADHD. </section>\r\n</article> <br><br>\r\n\r\n\r\n <article>\r\n     <h3>Mijn studie   </h3>\r\n     <section>Na het behalen van mijn gymnasium ging ik werken in de Albert Heijn om geld te verdienen voor mijn opleiding. Hierna had ik orthopedagogiek gestudeerd aan de Universiteit van Leiden. Tijdens mijn studie heb ik mij gespecialiseerd in de behandeling van ADHD en had een bijbaantje als bezorger. </section>\r\n </article>  <br><br>\r\n\r\n <article>\r\n     <h3>Nu over jou: jij hebt misschien ADHD </h3>\r\n     <section>Bij jou bestaat het vermoeden dat je ADHD hebt. Als je ADHD hebt, heb je moeite om je aandacht bij iets te houden en dat je te druk bent. Bij ADHD word je afgeleid bij alle prikkels die bij jou binnenkomen en dat je je dan ook druk gedraagt. De gevolgen hiervan zijn dat je de informatie niet goed onthoudt en je misschien andere mensen lastigvalt zonder dat je, het door hebt. \r\n    </section>\r\n </article>  <br><br>\r\n\r\n <article>\r\n    <h3>Wat gaan we doen?  </h3>\r\n    <section>Ik ga met jou uitzoeken of jij ADHD hebt met een paar gesprekken waarbij evt. ook jouw ouder(s)/verzorger(s) betrokken worden. Mocht het blijken dat je ADHD hebt kijken we samen naar de problemen die je ervaart en hoe we dat stap voor stap kunnen oplossen.  Ik ga mijn uiterst best doen om je te helpen concentreren en je te kalmeren.  \r\n\r\n        Allereerst luister ik graag actief naar je. Dit betekent dat ik tijdens het luisteren ook vragen ga stellen. Dit is om meer inzicht te krijgen in hoe ik jou kan helpen.  \r\n        \r\n        Wil je eerst nog meer informatie; bel, app of mail me gerust. We plannen in ieder geval een intakegesprek om elkaar beter te leren kennen. Daarna kun je je evt.-in overleg met je ouder(s)/verzorger(s)-inschrijven voor een behandeling. </section>\r\n</article>  <br><br>\r\n\r\n<article>\r\n    <h3>Hoe meld ik mij aan? </h3>\r\n    <section>Je kan op onze website aanmelden via de registratie knop op de hoofdpagina. Bij de registratie moet je aan een aantal voorwaarden voldoen om een intakegesprek te plannen. Na het intakegesprek ben je succesvol aangemeld. \r\n    </section>\r\n</article>  <br><br>\r\n\r\n<article>\r\n    <h3>Hoe kan ik chatten met mijn hulpverlener? \r\n    </h3>\r\n    <section>Na de login, verschijnt er een chat-icoon die jou de mogelijkheid biedt om met hulpverlener privé te chatten. Of je kan mij altijd mailen naar karinkemper@ZMDH.nl \r\n    </section>\r\n</article>  <br><br>\r\n\r\n<article>\r\n    <h3>Hoe kan ik deelnemen aan de groepschat? </h3>\r\n    <section>Na de login verschijnt er een chat-icoon die jou de mogelijkheid biedt om deel te nemen aan een groepschat. </section>\r\n</article>  <br><br>\r\n",
+                            OrthopedagogueWebText = "Even voorstellen									 \r\nIk heet Karin Kemper, geboren in 1972 in Almere en ben het enige kind.  Mijn vader is Argentijns en mijn moeder is Nederlands. Ik ben heel nieuwsgierig naar mensen met ADHD; naar wat hun motiveert, wat hun concentratievermogen is en hoe ik ze persoonlijk kan helpen. Toen ik jong was begon ik al met hulp aanbieden bij kinderen met ADHD. \r\n \r\n\r\nMijn studie   \r\nNa het behalen van mijn gymnasium ging ik werken in de Albert Heijn om geld te verdienen voor mijn opleiding. Hierna had ik orthopedagogiek gestudeerd aan de Universiteit van Leiden. Tijdens mijn studie heb ik mij gespecialiseerd in de behandeling van ADHD en had een bijbaantje als bezorger. \r\n \r\n\r\nNu over jou: jij hebt misschien ADHD \r\nBij jou bestaat het vermoeden dat je ADHD hebt. Als je ADHD hebt, heb je moeite om je aandacht bij iets te houden en dat je te druk bent. Bij ADHD word je afgeleid bij alle prikkels die bij jou binnenkomen en dat je je dan ook druk gedraagt. De gevolgen hiervan zijn dat je de informatie niet goed onthoudt en je misschien andere mensen lastigvalt zonder dat je, het door hebt. \r\n\r\n \r\n\r\nWat gaan we doen?   \r\nIk ga met jou uitzoeken of jij ADHD hebt met een paar gesprekken waarbij evt. ook jouw ouder(s)/verzorger(s) betrokken worden. Mocht het blijken dat je ADHD hebt kijken we samen naar de problemen die je ervaart en hoe we dat stap voor stap kunnen oplossen.  Ik ga mijn uiterst best doen om je te helpen concentreren en je te kalmeren.  \r\n\r\nAllereerst luister ik graag actief naar je. Dit betekent dat ik tijdens het luisteren ook vragen ga stellen. Dit is om meer inzicht te krijgen in hoe ik jou kan helpen.  \r\n\r\nWil je eerst nog meer informatie; bel, app of mail me gerust. We plannen in ieder geval een intakegesprek om elkaar beter te leren kennen. Daarna kun je je evt.-in overleg met je ouder(s)/verzorger(s)-inschrijven voor een behandeling. \r\n\r\n \r\n\r\nHoe meld ik mij aan? \r\n\r\nJe kan op onze website aanmelden via de registratie knop op de hoofdpagina. Bij de registratie moet je aan een aantal voorwaarden voldoen om een intakegesprek te plannen. Na het intakegesprek ben je succesvol aangemeld. \r\n\r\n \r\n\r\n \r\n\r\nHoe kan ik chatten met mijn hulpverlener? \r\n\r\nNa de login, verschijnt er een chat-icoon die jou de mogelijkheid biedt om met hulpverlener privé te chatten. Of je kan mij altijd mailen naar karinkemper@ZMDH.nl \r\n\r\n \r\n\r\nHoe kan ik deelnemen aan de groepschat? \r\n\r\nNa de login verschijnt er een chat-icoon die jou de mogelijkheid biedt om deel te nemen aan een groepschat. ",
                             PictureUrl = "https://i.postimg.cc/tRPnMpWP/Karin-Kemper-Orthopedagoog.png",
                             Specialty = "ADHD"
                         },
                         new
                         {
-                            Id = "8b1d50df-942e-4744-baec-0d3e7a03300d",
+                            Id = "bbfb8cd8-e2d6-4c9c-8390-6b7032b2112d",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "08c89be8-f59b-4eb0-850b-31ae178b8a33",
+                            ConcurrencyStamp = "d480163c-2384-4e04-afe7-e85f7b3f3af1",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "0b4fe3f6-500b-463e-910d-185bb13403b7",
+                            SecurityStamp = "45eb26c1-a55a-411c-a14c-7675fc3fa890",
                             TwoFactorEnabled = false,
                             FirstName = "Johan",
                             LastName = "Lo",
@@ -416,13 +418,13 @@ namespace WDPR_A.Migrations
                         },
                         new
                         {
-                            Id = "f9364bc8-5ff1-4a4c-ac9f-e038dab80a15",
+                            Id = "fb8069e1-b7e6-44c2-bbd4-ce4fdca423ca",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "cc48089e-e821-4af5-b939-a242c0717a1b",
+                            ConcurrencyStamp = "83c8e005-1069-4f2d-a3ae-2ed0a8af200c",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2e000995-8947-4f81-9a3b-e48b36287af6",
+                            SecurityStamp = "d3c20e5d-024e-4346-951f-12b993e1749a",
                             TwoFactorEnabled = false,
                             FirstName = "Steven",
                             LastName = "Ito",
@@ -432,13 +434,13 @@ namespace WDPR_A.Migrations
                         },
                         new
                         {
-                            Id = "accbc904-a23b-4c57-91ac-3b6e1ce7faa9",
+                            Id = "34e15dc4-3374-4924-b00a-ffb3ace4a31d",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "bc3a52c5-fe53-4446-880d-934b496624d4",
+                            ConcurrencyStamp = "754f4a10-80d0-4805-a45f-8bf2ae2196c0",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "7a75a972-9a09-4fa4-9adf-0c731e9a690f",
+                            SecurityStamp = "fdcf59cf-2cf4-4168-8fff-aaa7b3a83a0f",
                             TwoFactorEnabled = false,
                             FirstName = "Marianne",
                             LastName = "van Dijk",

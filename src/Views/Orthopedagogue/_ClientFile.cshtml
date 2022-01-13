@@ -1,0 +1,26 @@
+@model WDPR_A.ViewModels.ClientFile?;
+
+<div id="PartialViewClientFile">
+<br/>
+    @if (Model != null)
+    {
+        <div class="card text-dark bg-light mb-3">
+            <div class="card-header">BSN: @Model.PersonDetails.BSN</div>
+            <div class="card-body">
+                <h5 class="card-title">Volledige naam: @Model.PersonDetails.FullName</h5>
+                <p class="card-text">Geboortedatum: @Model.PersonDetails.BirthDate.Split(" ")[0]</p>
+                <p class="card-text">Adres: @Model.PersonDetails.Address</p>
+                <p class="card-text">Plaats: @Model.PersonDetails.Residence</p>
+                <p class="card-text">Postcode: @Model.PersonDetails.ZipCode</p>
+                <p class="card-text">Reden voor verwijzing: @Model.ReasonForReferral</p>
+                <p class="card-text">Zorgverzekering: @Model.insurance</p>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            Geen dossier gevonden.
+        </div>
+    }
+</div>

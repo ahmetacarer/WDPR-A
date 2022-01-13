@@ -64,6 +64,7 @@ public class OrthopedagogueController : Controller
     [HttpPost]
     public async Task<IActionResult> OnPostPartial(int BSN, DateTime birthDate)
     {
+        Console.WriteLine(birthDate.ToString("dd MM yyyy"));
         string result = await APIcall.GetClientFile(birthDate.ToString("dd MM yyyy"), BSN);
         Console.WriteLine(result);
 

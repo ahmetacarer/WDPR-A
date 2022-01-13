@@ -1,16 +1,21 @@
 @model WDPR_A.ViewModels.ClientFile?;
 
-<div id="pDiv">
+<div id="PartialViewClientFile">
+<br/>
     @if (Model != null)
     {
-        <p>@Model.PersonDetails.BSN</p>
-        <p>@Model.PersonDetails.FullName</p>
-        <p>@Model.PersonDetails.BirthDate</p>
-        <p>@Model.PersonDetails.Address</p>
-        <p>@Model.PersonDetails.Residence</p>
-        <p>@Model.PersonDetails.ZipCode</p>
-        <p>@Model.ReasonForReferral</p>
-        <p>@Model.insurance</p>
+        <div class="card text-dark bg-light mb-3">
+            <div class="card-header">BSN: @Model.PersonDetails.BSN</div>
+            <div class="card-body">
+                <h5 class="card-title">Volledige naam: @Model.PersonDetails.FullName</h5>
+                <p class="card-text">Geboortedatum: @Model.PersonDetails.BirthDate.Split(" ")[0]</p>
+                <p class="card-text">Adres: @Model.PersonDetails.Address</p>
+                <p class="card-text">Plaats: @Model.PersonDetails.Residence</p>
+                <p class="card-text">Postcode: @Model.PersonDetails.ZipCode</p>
+                <p class="card-text">Reden voor verwijzing: @Model.ReasonForReferral</p>
+                <p class="card-text">Zorgverzekering: @Model.insurance</p>
+            </div>
+        </div>
     }
     else
     {

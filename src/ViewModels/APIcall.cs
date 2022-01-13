@@ -15,9 +15,8 @@ namespace src.Controllers
             // send get request with the date time and the crypted data
             client.DefaultRequestHeaders.Clear();
             client.DefaultRequestHeaders.Add("key", $"{dateTime}|{encryptedData}");
-
+            System.Console.WriteLine($"{dateTime}|{encryptedData}");
             HttpResponseMessage response = await client.GetAsync("https://zorgdomeinhhs.azurewebsites.net/referral/" + birthDate + "/" + bsn);
-
             if (response.IsSuccessStatusCode)
             {
                 return await response.Content.ReadAsStringAsync();

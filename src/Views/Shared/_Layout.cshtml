@@ -39,6 +39,10 @@
             </div>
         </nav>
     </header>
+    @if (ViewContext.RouteData.Values["controller"] != null && ViewContext.RouteData.Values["controller"].ToString() == "Chat")
+    {
+        <partial name="../Chat/_ChatSideBarPartial"/>
+    }
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()

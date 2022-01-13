@@ -6,7 +6,7 @@ namespace WDPR_A.Models
         [Required]
         public String? Condition { get; set; }  //Aandoening
         public AgeCategory AgeCategory { get; set; }
-        public string? ChatCode { get; set; }  //Eenmalige code
+        public string? PrivateChatToken { get; set; }  //Eenmalige code
         public IList<Guardian>? Guardians { get; set; }
         public IList<Chat>? Chats { get; set; }
 

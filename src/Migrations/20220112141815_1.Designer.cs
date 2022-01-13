@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace WDPR_A.Migrations
 {
     [DbContext(typeof(WDPRContext))]
-    [Migration("20220111092726_emailunique")]
-    partial class emailunique
+    [Migration("20220112141815_1")]
+    partial class _1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,13 +20,13 @@ namespace WDPR_A.Migrations
 
             modelBuilder.Entity("ChatClient", b =>
                 {
-                    b.Property<string>("ChatsCode")
+                    b.Property<string>("ChatsRoomId")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ClientsId")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("ChatsCode", "ClientsId");
+                    b.HasKey("ChatsRoomId", "ClientsId");
 
                     b.HasIndex("ClientsId");
 
@@ -155,9 +155,6 @@ namespace WDPR_A.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Email")
-                        .IsUnique();
-
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -281,14 +278,29 @@ namespace WDPR_A.Migrations
 
             modelBuilder.Entity("WDPR_A.Models.Chat", b =>
                 {
-                    b.Property<string>("Code")
+                    b.Property<string>("RoomId")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("AgeCategory")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsPrivate")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("OrthopedagogueId")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Code");
+                    b.Property<string>("PrivateChatToken")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("RoomName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Subject")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("RoomId");
 
                     b.HasIndex("OrthopedagogueId");
 
@@ -301,15 +313,15 @@ namespace WDPR_A.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("ChatCode")
+                    b.Property<string>("ChatRoomId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("SenderId")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Text")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -318,7 +330,9 @@ namespace WDPR_A.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ChatCode");
+                    b.HasIndex("ChatRoomId");
+
+                    b.HasIndex("SenderId");
 
                     b.ToTable("Messages");
                 });
@@ -345,11 +359,11 @@ namespace WDPR_A.Migrations
                     b.Property<int>("AgeCategory")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("ChatCode")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Condition")
                         .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PrivateChatToken")
                         .HasColumnType("TEXT");
 
                     b.HasDiscriminator().HasValue("Client");
@@ -380,13 +394,13 @@ namespace WDPR_A.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1846f376-ca44-43ca-8354-3bc4eb50645b",
+                            Id = "1067f243-95f4-4719-bd55-f5fad9ebd34b",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "156087a1-311e-4fd4-9b0a-109fdf828b03",
+                            ConcurrencyStamp = "ae6372f0-bf86-486e-a48c-8ea4aa910c23",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e4ebe808-cb81-4f29-9f9a-ee9fad4d16a5",
+                            SecurityStamp = "2cfd02d5-edfa-4210-a4f2-a286b3ab78a5",
                             TwoFactorEnabled = false,
                             FirstName = "Karin",
                             LastName = "Kemper",
@@ -394,13 +408,13 @@ namespace WDPR_A.Migrations
                         },
                         new
                         {
-                            Id = "329049af-e16b-4b09-9e66-7ce2c5021a5b",
+                            Id = "a1d71533-2518-4fd6-b503-1cdf27e259c0",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "db83ddff-9110-40c1-b60f-7c9f206db7e1",
+                            ConcurrencyStamp = "1b16e28f-ec5c-42cd-8783-5b5f5d749cd5",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "24ce9520-01f6-4090-96ef-dad47aacf1bc",
+                            SecurityStamp = "afbb58e8-ada0-4bb7-bbb9-5a09b15a16f3",
                             TwoFactorEnabled = false,
                             FirstName = "Johan",
                             LastName = "Lo",
@@ -408,13 +422,13 @@ namespace WDPR_A.Migrations
                         },
                         new
                         {
-                            Id = "9391018f-6043-4a98-94af-5548c6c03148",
+                            Id = "7f9ba7ac-9c06-41d3-8963-e655ae5d18f9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "db93429a-6568-45b4-8d73-bed682f010c3",
+                            ConcurrencyStamp = "561ba5d1-691c-44cf-9450-e97c93c6c02b",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "36d9295b-3f37-43e4-8bdb-bc863e48859d",
+                            SecurityStamp = "ab0318f4-b3a5-4ee6-ac9f-cff81cfe0528",
                             TwoFactorEnabled = false,
                             FirstName = "Steven",
                             LastName = "Ito",
@@ -422,13 +436,13 @@ namespace WDPR_A.Migrations
                         },
                         new
                         {
-                            Id = "986a8c41-850f-4baf-b3d1-f96de52d13ec",
+                            Id = "97160277-5861-40f7-b841-bdc7bd646aa8",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "103f5917-d6d7-48b7-8465-6cda3200d905",
+                            ConcurrencyStamp = "797a18ea-323e-4b94-90fd-7f7752d4353b",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "138e9d82-38b4-437b-bc70-097edbcdf82b",
+                            SecurityStamp = "612fc2b8-e0a3-43cd-af5c-fd8e7ef94d83",
                             TwoFactorEnabled = false,
                             FirstName = "Marianne",
                             LastName = "van Dijk",
@@ -440,7 +454,7 @@ namespace WDPR_A.Migrations
                 {
                     b.HasOne("WDPR_A.Models.Chat", null)
                         .WithMany()
-                        .HasForeignKey("ChatsCode")
+                        .HasForeignKey("ChatsRoomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -551,11 +565,19 @@ namespace WDPR_A.Migrations
                 {
                     b.HasOne("WDPR_A.Models.Chat", "Chat")
                         .WithMany("Messages")
-                        .HasForeignKey("ChatCode")
+                        .HasForeignKey("ChatRoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WDPR_A.Models.User", "Sender")
+                        .WithMany()
+                        .HasForeignKey("SenderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Chat");
+
+                    b.Navigation("Sender");
                 });
 
             modelBuilder.Entity("WDPR_A.Models.Guardian", b =>

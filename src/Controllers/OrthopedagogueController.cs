@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WDPR_A.Controllers;
 
-// [Authorize(Roles = "Orthopedagogue")]
+[Authorize(Roles = "Orthopedagogue")]
 public class OrthopedagogueController : Controller
 {
     private readonly ILogger<OrthopedagogueController> _logger;
@@ -63,7 +63,7 @@ public class OrthopedagogueController : Controller
 
         if (result.Equals("Error"))
         {
-            return PartialView("_ClientFile", model:null);
+            return PartialView("_ClientFile", model: null);
         }
         ClientFile clientFile = JsonSerializer.Deserialize<ClientFile>(result);
 

@@ -64,6 +64,7 @@
           // append vervangen met replace with als het niet goed genoeg functioneerd
           $('#messages').replaceWith(data);
         });
+        var current_chatRoom = chatRoomId;
         Array.from(sidebar_buttons).forEach((el) => el.classList.remove('active'));
         current_button.classList.add("active");
       }

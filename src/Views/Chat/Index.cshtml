@@ -56,7 +56,7 @@ document
   .getElementById("sendButton")
   .addEventListener("click", function (event) {
     var text = document.getElementById("messageInput").value;
-    var roomId = "" + @Html.Raw(Model.FirstOrDefault().RoomId);
+    var roomId = Array.from(document.getElementsByClassName("sidebar_button")).find(button => button.classList.contains("active")).id;
     connection.invoke("SendMessage", text, roomId).catch(function (err) {
       return console.error(err.toString());
     });
@@ -64,3 +64,11 @@ document
   });
 
   </script>
+
+  <style>
+
+    .active, .sidebar_button:active, .sidebar_button .active > *
+    {
+      color: red;
+    }
+  </style>

@@ -21,7 +21,7 @@ public class Generate
         return randomWord;
     }
 
-    public string RandomChatCode()
+    public string RandomPrivateChatToken()
     {
         int fixedLength = 8;
         return RandomString(fixedLength);

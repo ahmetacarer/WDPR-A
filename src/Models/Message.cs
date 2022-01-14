@@ -7,7 +7,7 @@ namespace WDPR_A.Models
         public int Id { get; set; }
 
         [Required]
-        public string UserName { get; set; }
+        public User Sender { get; set; }
 
         [Required]
         public string Text { get; set; }
@@ -16,7 +16,7 @@ namespace WDPR_A.Models
         public DateTime When { get; set; }
 
         [Required]
-        public string ChatCode { get; set; }
+        public string ChatRoomId { get; set; }
 
         [Required]
         public Chat Chat { get; set; }

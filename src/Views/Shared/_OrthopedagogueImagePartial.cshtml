@@ -6,8 +6,8 @@
 
 @foreach (var orthopedagogue in Model)
 {
-    <a class="" href="/Specialismen/Specialist/@orthopedagogue.Id"><img class="OrthopedagogueImage img-fluid" src='@orthopedagogue.PictureUrl' alt="@orthopedagogue.FirstName @orthopedagogue.LastName Orthopedagoog @orthopedagogue.Specialty Profielfoto"></img></a> <br>
-    <a href="/Specialismen/Specialist/@orthopedagogue.Id">@orthopedagogue.FirstName   @orthopedagogue.LastName</a> 
+    <a href="/Specialismen/Specialist/@orthopedagogue.Id"><img class="OrthopedagogueImage img-fluid" src='@orthopedagogue.PictureUrl' alt="@orthopedagogue.FirstName @orthopedagogue.LastName Orthopedagoog @orthopedagogue.Specialty Profielfoto"></img></a> <br>
+    <a class="a-no-underline" href="/Specialismen/Specialist/@orthopedagogue.Id">@orthopedagogue.FirstName   @orthopedagogue.LastName</a> 
 
 }
 

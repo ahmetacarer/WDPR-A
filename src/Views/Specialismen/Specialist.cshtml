@@ -11,11 +11,13 @@
 
 <div class="container">
   <div class="row">
-    <div class="col col-lg-8">
+    <div class="col-lg-8 col-sm-12">
       @Html.Raw(@Model.Select(g => g.OrthopedagogueWebText).Single())
     </div>
-    <div class="col col-lg-4">
-      <img class="OrthopedagogueImage img-fluid" src='@Model.Select(g => g.PictureUrl).Single()' alt="@Model.Select(g => g.FirstName) @Model.Select(g => g.LastName) Orthopedagoog @Model.Select(g => g.Specialty) Profielfoto"></img> <br>
+    <div class="col-lg-4 col-sm-12">
+      <img class="OrthopedagogueImage img-fluid" src='@Model.Select(g => g.PictureUrl).Single()' alt="@Model.Select(g => g.FirstName) @Model.Select(g => g.LastName) Orthopedagoog @Model.Select(g => g.Specialty) Profielfoto"></img> <br> <br>
+      <h2>Specialisme</h2>
+      <a class="a-no-underline" href="/Specialismen/afdeling/@Model.Select(g => g.Specialty).Single()">@Model.Select(g => g.Specialty).Single()</a>
     </div>
   </div>
 </div>

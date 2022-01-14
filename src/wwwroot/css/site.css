@@ -20,7 +20,6 @@ body {
 footer {
   position: absolute;
   bottom: 0px;
-  height: 5%;
   width: 100%;
   color: #eee;
 }
@@ -28,4 +27,8 @@ footer {
 .OrthopedagogueImage {
   width: 368px;
   height: 368px;
+}
+
+.a-no-underline {
+  text-decoration: none;
 }

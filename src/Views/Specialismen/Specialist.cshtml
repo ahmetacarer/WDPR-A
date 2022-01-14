@@ -1,0 +1,26 @@
+@model List<Orthopedagogue>
+
+<nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/Home/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/Specialismen/">Specialismen</a></li>
+    <li class="breadcrumb-item"><a href="/Specialismen/afdeling/@Model.Select(g => g.Specialty).Single()">Specialismen en afdelingen</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Specialist</li>
+  </ol>
+</nav>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-sm-12">
+      @Html.Raw(@Model.Select(g => g.OrthopedagogueWebText).Single())
+    </div>
+    <div class="col-lg-4 col-sm-12">
+      <img class="OrthopedagogueImage img-fluid" src='@Model.Select(g => g.PictureUrl).Single()' alt="@Model.Select(g => g.FirstName) @Model.Select(g => g.LastName) Orthopedagoog @Model.Select(g => g.Specialty) Profielfoto"></img> <br> <br>
+      <h2>Specialisme</h2>
+      <a class="a-no-underline" href="/Specialismen/afdeling/@Model.Select(g => g.Specialty).Single()">@Model.Select(g => g.Specialty).Single()</a>
+    </div>
+  </div>
+</div>
+
+
+

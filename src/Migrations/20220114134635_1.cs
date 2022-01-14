@@ -284,22 +284,22 @@ namespace WDPR_A.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Specialty", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "1067f243-95f4-4719-bd55-f5fad9ebd34b", 0, "ae6372f0-bf86-486e-a48c-8ea4aa910c23", "Orthopedagogue", null, false, "Karin", "Kemper", false, null, null, null, null, null, false, "2cfd02d5-edfa-4210-a4f2-a286b3ab78a5", "ADHD", false, null });
+                values: new object[] { "1d4ff118-4c4a-4482-b20e-288dcc1f091b", 0, "594cc97b-73fa-4eaf-be26-e01897479df7", "Orthopedagogue", null, false, "Karin", "Kemper", false, null, null, null, null, null, false, "99c0a105-0480-4137-bf87-077f440a81a9", "ADHD", false, null });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Specialty", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "7f9ba7ac-9c06-41d3-8963-e655ae5d18f9", 0, "561ba5d1-691c-44cf-9450-e97c93c6c02b", "Orthopedagogue", null, false, "Steven", "Ito", false, null, null, null, null, null, false, "ab0318f4-b3a5-4ee6-ac9f-cff81cfe0528", "Eetstoornis", false, null });
+                values: new object[] { "6eb288ca-5457-4064-b496-92e63eb523b7", 0, "cae9b7c0-840f-4d4b-a314-49ae309dfaf7", "Orthopedagogue", null, false, "Marianne", "van Dijk", false, null, null, null, null, null, false, "80ff8748-0767-4384-9452-256eb451ae89", "Dyslexie", false, null });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Specialty", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "97160277-5861-40f7-b841-bdc7bd646aa8", 0, "797a18ea-323e-4b94-90fd-7f7752d4353b", "Orthopedagogue", null, false, "Marianne", "van Dijk", false, null, null, null, null, null, false, "612fc2b8-e0a3-43cd-af5c-fd8e7ef94d83", "Dyslexie", false, null });
+                values: new object[] { "a16ca1d3-b6d9-4be6-b9e9-6d947e348a99", 0, "e8217e94-9079-4076-a60e-24b1b496be34", "Orthopedagogue", null, false, "Steven", "Ito", false, null, null, null, null, null, false, "b6d23e0d-4a7b-413e-b028-9fd253fcd5c9", "Eetstoornis", false, null });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Specialty", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "a1d71533-2518-4fd6-b503-1cdf27e259c0", 0, "1b16e28f-ec5c-42cd-8783-5b5f5d749cd5", "Orthopedagogue", null, false, "Johan", "Lo", false, null, null, null, null, null, false, "afbb58e8-ada0-4bb7-bbb9-5a09b15a16f3", "Faalangst", false, null });
+                values: new object[] { "f5ff812a-ba5b-4b5c-8b5d-a1668b3bb1d8", 0, "4652679d-2686-4b85-ba34-ad434c986c91", "Orthopedagogue", null, false, "Johan", "Lo", false, null, null, null, null, null, false, "ed734fcf-9520-44db-bd96-e308659de32b", "Faalangst", false, null });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Appointments_IncomingClientId",

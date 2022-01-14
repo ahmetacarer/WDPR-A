@@ -398,13 +398,13 @@ namespace WDPR_A.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1a63b3c5-48f4-4851-a937-52118b69ae73",
+                            Id = "bb9ee416-97e9-4520-97b3-19b686aca423",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e41a3748-4161-4cb1-a434-3e4913930521",
+                            ConcurrencyStamp = "cf8ffeb5-b6fe-40c4-88b3-3364f7be7e7c",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "97348da8-33a1-45be-a222-e9f9fedb6f6e",
+                            SecurityStamp = "c5b48f5a-ee19-4770-8fdc-9be6c8f9eac3",
                             TwoFactorEnabled = false,
                             FirstName = "Karin",
                             LastName = "Kemper",
@@ -414,13 +414,13 @@ namespace WDPR_A.Migrations
                         },
                         new
                         {
-                            Id = "6599d629-c60d-4091-96bb-a654f709bf05",
+                            Id = "1f5f29ff-198e-4157-bb6d-ac155744e2a5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f8907e8c-a948-4fa2-a167-25209b39b115",
+                            ConcurrencyStamp = "c0c9238b-fec3-4419-82e0-5fbc2dec02d4",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "3346e396-4d0c-4754-a9a8-91f54c279629",
+                            SecurityStamp = "ec781272-8214-40db-919b-cf574018e0e0",
                             TwoFactorEnabled = false,
                             FirstName = "Johan",
                             LastName = "Lo",
@@ -430,13 +430,13 @@ namespace WDPR_A.Migrations
                         },
                         new
                         {
-                            Id = "a68c458a-042d-4925-bf47-52cd8f8b4eb9",
+                            Id = "551cab1e-c9f3-41f0-a078-447dedd9ffcf",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "52c6cf8d-a534-40f2-9c14-7cad9a553c33",
+                            ConcurrencyStamp = "c5867f45-296b-4326-9d0b-ea5d5113424c",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e95ba871-4774-4543-b9cb-ca7a0479dddf",
+                            SecurityStamp = "5e8ef489-d224-44e5-a7de-f6aeb9ed06c3",
                             TwoFactorEnabled = false,
                             FirstName = "Steven",
                             LastName = "Ito",
@@ -446,13 +446,13 @@ namespace WDPR_A.Migrations
                         },
                         new
                         {
-                            Id = "a9725e35-7734-4197-a11c-6a04c4843895",
+                            Id = "e5bf473f-877a-4f99-a428-afffe2808a51",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b4c1e5e8-3b8e-4d34-822b-568b07309666",
+                            ConcurrencyStamp = "592a50bd-da79-43e5-b67c-7b3fb17b9de0",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c45dc180-a602-402f-a4ff-e1d223643861",
+                            SecurityStamp = "29bdddf2-0546-47f1-b6cc-bfe9748ed501",
                             TwoFactorEnabled = false,
                             FirstName = "Marianne",
                             LastName = "van Dijk",

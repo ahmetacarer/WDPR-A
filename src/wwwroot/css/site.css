@@ -32,3 +32,15 @@ footer {
 .a-no-underline {
   text-decoration: none;
 }
+
+#logo {
+  width: 150px;
+}
+
+footer {
+  background-color: #3e424f;
+}
+
+#footertext {
+  color: white;
+}

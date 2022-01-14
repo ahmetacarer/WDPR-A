@@ -15,11 +15,11 @@ public class WDPRContext : IdentityDbContext
         base.OnModelCreating(builder);
         builder.Entity<Orthopedagogue>().HasData(
 
-            new Orthopedagogue { FirstName = "Karin", LastName = "Kemper", Specialty = "ADHD", PictureUrl = "https://i.postimg.cc/tRPnMpWP/Karin-Kemper-Orthopedagoog.png", OrthopedagogueWebText = File.ReadAllText(@"../src/wwwroot/WebTexts/KarinKemperWebText.html")},
+            new Orthopedagogue { FirstName = "Karin", LastName = "Kemper", Specialty = "ADHD", PictureUrl = "https://i.postimg.cc/tRPnMpWP/Karin-Kemper-Orthopedagoog.png", OrthopedagogueWebText = File.ReadAllText(@"../src/wwwroot/WebTexts/KarinKemperWebText.html") },
 
             new Orthopedagogue { FirstName = "Johan", LastName = "Lo", Specialty = "Faalangst", PictureUrl = "https://i.postimg.cc/9fwqH7rm/Johan-Lo-Orthopedagoog.png", OrthopedagogueWebText = File.ReadAllText(@"../src/wwwroot/WebTexts/JohanLoWebText.html") },
 
-            new Orthopedagogue { FirstName = "Steven", LastName = "Ito", Specialty = "Eetstoornis", PictureUrl = "https://i.postimg.cc/bNbyP9RF/Steven-Ito-Orthopedagoog.png", OrthopedagogueWebText = File.ReadAllText(@"../src/wwwroot/WebTexts/StevenItoWebText.html")},
+            new Orthopedagogue { FirstName = "Steven", LastName = "Ito", Specialty = "Eetstoornis", PictureUrl = "https://i.postimg.cc/bNbyP9RF/Steven-Ito-Orthopedagoog.png", OrthopedagogueWebText = File.ReadAllText(@"../src/wwwroot/WebTexts/StevenItoWebText.html") },
 
             new Orthopedagogue { FirstName = "Marianne", LastName = "van Dijk", Specialty = "Dyslexie", PictureUrl = "https://i.postimg.cc/wTSpbR8c/Marianne-Van-Dijk-Orthopedagoog.png", OrthopedagogueWebText = File.ReadAllText(@"../src/wwwroot/WebTexts/MarianneVanDijkWebText.html") }
 

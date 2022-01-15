@@ -18,13 +18,13 @@ namespace WDPR_A.Migrations
 
             modelBuilder.Entity("ChatClient", b =>
                 {
-                    b.Property<string>("ChatsCode")
+                    b.Property<string>("ChatsRoomId")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ClientsId")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("ChatsCode", "ClientsId");
+                    b.HasKey("ChatsRoomId", "ClientsId");
 
                     b.HasIndex("ClientsId");
 
@@ -276,14 +276,29 @@ namespace WDPR_A.Migrations
 
             modelBuilder.Entity("WDPR_A.Models.Chat", b =>
                 {
-                    b.Property<string>("Code")
+                    b.Property<string>("RoomId")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("AgeCategory")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsPrivate")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("OrthopedagogueId")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Code");
+                    b.Property<string>("PrivateChatToken")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("RoomName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Subject")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("RoomId");
 
                     b.HasIndex("OrthopedagogueId");
 
@@ -296,15 +311,15 @@ namespace WDPR_A.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("ChatCode")
+                    b.Property<string>("ChatRoomId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("SenderId")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Text")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -313,57 +328,51 @@ namespace WDPR_A.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ChatCode");
+                    b.HasIndex("ChatRoomId");
+
+                    b.HasIndex("SenderId");
 
                     b.ToTable("Messages");
                 });
 
-            modelBuilder.Entity("WDPR_A.Models.Client", b =>
+            modelBuilder.Entity("WDPR_A.Models.User", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasDiscriminator().HasValue("User");
+                });
+
+            modelBuilder.Entity("WDPR_A.Models.Client", b =>
+                {
+                    b.HasBaseType("WDPR_A.Models.User");
+
                     b.Property<int>("AgeCategory")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("ChatCode")
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("Condition")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .ValueGeneratedOnUpdateSometimes()
+                    b.Property<string>("PrivateChatToken")
                         .HasColumnType("TEXT");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("TEXT");
-
-                    b.HasIndex("ChatCode")
-                        .IsUnique();
 
                     b.HasDiscriminator().HasValue("Client");
                 });
 
             modelBuilder.Entity("WDPR_A.Models.Guardian", b =>
                 {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+                    b.HasBaseType("WDPR_A.Models.User");
 
                     b.Property<int?>("AppointmentId")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("TEXT");
 
                     b.HasIndex("AppointmentId");
 
@@ -372,16 +381,12 @@ namespace WDPR_A.Migrations
 
             modelBuilder.Entity("WDPR_A.Models.Orthopedagogue", b =>
                 {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+                    b.HasBaseType("WDPR_A.Models.User");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .ValueGeneratedOnUpdateSometimes()
+                    b.Property<string>("OrthopedagogueWebText")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .ValueGeneratedOnUpdateSometimes()
+                    b.Property<string>("PictureUrl")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Specialty")
@@ -393,58 +398,94 @@ namespace WDPR_A.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "2dfade34-5ba3-4bc2-b50d-c5d4e5d29027",
+                            Id = "d82d98fb-1e39-4dc8-be32-ef25e3756c9c",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5eb0bf2e-2da8-49a7-9a02-21eee0f9c5e2",
+                            ConcurrencyStamp = "de3c50d5-0cfc-43f3-bde0-a1daf2cd5ca5",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "aecd87d1-927d-42f1-a4e1-90808961daf4",
+                            SecurityStamp = "56b6735e-2eb4-41f1-952f-a7e323ecf4f0",
+                            Id = "1067f243-95f4-4719-bd55-f5fad9ebd34b",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "ae6372f0-bf86-486e-a48c-8ea4aa910c23",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "2cfd02d5-edfa-4210-a4f2-a286b3ab78a5",
                             TwoFactorEnabled = false,
                             FirstName = "Karin",
                             LastName = "Kemper",
+                            OrthopedagogueWebText = "<h1>Karin Kemper</h1> <br><br>\r\n\r\n<article>\r\n    <h2>Even voorstellen</h2>\r\n    <section>Ik heet Karin Kemper, geboren in 1972 in Almere en ben het enige kind.  Mijn vader is Argentijns en mijn moeder is Nederlands. Ik ben heel nieuwsgierig naar mensen met ADHD; naar wat hun motiveert, wat hun concentratievermogen is en hoe ik ze persoonlijk kan helpen. Toen ik jong was begon ik al met hulp aanbieden bij kinderen met ADHD. </section>\r\n    <br><br>\r\n\r\n\r\n\r\n     <h2>Mijn studie   </h2>\r\n     <section>Na het behalen van mijn gymnasium ging ik werken in de Albert Heijn om geld te verdienen voor mijn opleiding. Hierna had ik orthopedagogiek gestudeerd aan de Universiteit van Leiden. Tijdens mijn studie heb ik mij gespecialiseerd in de behandeling van ADHD en had een bijbaantje als bezorger. </section>\r\n     <br><br>\r\n\r\n     <h2>Nu over jou: jij hebt misschien ADHD </h2>\r\n     <section>Bij jou bestaat het vermoeden dat je ADHD hebt. Als je ADHD hebt, heb je moeite om je aandacht bij iets te houden en dat je te druk bent. Bij ADHD word je afgeleid bij alle prikkels die bij jou binnenkomen en dat je je dan ook druk gedraagt. De gevolgen hiervan zijn dat je de informatie niet goed onthoudt en je misschien andere mensen lastigvalt zonder dat je, het door hebt. \r\n    </section>\r\n    <br><br>\r\n\r\n\r\n    <h2>Wat gaan we doen?  </h2>\r\n    <section>Ik ga met jou uitzoeken of jij ADHD hebt met een paar gesprekken waarbij evt. ook jouw ouder(s)/verzorger(s) betrokken worden. Mocht het blijken dat je ADHD hebt kijken we samen naar de problemen die je ervaart en hoe we dat stap voor stap kunnen oplossen.  Ik ga mijn uiterst best doen om je te helpen concentreren en je te kalmeren.  \r\n\r\n        Allereerst luister ik graag actief naar je. Dit betekent dat ik tijdens het luisteren ook vragen ga stellen. Dit is om meer inzicht te krijgen in hoe ik jou kan helpen.  \r\n        \r\n        Wil je eerst nog meer informatie; bel, app of mail me gerust. We plannen in ieder geval een intakegesprek om elkaar beter te leren kennen. Daarna kun je je evt.-in overleg met je ouder(s)/verzorger(s)-inschrijven voor een behandeling. </section>\r\n        <br><br>\r\n\r\n\r\n    <h2>Hoe meld ik mij aan? </h2>\r\n    <section>Je kan op onze website aanmelden via de registratie knop op de hoofdpagina. Bij de registratie moet je aan een aantal voorwaarden voldoen om een intakegesprek te plannen. Na het intakegesprek ben je succesvol aangemeld. \r\n    </section>\r\n    <br><br>\r\n\r\n\r\n    <h2>Hoe kan ik chatten met mijn hulpverlener? \r\n    </h2>\r\n    <section>Na de login, verschijnt er een chat-icoon die jou de mogelijkheid biedt om met hulpverlener privé te chatten. Of je kan mij altijd mailen naar karinkemper@ZMDH.nl \r\n    </section>\r\n    <br><br>\r\n\r\n\r\n    <h2>Hoe kan ik deelnemen aan de groepschat? </h2>\r\n    <section>Na de login verschijnt er een chat-icoon die jou de mogelijkheid biedt om deel te nemen aan een groepschat. </section>\r\n</article>  <br><br>\r\n",
+                            PictureUrl = "https://i.postimg.cc/tRPnMpWP/Karin-Kemper-Orthopedagoog.png",
                             Specialty = "ADHD"
                         },
                         new
                         {
-                            Id = "67f88bfb-409f-417d-8f7b-fec56e2fcca3",
+                            Id = "c43c63bc-5901-447e-8137-aa37834e42f7",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "349593c8-3728-4372-b320-fe3c8f312f16",
+                            ConcurrencyStamp = "156b79ee-c147-4c44-ac44-557486dc8c91",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "1ed6963c-5866-4901-a5dd-41626d3d69b4",
+                            SecurityStamp = "faedcfea-e105-4150-bf0b-9faac154ad07",
+                            Id = "a1d71533-2518-4fd6-b503-1cdf27e259c0",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "1b16e28f-ec5c-42cd-8783-5b5f5d749cd5",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "afbb58e8-ada0-4bb7-bbb9-5a09b15a16f3",
                             TwoFactorEnabled = false,
                             FirstName = "Johan",
                             LastName = "Lo",
+                            OrthopedagogueWebText = "<h1>Johan Lo</h1> <br> <br>\r\n\r\n<article>\r\n    <h2>Even voorstellen </h2>\r\n    <section>Ik heet Johan Lo, geboren in 1990 in Rotterdam en de jongste van zes kinderen. Ik ben opgegroeid bij de haven door mijn ouders. Ik verdiep me in de laatste trends van jongeren en vind het interessant hoe de huidige generatie van jongeren zicht inzet voor belangrijke maatschappelijke problemen, zoals klimaatverandering. Jongs af aan probeerde ik jongeren te motiveren om dingen te doen waar ze bang voor zijn.  \r\n    </section> <br> <br>\r\n\r\n    <h2>Mijn studie   \r\n    </h2>\r\n    <section>Na het VWO begon ik met stand up comedy en werkte ik twee jaar lang als een motiverende spreker bij verschillende bedrijven en evenementen. Hierna had ik orthopedagogiek gestudeerd aan de Universiteit van Cambridge. Tijdens mijn studie heb ik mij gespecialiseerd in de behandeling van faalangst.  \r\n    </section> <br> <br>\r\n\r\n    <h2>Nu over jou: jij hebt misschien faalangst   \r\n    </h2>\r\n    <section>Bij jou bestaat het vermoeden dat je faalangst hebt. Veelal gaat dit over het uitvoeren van iets concreets zoals een taak, een examen, een werkopdracht en dergelijke. De gevolgen hiervan is dat je vaker faalervaring ervaart.  \r\n    </section> <br> <br>\r\n\r\n    <h2>Wat gaan we doen?   \r\n    </h2>\r\n    <section>Ik ga met jou uitzoeken of jij faalangst hebt met een paar gesprekken waarbij evt. ook jouw ouder(s)/verzorger(s) betrokken worden. Mocht het blijken dat je faalangst hebt kijken we samen naar de problemen die je ervaart en hoe we dat stap voor stap kunnen oplossen. Met therapie kan ik je helpen om sterker te staan in je schoenen en een positiever beeld te creëren over jezelf. \r\n        Allereerst luister ik graag aandachtig naar je. Ik ben namelijk een actieve luisteraar en beantwoord graag vragen die je hebt. Daarna ga ik een gesprek met je aan om te kijken waarom je faalangst ervaart. We gaan ook je faalangst confronteren met positieve denkpatronen. Wil je eerst nog meer informatie; bel, app of mail me gerust. We plannen in ieder geval een intakegesprek om elkaar beter te leren kennen. Daarna kun je je evt.-in overleg met je ouder(s)/verzorger(s)-inschrijven voor een behandeling. \r\n        </section> <br> <br>\r\n\r\n    <h2>Hoe meld ik mij aan? </h2>\r\n    <section>Je kan op onze website aanmelden via de registratie knop op de hoofdpagina. Bij de registratie moet je aan een aantal voorwaarden voldoen om een intakegesprek te plannen. Na de intakegesprek ben je succesvol aangemeld. \r\n    </section> <br> <br>\r\n\r\n    <h2>Hoe kan ik chatten met mijn hulpverlener? </h2>\r\n    <section>Na de login, verschijnt er een chat-icoon die jou de mogelijkheid biedt om met hulpverlener privé te chatten. Of je kan mij altijd mailen naar johanlo@ZMDH.nl \r\n    </section> <br> <br>\r\n\r\n    <h2>Hoe kan ik deelnemen aan de groepschat? </h2>\r\n    <section>Na de login verschijnt er een chat-icoon die jou de mogelijkheid biedt om deel te nemen aan een groepschat. </section> <br> <br>\r\n\r\n</article><br><br>\r\n\r\n\r\n",
+                            PictureUrl = "https://i.postimg.cc/9fwqH7rm/Johan-Lo-Orthopedagoog.png",
                             Specialty = "Faalangst"
                         },
                         new
                         {
-                            Id = "536ffd33-7cd8-4443-93bd-1273895e55dd",
+                            Id = "68eb79de-06bb-4f45-970c-2d7755931f0c",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8d01ea89-dea6-40b9-a004-6feb7f802f10",
+                            ConcurrencyStamp = "78f3b1cb-a7fb-49bf-9214-43fb87874735",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "8e8d5f71-3839-42b3-822e-60a772eedc18",
+                            SecurityStamp = "ce6aa1ae-52a3-4bd6-8dba-826b4d92f1ee",
+                            Id = "7f9ba7ac-9c06-41d3-8963-e655ae5d18f9",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "561ba5d1-691c-44cf-9450-e97c93c6c02b",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "ab0318f4-b3a5-4ee6-ac9f-cff81cfe0528",
                             TwoFactorEnabled = false,
                             FirstName = "Steven",
                             LastName = "Ito",
+                            OrthopedagogueWebText = "<h1>Steven Ito</h1> <br> <br>\r\n\r\n<article>\r\n    <h2>Even voorstellen   </h2>\r\n    <section> Mijn naam is Steven Ito, ik ben geboren in 1987 in het hartje van Amsterdam. Mijn ouders hadden allebei een medische achtergrond en komen oorspronkelijk uit Japan. Ik heb al sinds mijn jeugd een passie gehad voor de medische wereld en het helpen van mensen, specifiek de jongeren. Omdat het mij interesseert hoe jongeren hun leven leiden. \r\n    </section> <br> <br>\r\n\r\n    <h2>Mijn studie   </h2>\r\n    <section> Na het VWO heb ik orthopedagogiek gestudeerd aan de Universiteit van Amsterdam. Bij mijn afstuderen heb ik mij gespecialiseerd in de behandeling van eetstoornissen. Daarna heb ik nog een tweejarig masterprogramma gevolgd in het buitenland op de Medische Universiteit van Tokyo. \r\n    </section> <br> <br>\r\n\r\n    <h2>Nu over jou: jij hebt misschien een eetstoornis  \r\n    </h2>\r\n    <section> Bij jou bestaat het vermoeden dat je een eetstoornis hebt. Soms wordt gedacht dat er maar één eetstoornis is. Maar dit klopt niet, want er zijn verschillende soorten zoals: boulimia, anorexia en Binge Eating Disorder (BED). Sommige eetstoornissen zijn niet altijd zichtbaar en worden daarom ook ‘onzichtbare eetstoornissen’ genoemd. Als het goed is merk je dat je een verstoord en onregelmatig eetgedrag hebt. Dit wordt gekenmerkt dat er soms te weinig wordt gegeten en in andere perioden juist te veel wordt gegeten. Het heeft voornamelijk te maken met een verstoord lichaamsbeeld. Misschien heb je gemerkt dat je een angst hebt om dik te worden of juist om dun te worden, toch? Verder zijn er lichamelijke klachten zoals misselijkheid of maagpijn. Daarnaast herken je misschien dat je liever niet wilt eten als andere mensen in de buurt zijn. \r\n    </section> <br> <br>\r\n\r\n    <h2>Wat gaan we doen?  </h2>\r\n    <section>Ik ga met jou samen onderzoeken of jij een eetstoornis hebt met een paar testen, waarbij eventueel jouw ouder(s)/verzorger(s) betrokken worden. Mocht blijken uit de resultaten dat je toch een eetstoornis hebt. Dan zullen we samen bekijken waar jij moeite mee hebt of tegen aanloopt. We zullen dan samen stap-voor-stap ervoor zorgen dat we jouw eetstoornis en verstoord lichaamsbeeld verhelpen. \r\n\r\n        Daarna gaan we met elkaar aan de slag en probeer ik je verder te helpen met tips en oefeningen, die laagdrempelig zijn, wat vooral prettig is voor jou.   \r\n         Er zal in het proces veel humor en gezelligheid zijn. We gaan niet te ingewikkeld doen, maar onze mouwen opstropen en aan het werk met jouw grootste uitdagingen is de missie waaraan wij gaan werken.   \r\n        \r\n        Je bent van harte welkom. Ik help je heel graag. Wil je eerst nog meer informatie; bel of mail me gerust. We plannen in ieder geval een intakegesprek in om te zien of wij graag met elkaar verder willen. Daarna kun je je eventueel in overleg met je ouder(s)/verzorger(s)-inschrijven voor een behandeling. \r\n        </section> <br> <br>\r\n\r\n    <h2>Hoe meld ik mij aan? </h2>\r\n    <section>Je kan op onze website aanmelden via de registratie knop op de hoofdpagina. Bij de registratie moet je aan een aantal voorwaarden voldoen om een intakegesprek te plannen. Na de intakegesprek ben je succesvol aangemeld. \r\n    </section> <br> <br>\r\n\r\n    <h2>Hoe kan ik chatten met mijn hulpverlener? \r\n    </h2>\r\n    <section>Na de login, verschijnt er een chat-icoon die jou de mogelijkheid biedt om met hulpverlener privé te chatten. Of je kan mij altijd mailen naar stevenito@ZMDH.nl \r\n    </section> <br> <br>\r\n\r\n    <h2>Hoe kan ik deelnemen aan de groepschat? </h2>\r\n    <section>Na de login verschijnt er een chat-icoon die jou de mogelijkheid biedt om deel te nemen aan een groepschat. </section> <br> <br>\r\n\r\n</article> <br><br>\r\n",
+                            PictureUrl = "https://i.postimg.cc/bNbyP9RF/Steven-Ito-Orthopedagoog.png",
                             Specialty = "Eetstoornis"
                         },
                         new
                         {
-                            Id = "fdb08b90-f8bd-4f19-8c1e-f67a580491a2",
+                            Id = "deb0b863-d5b7-4534-b6cd-3ab28a7d629a",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5ac09d5d-08c8-47a6-bb13-5f45e12c875a",
+                            ConcurrencyStamp = "c4c67c5b-ad99-498d-8b46-27646e00f83c",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "64242c79-45a1-4a08-ab1a-e30d6bac797a",
+                            SecurityStamp = "6f000543-d612-4bda-a725-a9f6694f949c",
+                            Id = "97160277-5861-40f7-b841-bdc7bd646aa8",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "797a18ea-323e-4b94-90fd-7f7752d4353b",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "612fc2b8-e0a3-43cd-af5c-fd8e7ef94d83",
                             TwoFactorEnabled = false,
                             FirstName = "Marianne",
                             LastName = "van Dijk",
+                            OrthopedagogueWebText = "<h1>Marianne Van Dijk</h1> <br> <br>\r\n\r\n<article>\r\n    <h2>Even voorstellen \r\n    </h2>\r\n    <section>Hallo, ik ben Marianne van Dijk geboren en getogen in Rotterdam. Vanaf kleins af aan vind ik het altijd leuk om kinderen te helpen, ik haal hier namelijk mijn voldoening uit. Verder ben ik een moeder van drie kinderen, waarvan er een dyslexie heeft. Zelf heb ik ook dyslexie. Misschien valt het je op dat dyslexie een onderwerp is wat regelmatig in mijn leven ter sprake komt, hierdoor wil ik graag mijn ervaring delen met kinderen die hulp willen. \r\n    </section> <br> <br>\r\n\r\n    <h2>Mijn studie \r\n    </h2>\r\n    <section>Omdat ik moeite had met lezen liep ik veel achterstand. Ik ben vanaf VMBO Basis begonnen en door de jaren heen ben ik verder gaan studeren. Uiteindelijk heb ik de opleiding orthopedagogiek afgerond aan de Universiteit van Leiden. \r\n    </section> <br> <br>\r\n\r\n    <h2>Nu over jou: Jij hebt misschien dyslexie </h2>\r\n    <section>Dyslexie hebben is niet prettig. Het maakt lezen, spellen en schrijven veel ingewikkelder, terwijl iemand wel intelligent genoeg is om dat allemaal te begrijpen. Er is pas sprake van dyslexie als er geen andere oorzaken zijn die de leesproblemen kunnen verklaren. \r\n        Niet elke kind dat dyslexie heeft, heeft moeite met spelling en lezen. Sommige kinderen hebben vooral problemen met het lezen en anderen met spelling. Zo heb je bijvoorbeeld kinderen die radend lezen, waardoor ze veel fouten maken doordat ze gokken wat er staat. Anderen lezen letter voor letter, waardoor het leestempo heel laag ligt. \r\n        \r\n    </section> <br> <br>\r\n\r\n    <h2>Wat gaan we doen? </h2>\r\n    <section>Samen gaan we uitzoeken of jij dyslexie hebt. Dat doen we door verschillende soorten testen uit te voeren. Bij het uitvoeren van de testen merk ik vanzelf of jij symptomen hebt. Het zijn testen, zoals het hardop lezen van teksten of het uitspreken van klanken en letters. \r\n\r\n        Wat we vooral merken is dat je moeite hebt met het verschil te horen tussen klanken als: ‘m’, ‘n’, en ‘ng’, of ‘eu’, ‘uu’ en ‘ui’. Of je hebt moeite om op woorden te komen. En zo zijn er nog andere symptomen. \r\n        \r\n        Je bent van harte welkom en ik wil je graag bij helpen om mee om te gaan. Je kan mij altijd gerust bereiken voor meer informatie of uitleg door mij te bellen of te mailen. We maken eerst een intakegesprek zodat wij zien of we met elkaar verder willen. En uiteraard kun je je eventueel in overleg met je ouder(s)/verzorg(s) inschrijven voor een behandeling. \r\n        </section> <br> <br>\r\n\r\n    <h2>Hoe meld ik mij aan? </h2>\r\n    <section>Je kan op onze website aanmelden via de registratie knop op de hoofdpagina. Bij de registratie moet je aan een aantal voorwaarden voldoen om een intakegesprek te plannen. Na de intakegesprek ben je succesvol aangemeld. \r\n    </section> <br> <br>\r\n\r\n    <h2>Hoe kan ik chatten met mijn hulpverlener? </h2>\r\n    <section>Na de login, verschijnt er een chat-icoon die jou de mogelijkheid biedt om met hulpverlener privé te chatten. Of je kan mij altijd mailen naar mariannevandijk@ZMDH.nl \r\n    </section> <br> <br>\r\n\r\n    <h2>Hoe kan ik deelnemen aan de groepschat?</h2>\r\n    <section>Na de login verschijnt er een chat-icoon die jou de mogelijkheid biedt om deel te nemen aan een groepschat. </section> <br> <br>\r\n\r\n</article> <br><br>\r\n",
+                            PictureUrl = "https://i.postimg.cc/wTSpbR8c/Marianne-Van-Dijk-Orthopedagoog.png",
                             Specialty = "Dyslexie"
                         });
                 });
@@ -453,7 +494,7 @@ namespace WDPR_A.Migrations
                 {
                     b.HasOne("WDPR_A.Models.Chat", null)
                         .WithMany()
-                        .HasForeignKey("ChatsCode")
+                        .HasForeignKey("ChatsRoomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -549,6 +590,36 @@ namespace WDPR_A.Migrations
                     b.Navigation("Orthopedagogue");
                 });
 
+            modelBuilder.Entity("WDPR_A.Models.Chat", b =>
+                {
+                    b.HasOne("WDPR_A.Models.Orthopedagogue", "Orthopedagogue")
+                        .WithMany("Chats")
+                        .HasForeignKey("OrthopedagogueId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Orthopedagogue");
+                });
+
+            modelBuilder.Entity("WDPR_A.Models.Message", b =>
+                {
+                    b.HasOne("WDPR_A.Models.Chat", "Chat")
+                        .WithMany("Messages")
+                        .HasForeignKey("ChatRoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WDPR_A.Models.User", "Sender")
+                        .WithMany()
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Chat");
+
+                    b.Navigation("Sender");
+                });
+
             modelBuilder.Entity("WDPR_A.Models.Guardian", b =>
                 {
                     b.HasOne("WDPR_A.Models.Appointment", null)
@@ -559,6 +630,11 @@ namespace WDPR_A.Migrations
             modelBuilder.Entity("WDPR_A.Models.Appointment", b =>
                 {
                     b.Navigation("Guardians");
+                });
+
+            modelBuilder.Entity("WDPR_A.Models.Chat", b =>
+                {
+                    b.Navigation("Messages");
                 });
 
             modelBuilder.Entity("WDPR_A.Models.Orthopedagogue", b =>

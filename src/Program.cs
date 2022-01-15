@@ -3,10 +3,31 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WDPR_A.ViewModels;
 using WDPR_A.Hubs;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Data.SqlClient;
+using Azure.Security.KeyVault.Secrets;
+using Azure.Identity;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("WDPRContextConnection");
-builder.Services.AddDbContext<WDPRContext>(options => options.UseSqlite(connectionString));
+var keyVaultName = Environment.GetEnvironmentVariable("DB_KEY",EnvironmentVariableTarget.User);
+builder.Services.AddDbContext<WDPRContext>
+(async options =>
+{
+    if (builder.Environment.IsProduction())
+    {
+        var kvUri = "https://" + keyVaultName + ".vault.azure.net";
+        var client = new SecretClient(new Uri(kvUri), new DefaultAzureCredential());
+        var secret = await client.GetSecretAsync("DB-PASSWORD");
+        connectionString = connectionString.Replace("{your_password}", secret.Value.Value);
+        options.UseSqlServer(connectionString);
+    }
+    else
+    {
+        options.UseSqlite(connectionString);
+    }
+});
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<WDPRContext>();

@@ -7,24 +7,41 @@ using WDPR_A.Models;
 
 namespace WDPR_A.Controllers;
 
-[Authorize(Roles = "Client, Orthopedagogue")]
+// [Authorize(Roles = "Client, Orthopedagogue")]
 public class SelfHelpGroupController : Controller
 {
     private readonly ILogger<SelfHelpGroupController> _logger;
     private readonly WDPRContext _context;
     private readonly UserManager<IdentityUser> _userManager;
+    private readonly RoleManager<IdentityRole> _roleManager;
 
-    public SelfHelpGroupController(ILogger<SelfHelpGroupController> logger, WDPRContext context, UserManager<IdentityUser> userManager)
+    public SelfHelpGroupController(ILogger<SelfHelpGroupController> logger, WDPRContext context, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
     {
         _logger = logger;
         _context = context;
         _userManager = userManager;
+        _roleManager = roleManager;
     }
 
     public async Task<IActionResult> Index()
     {
         return View();
     }
+
+    [Authorize(Roles = "Orthopedagogue")]
+    public async Task<IActionResult> Create()
+    {
+        IdentityUser user = await _userManager.GetUserAsync(User);
+        var currentUser = _context.Orthopedagogues.Where(c => c.Id == user.Id).SingleOrDefault();
+        return View(currentUser);
+    }
+
+    // [HttpPost]
+    // [Authorize(Roles = "Orthopedagogue")]
+    // public async Task<IActionResult> Create()
+    // {
+    //     return View();
+    // }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

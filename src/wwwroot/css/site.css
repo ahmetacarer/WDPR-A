@@ -31,7 +31,9 @@ footer {
 
 .a-no-underline {
   text-decoration: none;
+  color: black;
 }
+
 
 #logo {
   width: 150px;
@@ -39,8 +41,31 @@ footer {
 
 footer {
   background-color: #3e424f;
+  height: 5%;
 }
 
 #footertext {
   color: white;
+}
+
+.ZMDHButton, button {
+  background-color: #3e424f;
+  padding: 0.75% 5% 0.75% 5%;
+}
+
+.ZMDHButton:hover, button:hover {
+  background-color: #3e424f;
+}
+
+.ZMDHButton:active, button:active {
+  background-color: #3e424f;
+} 
+
+.ZMDHButton:focus, button:focus {
+  background-color: #3e424f;
+}
+
+.LoginButton {
+  margin: 0 5% 0 0;
+  padding: 0.5% 2% 0.5% 2%;
 }

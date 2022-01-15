@@ -1,8 +1,8 @@
 @{
-    ViewData["Title"] = "Zelfhelpgroep aanmaken";
+    ViewData["Title"] = "Zelfhulpgroep aanmaken";
 }
 
-<h1>Zelfhelpgroep aanmaken</h1>
+<h1>Zelfhulpgroep aanmaken</h1>
 
 
 <form asp-action="Create" method="post">
@@ -16,7 +16,6 @@
   <div class="input-group mb-3">
     <label class="input-group-text" for="inputGroupSelect01">Leeftijdscategorie</label>
     <select class="form-select" id="inputGroupSelect01" name="AgeCategory">
-      <option selected>Kies...</option>
       <option value="@AgeCategory.Jongste">Jongste</option>
       <option value="@AgeCategory.Middelste">Middelste</option>
       <option value="@AgeCategory.Oudste">Oudste</option>

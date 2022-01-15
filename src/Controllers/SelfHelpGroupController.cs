@@ -23,9 +23,26 @@ public class SelfHelpGroupController : Controller
         _roleManager = roleManager;
     }
 
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(string subject, AgeCategory? ageCategory)
     {
-        return View();
+        var lijst = _context.Chats.Where(c => c.IsPrivate == false);
+
+        if (!String.IsNullOrEmpty(subject))
+        {
+            lijst = _context.Chats.Where(c => c.IsPrivate == false && c.Subject == subject);
+        }
+
+        if (!String.IsNullOrEmpty(ageCategory.ToString()))
+        {
+            lijst = _context.Chats.Where(c => c.IsPrivate == false && c.AgeCategory == ageCategory);
+        }
+
+        if (!String.IsNullOrEmpty(subject) && !String.IsNullOrEmpty(ageCategory.ToString()))
+        {
+            lijst = _context.Chats.Where(c => c.IsPrivate == false && c.Subject == subject && c.AgeCategory == ageCategory);
+        }
+
+        return View(await lijst.OrderBy(c => c.RoomName.ToLower()).ToListAsync());
     }
 
     [Authorize(Roles = "Orthopedagogue")]

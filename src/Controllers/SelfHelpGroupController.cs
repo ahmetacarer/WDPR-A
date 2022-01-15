@@ -31,17 +31,20 @@ public class SelfHelpGroupController : Controller
     [Authorize(Roles = "Orthopedagogue")]
     public async Task<IActionResult> Create()
     {
-        IdentityUser user = await _userManager.GetUserAsync(User);
-        var currentUser = _context.Orthopedagogues.Where(c => c.Id == user.Id).SingleOrDefault();
-        return View(currentUser);
+        return View();
     }
 
-    // [HttpPost]
-    // [Authorize(Roles = "Orthopedagogue")]
-    // public async Task<IActionResult> Create()
-    // {
-    //     return View();
-    // }
+    [HttpPost]
+    [Authorize(Roles = "Orthopedagogue")]
+    public async Task<IActionResult> Create(string roomName, AgeCategory ageCategory)
+    {
+        IdentityUser user = await _userManager.GetUserAsync(User);
+        var currentUser = _context.Orthopedagogues.Where(c => c.Id == user.Id).SingleOrDefault();
+
+        _context.Chats.Add(new Chat() { RoomId = Guid.NewGuid().ToString(), RoomName = roomName, Subject = currentUser.Specialty, IsPrivate = false, Orthopedagogue = currentUser, AgeCategory = ageCategory });
+        _context.SaveChanges();
+        return RedirectToAction("Index");
+    }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

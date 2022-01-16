@@ -1,6 +1,8 @@
 @model List<Orthopedagogue>
 @{
   string path = "../../img/" + @Model.Select(g => g.FirstName).Single() + @Model.Select(g => g.LastName).Single() + "Orthopedagoog.png";
+  // string webTextPath = "../../WebTexts/" + @Model.Select(g => g.FirstName).Single() + @Model.Select(g => g.LastName).Single() + "WebText.html"; 
+  string webTextPath = "../src/wwwroot/WebTexts/" + @Model.Select(g => g.FirstName).Single() + @Model.Select(g => g.LastName).Single() + "WebText.html";
 }
 
 <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
@@ -15,7 +17,7 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-8 col-sm-12">
-      @Html.Raw(@Model.Select(g => g.OrthopedagogueWebText).Single())
+      @Html.Raw(File.ReadAllText(webTextPath))
     </div>
     <div class="col-lg-4 col-sm-12">
       <img class="OrthopedagogueImage img-fluid rounded-circle" src='@path' alt="@Model.Select(g => g.FirstName) @Model.Select(g => g.LastName) Orthopedagoog @Model.Select(g => g.Specialty) Profielfoto"></img> <br> <br>

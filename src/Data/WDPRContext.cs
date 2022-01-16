@@ -10,23 +10,19 @@ public class WDPRContext : IdentityDbContext
     {
     }
 
-    // https://i.postimg.cc/tRPnMpWP/Karin-Kemper-Orthopedagoog.png
-    // https://i.postimg.cc/9fwqH7rm/Johan-Lo-Orthopedagoog.png
-    // https://i.postimg.cc/bNbyP9RF/Steven-Ito-Orthopedagoog.png
-    // https://i.postimg.cc/wTSpbR8c/Marianne-Van-Dijk-Orthopedagoog.png
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
         builder.Entity<Orthopedagogue>().HasData(
 
-            new Orthopedagogue { FirstName = "Karin", LastName = "Kemper", Specialty = "ADHD", OrthopedagogueWebText = File.ReadAllText(@"../src/wwwroot/WebTexts/KarinKemperWebText.html") },
+            new Orthopedagogue { FirstName = "Karin", LastName = "Kemper", Specialty = "ADHD" },
 
-            new Orthopedagogue { FirstName = "Johan", LastName = "Lo", Specialty = "Faalangst", OrthopedagogueWebText = File.ReadAllText(@"../src/wwwroot/WebTexts/JohanLoWebText.html") },
+            new Orthopedagogue { FirstName = "Johan", LastName = "Lo", Specialty = "Faalangst"},
 
-            new Orthopedagogue { FirstName = "Steven", LastName = "Ito", Specialty = "Eetstoornis", OrthopedagogueWebText = File.ReadAllText(@"../src/wwwroot/WebTexts/StevenItoWebText.html") },
+            new Orthopedagogue { FirstName = "Steven", LastName = "Ito", Specialty = "Eetstoornis" },
 
-            new Orthopedagogue { FirstName = "Marianne", LastName = "van Dijk", Specialty = "Dyslexie", OrthopedagogueWebText = File.ReadAllText(@"../src/wwwroot/WebTexts/MarianneVanDijkWebText.html") }
+            new Orthopedagogue { FirstName = "Marianne", LastName = "van Dijk", Specialty = "Dyslexie"}
 
         );
         // Customize the ASP.NET Identity model and override the defaults if needed.

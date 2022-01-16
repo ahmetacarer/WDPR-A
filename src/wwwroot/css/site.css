@@ -41,11 +41,17 @@ footer {
 
 footer {
   background-color: #3e424f;
-  height: 5%;
+  height: 7.5%;
 }
+
+/* @media voor de footer erbij erin knallen  */
 
 #footertext {
   color: white;
+  margin-top: 1.75%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .ZMDHButton, button {

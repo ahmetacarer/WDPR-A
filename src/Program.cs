@@ -23,7 +23,6 @@ builder.Services.AddDbContext<WDPRContext>(options =>
         var secret = client.GetSecret(DB_KEY);
         cS.Password = secret.Value.Value;
         options.UseSqlServer(cS.ConnectionString);
-        // options.UseSqlServer(connectionString);
     }
     else
     {

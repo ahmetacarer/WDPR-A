@@ -1,17 +1,26 @@
 using System.Security.Cryptography;
 using System.Text;
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
 
 namespace src.Controllers
 {
     public static class SigningData
     {
-        public static string encryptData(string message)
+        private static byte[] RSAkey;
+        public static async Task<string> encryptData(string message)
         {
-            byte[] RSAkey;
 
             try
             {
-                RSAkey = Convert.FromBase64String(System.IO.File.ReadAllText(@"C:\Users\Public\HHSKeys\WriteText.txt"));
+                if (RSAkey == null || RSAkey.Length == 0)
+                {
+                    var kvUri = "https://wdpr-keys.vault.azure.net/";
+                    var client = new SecretClient(new Uri(kvUri), new DefaultAzureCredential());
+                    var secret = await client.GetSecretAsync("PrivateKey");
+
+                    RSAkey = Convert.FromBase64String(secret.Value.Value);
+                }
             }
             catch (FileNotFoundException ex)
             {

@@ -10,21 +10,19 @@ using Azure.Identity;
 using System;
 
 var builder = WebApplication.CreateBuilder(args);
-// connectie string voor sqlserver of sqlite (dezelfde naam)
+// connectie string voor sqlserver of sqlite (dezelfde naam )
 var connectionString = builder.Configuration.GetConnectionString("WDPRContextConnection");
 builder.Services.AddDbContext<WDPRContext>(options =>
 {
     if (builder.Environment.IsProduction())
     {
-        // var cS = new SqlConnectionStringBuilder(connectionString);
-        // var DB_NAME = builder.Configuration.GetConnectionString("DB_NAME");
-        // var DB_KEY = builder.Configuration.GetConnectionString("DB_KEY");
-        // var kvUri = $"https://{DB_NAME}.vault.azure.net";
-        // var client = new SecretClient(new Uri(kvUri), new DefaultAzureCredential());
-        // var secret = client.GetSecret(DB_KEY);
-        // cS.Password = secret.Value.Value;
-        // options.UseSqlServer(cS.ConnectionString);
-        options.UseSqlServer(connectionString);
+        var cS = new SqlConnectionStringBuilder(connectionString);
+        var DB_URL = builder.Configuration.GetConnectionString("DB_URL");
+        var DB_KEY = builder.Configuration.GetConnectionString("DB_KEY");
+        var client = new SecretClient(new Uri(DB_URL), new DefaultAzureCredential());
+        var secret = client.GetSecret(DB_KEY);
+        cS.Password = secret.Value.Value;
+        options.UseSqlServer(cS.ConnectionString);
     }
     else
     {

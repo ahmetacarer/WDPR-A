@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WDPR_A.Controllers;
 
-[Authorize(Roles = "Orthopedagogue")]
+// [Authorize(Roles = "Orthopedagogue")]
 public class OrthopedagogueController : Controller
 {
     private readonly ILogger<OrthopedagogueController> _logger;

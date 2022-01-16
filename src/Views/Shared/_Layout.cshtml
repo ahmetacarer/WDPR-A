@@ -34,14 +34,24 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Orthopedagogue" asp-action="Client">Dossier</a>
                                 @* dit moet gefixt worden guardian mag niet chat zien *@
                             </li>
+                            <li class="nav-item">
+                                <button type="button" class="btn LoginButton border-dark border-1 rounded-3" onclick="location.href='/identity/account/logout'">
+                                    <strong>Loguit</strong> 
+                                </button>
+                            </li>
                         } else {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Appointment" asp-action="Index">Intake</a>
                             </li>
+                            <li>
+                                <button type="button" class="btn LoginButton border-dark border-1 rounded-3" onclick="location.href='/identity/account/login'">
+                                    <strong>Login</strong> 
+                                </button>
+                            </li>
                         }
                     </ul>
                 </div>
-                @if (User.Identity.IsAuthenticated) {
+                @* @if (User.Identity.IsAuthenticated) {
                     <button type="button" class="btn LoginButton border-dark border-1 rounded-3" onclick="location.href='/identity/account/logout'">
                         <strong>Loguit</strong> 
                     </button>
@@ -49,7 +59,7 @@
                     <button type="button" class="btn LoginButton border-dark border-1 rounded-3" onclick="location.href='/identity/account/login'">
                         <strong>Login</strong> 
                     </button>
-                }
+                } *@
 
             </div>
         </nav>

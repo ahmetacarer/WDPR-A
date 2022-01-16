@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using WDPR_A.Models;
 using WDPR_A.Extensions;
+using WDPR_A.Models;
 
 namespace WDPR_A.Controllers;
 

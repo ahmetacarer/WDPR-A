@@ -10,12 +10,12 @@ namespace src.Controllers
             string dateTime = convertedTime.ToString("dd MM yyyy HH mm ss");
 
             // signature of date time in RSA SHA256 data 
-            string encryptedData = SigningData.encryptData(dateTime);
+            string encryptedData = await SigningData.encryptData(dateTime);
 
             // send get request with the date time and the crypted data
             client.DefaultRequestHeaders.Clear();
             client.DefaultRequestHeaders.Add("key", $"{dateTime}|{encryptedData}");
-            System.Console.WriteLine($"{dateTime}|{encryptedData}");
+            
             HttpResponseMessage response = await client.GetAsync("https://zorgdomeinhhs.azurewebsites.net/referral/" + birthDate + "/" + bsn);
             if (response.IsSuccessStatusCode)
             {

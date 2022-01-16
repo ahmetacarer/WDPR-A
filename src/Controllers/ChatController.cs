@@ -31,13 +31,6 @@ public class ChatController : Controller
                                         .Include(c => c.Messages)
                                         .Where(c => c.Clients.Any(cl => cl.Id == client.Id))
                                         .ToListAsync();
-        // chats = new List<Chat> {new Chat {RoomId = "1", RoomName = "ADHDZelfhelpGroepJong", Orthopedagogue = _context.Orthopedagogues.First(), Subject = "ADHD", Clients = new List<Client> {client}, IsPrivate = false, AgeCategory = AgeCategory.Jongste},
-        //                             new Chat {RoomId = "2", RoomName = "FaalangstZelfhelpGroepMiddelste", Orthopedagogue = _context.Orthopedagogues.First(), Subject = "Faalangst", Clients = new List<Client> {client}, IsPrivate = false, AgeCategory = AgeCategory.Middelste},
-        //                             new Chat {RoomId = "3", PrivateChatToken = "3", Orthopedagogue = _context.Orthopedagogues.First(c => c.Specialty == "Faalangst"), Clients = new List<Client> {client}, IsPrivate = true}
-
-        //                             };
-        // await _context.Chats.AddRangeAsync(chats);
-        // await _context.SaveChangesAsync();
         return View(chats);
     }
 

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using WDPR_A.Models;
@@ -9,6 +10,7 @@ public class WDPRContext : IdentityDbContext
     {
     }
 
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
@@ -16,11 +18,11 @@ public class WDPRContext : IdentityDbContext
 
             new Orthopedagogue { FirstName = "Karin", LastName = "Kemper", Specialty = "ADHD" },
 
-            new Orthopedagogue { FirstName = "Johan", LastName = "Lo", Specialty = "Faalangst" },
+            new Orthopedagogue { FirstName = "Johan", LastName = "Lo", Specialty = "Faalangst"},
 
             new Orthopedagogue { FirstName = "Steven", LastName = "Ito", Specialty = "Eetstoornis" },
 
-            new Orthopedagogue { FirstName = "Marianne", LastName = "van Dijk", Specialty = "Dyslexie" }
+            new Orthopedagogue { FirstName = "Marianne", LastName = "van Dijk", Specialty = "Dyslexie"}
 
         );
         // Customize the ASP.NET Identity model and override the defaults if needed.

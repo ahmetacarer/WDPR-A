@@ -1,0 +1,48 @@
+@{
+    ViewData["Title"] = "Dossier";
+}
+
+
+<div class="row">
+    <form action="#" onsubmit="AjaxCall();return false">
+        <div class="col-md-4">
+            <label>Voer BSN nummer</label>
+            <input class="form-control BSN" type="number" placeholder="BSN nummer" aria-label="BSN" name="BSN">
+        </div>
+        <div class="col-md-4">
+            <label>Selecteer geboortedatum</label>
+            <input type="date" class="form-control birthDate" aria-label="birthDate" name="birthDate">
+        </div>
+        <div class="col-md-4">
+            <label>Druk op zoeken na het invullen gegevens</label>
+            <button class="btn btn-outline-success form-control ZMDHButton" type="submit">Zoeken</button>
+        </div>
+    </form>
+</div>
+
+<div class="row">
+    <div id="PartialViewClientFile"></div>
+</div>
+
+@section scripts
+{
+<script>
+    function AjaxCall() {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("OnPostPartial")",
+            data: {
+                BSN: $(".BSN").val(),
+                birthDate: $(".birthDate").val()
+            },
+            dataType: "text",
+            success: function (msg) {
+                $("#PartialViewClientFile").replaceWith(msg);
+            },
+            error: function (req, status, error) {
+                console.log(error)
+            }
+        });
+    }
+</script>
+}

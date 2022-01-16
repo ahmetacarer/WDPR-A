@@ -6,7 +6,14 @@
 
 <div class="text-center">
     <h1 class="display-4"><strong>Dashboard</strong></h1>
-    <h2 class="display-8">Welkom @Model.FirstName.First(). @Model.LastName</h2>
+    @if(@Model.FirstName == null || @Model.LastName == null)
+    {
+      <h2 class="display-8">Welkom</h2>
+    }
+    else
+    {
+      <h2 class="display-8">Welkom @Model.FirstName.First(). @Model.LastName</h2>
+    }
 </div>
 
 <div class="row">
@@ -19,7 +26,7 @@
           {
              <div class="accordion-item">
             <h2 class="accordion-header" id="heading@(i)"> 
-              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse@(i)" aria-expanded="true" aria-controls="collapse@(i)">
+              <button class="accordion-button ZMDHButton" type="button" data-bs-toggle="collapse" data-bs-target="#collapse@(i)" aria-expanded="true" aria-controls="collapse@(i)">
                 @Model.Clients[i].FirstName @Model.Clients[i].LastName
               </button>
             </h2>
@@ -27,16 +34,20 @@
               <div class="accordion-body">
                 <p>Aandoening: @Model.Clients[i].Condition</p>
                 
-                  @{
-                    if (Model.Clients[i].AgeCategory.Equals(WDPR_A.Models.AgeCategory.Oudste))
+    
+                  @if (Model.Clients[i].AgeCategory.Equals(WDPR_A.Models.AgeCategory.Oudste))
                       {
                         <p>Dit kind is 16 jaar of ouder. Hierdoor is het inzien van een chat-frequentie niet beschikbaar.</p>
                       }
 
                   else {
-                    <p>Chat-frequentie: </p>
-                  }
-                }   
+                        <p>Chat-frequentie: @Model.Clients[i].Chats.Sum(c => c.Messages.Where(c => c.Sender.Id == Model.Clients[i].Id).Count())</p>  
+
+                      if (@Model.Clients[i].Chats.Sum(c => c.Messages.Where(c => c.Sender.Id == Model.Clients[i].Id).Count()) > 0)
+                      {
+                        <small>Laatste keer een bericht verzonden: @Model.Clients[i].Chats.Select(c => c.Messages.Last().When).SingleOrDefault()</small>
+                      }
+                  }  
               </div>
             </div>
           </div> 

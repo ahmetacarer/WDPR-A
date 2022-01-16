@@ -1,0 +1,14 @@
+@model List<Orthopedagogue>
+
+<h1>@Model.Select(g => g.Specialty).Single()</h1> <br>
+
+<h3>Het Team</h3>
+
+@foreach (var orthopedagogue in Model)
+{
+    string path = "../../img/" + @orthopedagogue.FirstName + @orthopedagogue.LastName + "Orthopedagoog.png";
+    <a href="/Specialismen/Specialist/@orthopedagogue.Id"><img class="OrthopedagogueImage img-fluid rounded-circle" src="@path" alt="@orthopedagogue.FirstName @orthopedagogue.LastName Orthopedagoog @orthopedagogue.Specialty Profielfoto"></img></a> <br>
+    <a class="a-no-underline" href="/Specialismen/Specialist/@orthopedagogue.Id"><strong>@orthopedagogue.FirstName   @orthopedagogue.LastName</strong></a> 
+
+}
+

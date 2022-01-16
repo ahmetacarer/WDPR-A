@@ -42,6 +42,11 @@ public class SelfHelpGroupController : Controller
             lijst = _context.Chats.Where(c => c.IsPrivate == false && c.Subject == subject && c.AgeCategory == ageCategory);
         }
 
+        if (lijst.Count() == 0)
+        {
+            ViewData["Melding"] = "Er zijn helaas geen chats gevonden.";
+        }
+
         return View(await lijst.OrderBy(c => c.RoomName.ToLower()).ToListAsync());
     }
 

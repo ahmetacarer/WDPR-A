@@ -11,16 +11,18 @@ using System;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("WDPRContextConnection");
-var keyVaultName = Environment.GetEnvironmentVariable("DB_KEY",EnvironmentVariableTarget.User);
-builder.Services.AddDbContext<WDPRContext>
-(async options =>
+builder.Services.AddDbContext<WDPRContext>(options =>
 {
     if (builder.Environment.IsProduction())
     {
-        var kvUri = "https://" + keyVaultName + ".vault.azure.net";
-        var client = new SecretClient(new Uri(kvUri), new DefaultAzureCredential());
-        var secret = await client.GetSecretAsync("DB-PASSWORD");
-        connectionString = connectionString.Replace("{your_password}", secret.Value.Value);
+        // var cS = new SqlConnectionStringBuilder(connectionString);
+        // var DB_NAME = builder.Configuration.GetConnectionString("DB_NAME");
+        // var DB_KEY = builder.Configuration.GetConnectionString("DB_KEY");
+        // var kvUri = $"https://{DB_NAME}.vault.azure.net";
+        // var client = new SecretClient(new Uri(kvUri), new DefaultAzureCredential());
+        // var secret = client.GetSecret(DB_KEY);
+        // cS.Password = secret.Value.Value;
+        // options.UseSqlServer(cS.ConnectionString);
         options.UseSqlServer(connectionString);
     }
     else

@@ -23,6 +23,7 @@ namespace WDPR_A.Hubs
             var name = $"{contextUser.FirstName[0]}. {contextUser.LastName}";
             var date = DateTime.Now;
             await Clients.All.SendAsync("ReceiveMessage", name, text, date.ToString("HH:mm"));
+            // niet de meest efficiente manier, later gerefactored worden naar meerdere methods zoals SendMessageToChat en SendPrivateMessage
             await _context.Messages.AddAsync(new Message { Sender = contextUser, Text = text, When = date, ChatRoomId = roomId });
             await _context.SaveChangesAsync();
         }

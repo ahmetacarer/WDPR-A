@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'zmdh-hhs'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_563BA0719E2F49DA86406998282AFEDB }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_D841486EC47B43DCBC90155F866FB66C }}
           package: .

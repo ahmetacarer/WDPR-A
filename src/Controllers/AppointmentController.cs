@@ -82,7 +82,7 @@ public class AppointmentController : Controller
             protocol: Request.Scheme);
         string datum = appointmentDate.ToString("dd/MM/yyyy HH:mm");
         await SendVerificationEmail(client.Email, "Bevestig je mail",
-            $"Bevestig je mail door te <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>klikken</a>.</br>Jouw intake-gesprek vind plaats op {datum}");
+            $"Bevestig je mail door te <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>klikken</a>.</br>Jouw intake-gesprek vindt plaats op {datum}");
 
 
         return RedirectToAction("Succes");

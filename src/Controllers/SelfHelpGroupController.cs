@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WDPR_A.Models;
+using WDPR_A.ViewModels;
 
 namespace WDPR_A.Controllers;
 
@@ -14,13 +15,15 @@ public class SelfHelpGroupController : Controller
     private readonly WDPRContext _context;
     private readonly UserManager<IdentityUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
+    private readonly ChatManager _chatManager;
 
-    public SelfHelpGroupController(ILogger<SelfHelpGroupController> logger, WDPRContext context, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+    public SelfHelpGroupController(ILogger<SelfHelpGroupController> logger, WDPRContext context, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, ChatManager chatManager)
     {
         _logger = logger;
         _context = context;
         _userManager = userManager;
         _roleManager = roleManager;
+        _chatManager = chatManager;
     }
 
     public async Task<IActionResult> Index(string subject, AgeCategory? ageCategory)
@@ -66,8 +69,7 @@ public class SelfHelpGroupController : Controller
         IdentityUser user = await _userManager.GetUserAsync(User);
         var currentUser = _context.Orthopedagogues.Where(c => c.Id == user.Id).SingleOrDefault();
 
-        _context.Chats.Add(new Chat() { RoomId = Guid.NewGuid().ToString(), RoomName = roomName, Subject = currentUser.Specialty, IsPrivate = false, Orthopedagogue = currentUser, AgeCategory = ageCategory });
-        await _context.SaveChangesAsync();
+        await _chatManager.CreateSelfHelpChatAsync(currentUser, roomName, currentUser.Specialty, ageCategory);
         return RedirectToAction("Index");
     }
 

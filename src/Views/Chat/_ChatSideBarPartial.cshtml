@@ -1,47 +1,75 @@
 @inject WDPR_A.ViewModels.ChatViewModel chatViewModel
 @{
   List<Chat> chats = await chatViewModel.GetChatsAsync();
+
 }
-<div class="d-flex flex-column align-items-stretch flex-shrink-0 text-white bg-dark" style="width: 380px;">
-    <a href="#" class="d-flex align-items-center flex-shrink-0 p-3 link-white text-decoration-none border-bottom">
-      <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
-      <span class="fs-5 fw-bold text-white">Chats</span>
-    </a>
-    <div class="list-group list-group-flush border-bottom scrollarea">
-      @if(chats != null)
-      {
-      @foreach (var chat in chats)
-      {
-         <a href="#" class="sidebar_button list-group-item list-group-item-action py-3 lh-tight" style="background-color: #ececec" aria-current="true">
-        <div class="d-flex w-100 align-items-center justify-content-between" >
-          @if(chat.IsPrivate)
-          {
-            <strong class="mb-1">@chat.Orthopedagogue.FirstName @chat.Orthopedagogue.LastName</strong>
-          }
-          else {
-                <strong class="mb-2">@chat.RoomName</strong>
-          }
-        </div>
-        <div class="col-10 mb-1 small">
-          @if(chat.Messages.Any())
-          {
-            <p style="display:inline-block; margin-right:60%">@(chat.Messages.LastOrDefault().Text)</p>
-            <small>@chat.Messages.LastOrDefault().When.Hour:@chat.Messages.LastOrDefault().When.Minute</small>
-          }
-        </div>
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="d-flex flex-column align-items-stretch flex-shrink-0 text-white bg-dark col-3">
+      <a href="#" class="d-flex align-items-center flex-shrink-0 p-3 link-white text-decoration-none border-bottom">
+        <svg class="bi me-2" width="30" height="24">
+          <use xlink:href="#bootstrap"></use>
+        </svg>
+        <span class="fs-5 fw-bold text-white">Chats</span>
       </a>
-      }
-      }
-    }
+      <div class="list-group list-group-flush border-bottom scrollarea">
+        @if (chats != null)
+        {
+          @foreach (var chat in chats)
+          {
+            <a href="javascript:void(0)" id="@Html.Raw(chat.RoomId)"
+          class="sidebar_button list-group-item list-group-item-action py-3 lh-tight" 
+          aria-current="true">
+              <div class="d-flex w-100 align-items-center justify-content-between">
+                @if (chat.IsPrivate)
+                {
+                  <strong class="mb-1">@chat.Orthopedagogue.FirstName @chat.Orthopedagogue.LastName</strong>
+                }
+                else
+                {
+                  <strong class="mb-2">@chat.RoomName</strong>
+                }
+              </div>
+              <div class="col-10 mb-1 small">
+                @if (chat.Messages.Any())
+                {
+                  <p style="display:inline-block; margin-right:60%">@(chat.Messages.LastOrDefault().Text)</p>
+                  <small>@chat.Messages.LastOrDefault().When.Hour:@chat.Messages.LastOrDefault().When.Minute</small>
+                }
+              </div>
+            </a>
+          }
+        }
+      </div>
+    </div>
+    <div id="messages"></div>
   </div>
+
 </div>
 
 <script>
   let sidebar_buttons = document.getElementsByClassName("sidebar_button");
-  @* for (let i = 0; i < sidebar_buttons.length; i++)
-    {
-    sidebar_buttons[i].addEventListener('click', function(){
-    @await Html.PartialAsync("_ChatPartial", chat)
+  for (let i = 0; i < sidebar_buttons.length; i++) {
+    sidebar_buttons[i].addEventListener("click", function () {
+      let current_button = sidebar_buttons[i]
+      var chatRoomId = current_button.id;
+      var text = "@Url.Action("OnGetChatPartial", new { chatRoomId = "name"})";
+      text = text.replace("name", chatRoomId);
+  
+      if (!current_button.classList.contains("active")) {
+        $.post(text, function (data) {
+          // append vervangen met replace with als het niet goed genoeg functioneerd
+          $('#messages').replaceWith(data);
+        });
+        var current_chatRoom = chatRoomId;
+        Array.from(sidebar_buttons).forEach((el) => el.classList.remove('active'));
+        current_button.classList.add("active");
+      }
     })
-    } *@
+  }
 </script>
+
+<style></style>

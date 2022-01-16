@@ -21,6 +21,11 @@ public class GuardianController : Controller
         _userManager = userManager;
     }
 
+    public IActionResult Index()
+    {
+        return RedirectToAction("Dashboard");
+    }
+
     public async Task<IActionResult> Dashboard()
     {
         IdentityUser user = await _userManager.GetUserAsync(User);

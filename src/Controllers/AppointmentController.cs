@@ -80,13 +80,16 @@ public class AppointmentController : Controller
             pageHandler: null,
             values: new { area = "Identity", userId = client.Id, code = code, returnUrl = "~/" },
             protocol: Request.Scheme);
+
         string datum = appointmentDate.ToString("dd/MM/yyyy HH:mm");
         // await SendVerificationEmail(client.Email, "Bevestig je mail",
         //     $"Bevestig je mail door te <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>klikken</a>.</br>Jouw intake-gesprek vindt plaats op {datum}");
 
 
+
         return RedirectToAction("Succes");
     }
+
 
     public static async Task SendEmail(string receiver, string subject, string body)
     {
@@ -94,7 +97,6 @@ public class AppointmentController : Controller
         var client = new SendGridClient(apiKey);
 
         var from = new EmailAddress("", "ZMDH Kliniek");  //Voer verzender email in
-
         var to = new EmailAddress(receiver, "Intakegesprek cliënt");
         var plainTextContent = "";
 
@@ -107,11 +109,24 @@ public class AppointmentController : Controller
         return View();
     }
 
+
     // public void SendEmailThroughMailhog(string receiverEmail, DateTime AppointmentDate, bool isParent)
     // {
     //     //AppointmentDate.ToString("MM/dd/yyyy hh:mm");
     //     string datum = AppointmentDate.ToString("MM/dd/yyyy");
     //     string tijd = AppointmentDate.ToString("HH:mm");
+
+    //     //execute powershell cmdlets or scripts using command arguments as process
+    //     ProcessStartInfo processInfo = new ProcessStartInfo();
+    //     processInfo.FileName = @"powershell.exe";
+    //     //execute powershell script using script file
+    //     //processInfo.Arguments = @"& {c:\temp\Get-EventLog.ps1}";
+    //     //execute powershell command
+
+    //     if (isParent)
+    //     {
+    //         processInfo.Arguments = $@"& Send-MailMessage -To '{receiverEmail}' -From 'no-reply@ZMDHKliniek.com' -Subject 'ZMDH intakegesprek bevestiging' -Body 'U kind heeft zich aangemeld voor een intakegesprek op {datum} om {tijd}' -SmtpServer 'localhost' -Port 1025";
+    //     }
 
     //     //execute powershell cmdlets or scripts using command arguments as process
     //     ProcessStartInfo processInfo = new ProcessStartInfo();

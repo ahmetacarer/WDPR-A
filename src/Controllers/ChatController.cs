@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WDPR_A.Models;
+using WDPR_A.Extensions;
 
 namespace WDPR_A.Controllers;
 
@@ -37,5 +38,22 @@ public class ChatController : Controller
     public IActionResult Error()
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+    }
+
+    // nog niet async
+    [HttpPost]
+    public IActionResult OnGetChatPartial(string chatRoomId)
+    {
+        bool isAjax = HttpContext.Request.IsAjax("POST");
+        
+        if (!isAjax) 
+            return RedirectToAction("Index", "Home");
+        System.Console.WriteLine(chatRoomId);
+        var chat = _context.Chats.Include(c => c.Messages)
+                                 .Include(c => c.Clients)
+                                 .Include(c => c.Orthopedagogue)
+                                 .Where(c => c.RoomId == chatRoomId)
+                                 .SingleOrDefault();
+        return PartialView("_ChatPartial", chat);
     }
 }

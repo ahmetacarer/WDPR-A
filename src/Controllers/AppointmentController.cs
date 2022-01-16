@@ -81,14 +81,14 @@ public class AppointmentController : Controller
             values: new { area = "Identity", userId = client.Id, code = code, returnUrl = "~/" },
             protocol: Request.Scheme);
         string datum = appointmentDate.ToString("dd/MM/yyyy HH:mm");
-        await SendVerificationEmail(client.Email, "Bevestig je mail",
-            $"Bevestig je mail door te <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>klikken</a>.</br>Jouw intake-gesprek vindt plaats op {datum}");
+        // await SendVerificationEmail(client.Email, "Bevestig je mail",
+        //     $"Bevestig je mail door te <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>klikken</a>.</br>Jouw intake-gesprek vindt plaats op {datum}");
 
 
         return RedirectToAction("Succes");
     }
 
-    public static async Task SendVerificationEmail(string receiver, string subject, string body)
+    public static async Task SendEmail(string receiver, string subject, string body)
     {
         var apiKey = "";
         var client = new SendGridClient(apiKey);

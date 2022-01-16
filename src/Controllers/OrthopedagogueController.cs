@@ -33,7 +33,6 @@ public class OrthopedagogueController : Controller
 
     public async Task<IActionResult> Registration(int appointmentId)
     {
-        System.Console.WriteLine(appointmentId);
         var appointment = await _context.Appointments
                                         .Include(a => a.IncomingClient)
                                         .Include(a => a.Guardians)
@@ -58,7 +57,6 @@ public class OrthopedagogueController : Controller
     [HttpPost]
     public async Task<IActionResult> OnPostPartial(int BSN, DateTime birthDate)
     {
-        Console.WriteLine(birthDate.ToString("dd MM yyyy"));
         string result = await APIcall.GetClientFile(birthDate.ToString("dd MM yyyy"), BSN);
 
         if (result.Equals("Error"))
@@ -68,5 +66,47 @@ public class OrthopedagogueController : Controller
         ClientFile clientFile = JsonSerializer.Deserialize<ClientFile>(result);
 
         return PartialView("_ClientFile", model: clientFile);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> AcceptClient(int appointmentId)
+    {
+        
+        // hier een email verzenden om zijn wachtwoord in te stellen en vervolgens update in de database.
+        var appointment = await _context.Appointments.Include(a => a.Guardians)
+                                               .Include(c => c.IncomingClient)
+                                               .SingleOrDefaultAsync(a => a.Id == appointmentId);
+        if (appointment == null) 
+            return RedirectToAction("Dashboard");
+        if (appointment.Guardians != null && appointment.Guardians.Count > 0)
+            await AppointmentController.SendEmail(appointment.Guardians[0].Email, "Wachtwoord Aanmaken", "");
+
+        await AppointmentController.SendEmail(appointment.IncomingClient.Email, "Wachtwoord Aanmaken", "");
+        return RedirectToAction("Dashboard");
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> DenyClient(int appointmentId)
+    {
+        var appointment = await _context.Appointments.Include(a => a.Guardians)
+                                               .ThenInclude(g => g.Clients)
+                                               .Include(c => c.IncomingClient)
+                                               .SingleOrDefaultAsync(a => a.Id == appointmentId);
+        if (appointment == null) 
+            return RedirectToAction("Dashboard");
+        
+        var guardiansWithOneChild = _context.Guardians.Where(g => g.Clients.Count == 1 && g.Clients.Any(c => c.Id == appointment.IncomingClientId));
+
+        if (guardiansWithOneChild != null) _context.RemoveRange(guardiansWithOneChild);
+        _context.Remove(appointment.IncomingClient);
+        _context.Remove(appointment);
+        await _context.SaveChangesAsync();
+        return RedirectToAction("Dashboard");
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreatePassword(string userId)
+    {
+        return RedirectToAction("index", "home");
     }
 }

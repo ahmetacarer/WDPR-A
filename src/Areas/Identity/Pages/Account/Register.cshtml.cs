@@ -26,7 +26,6 @@ using WDPR_A.ViewModels;
 
 namespace WDPR_A.Areas.Identity.Pages.Account
 {
-    [Authorize(Roles = "Orthopedagogue")]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;

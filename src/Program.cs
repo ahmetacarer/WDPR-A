@@ -10,6 +10,7 @@ using Azure.Identity;
 using System;
 
 var builder = WebApplication.CreateBuilder(args);
+// connectie string voor sqlserver of sqlite
 var connectionString = builder.Configuration.GetConnectionString("WDPRContextConnection");
 builder.Services.AddDbContext<WDPRContext>(options =>
 {

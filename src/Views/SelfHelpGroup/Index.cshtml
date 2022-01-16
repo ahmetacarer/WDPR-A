@@ -60,6 +60,15 @@
           <td>
                 @Html.DisplayFor(modelItem => chat.AgeCategory)
           </td>
+          @if (User.IsInRole("Client") && !chat.Clients.Where(c => c.Email == User.Identity.Name).Any() )
+          {
+          <td>
+                <form asp-action="Join" asp-controller="SelfHelpGroup" method="post">
+                <input type="text" class="form-control" aria-describedby="basic-addon1" value="@chat.RoomId" name="roomId" hidden>
+                <input type="submit" class="btn btn-primary" value="Deelnemen">
+                </form>
+          </td>
+          }
      </tr>
     }
 </table>

@@ -25,6 +25,9 @@ public class SelfHelpGroupController : Controller
 
     public async Task<IActionResult> Index(string subject, AgeCategory? ageCategory)
     {
+        IdentityUser user = await _userManager.GetUserAsync(User);
+        var currentUser = _context.Orthopedagogues.Where(c => c.Id == user.Id).SingleOrDefault();
+
         var lijst = _context.Chats.Where(c => c.IsPrivate == false);
 
         if (!String.IsNullOrEmpty(subject))
@@ -47,7 +50,7 @@ public class SelfHelpGroupController : Controller
             ViewData["Melding"] = "Er zijn helaas geen chats gevonden.";
         }
 
-        return View(await lijst.OrderBy(c => c.RoomName.ToLower()).ToListAsync());
+        return View(await lijst.OrderBy(c => c.RoomName.ToLower()).Include(c => c.Clients).ToListAsync());
     }
 
     [Authorize(Roles = "Orthopedagogue")]
@@ -66,6 +69,19 @@ public class SelfHelpGroupController : Controller
         _context.Chats.Add(new Chat() { RoomId = Guid.NewGuid().ToString(), RoomName = roomName, Subject = currentUser.Specialty, IsPrivate = false, Orthopedagogue = currentUser, AgeCategory = ageCategory });
         await _context.SaveChangesAsync();
         return RedirectToAction("Index");
+    }
+
+    [Authorize(Roles = "Client")]
+    [HttpPost]
+    public async Task<IActionResult> Join(string roomId)
+    {
+        IdentityUser user = await _userManager.GetUserAsync(User);
+        var currentUser = _context.Clients.Where(c => c.Id == user.Id).SingleOrDefault();
+        var chat = _context.Chats.FirstOrDefault(c => c.RoomId == roomId);
+        chat.Clients.Add(currentUser);
+        _context.SaveChanges();
+
+        return RedirectToAction("Index", "Chat");
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -8,21 +8,21 @@ using WDPR_A.ViewModels;
 
 namespace WDPR_A.Controllers;
 
-// [Authorize(Roles = "Client, Orthopedagogue")]
+[Authorize(Roles = "Client, Orthopedagogue")]
 public class SelfHelpGroupController : Controller
 {
     private readonly ILogger<SelfHelpGroupController> _logger;
     private readonly WDPRContext _context;
     private readonly UserManager<IdentityUser> _userManager;
-    private readonly RoleManager<IdentityRole> _roleManager;
+    private readonly RoleSystem _roleSystem;
     private readonly ChatManager _chatManager;
 
-    public SelfHelpGroupController(ILogger<SelfHelpGroupController> logger, WDPRContext context, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, ChatManager chatManager)
+    public SelfHelpGroupController(ILogger<SelfHelpGroupController> logger, WDPRContext context, UserManager<IdentityUser> userManager, RoleSystem roleSystem, ChatManager chatManager)
     {
         _logger = logger;
         _context = context;
         _userManager = userManager;
-        _roleManager = roleManager;
+        _roleSystem = roleSystem;
         _chatManager = chatManager;
     }
 

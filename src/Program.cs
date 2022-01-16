@@ -19,8 +19,7 @@ builder.Services.AddDbContext<WDPRContext>(options =>
         var cS = new SqlConnectionStringBuilder(connectionString);
         var DB_URL = builder.Configuration.GetConnectionString("DB_URL");
         var DB_KEY = builder.Configuration.GetConnectionString("DB_KEY");
-        var kvUri = $"https://{DB_URL}.vault.azure.net";
-        var client = new SecretClient(new Uri(kvUri), new DefaultAzureCredential());
+        var client = new SecretClient(new Uri(DB_URL), new DefaultAzureCredential());
         var secret = client.GetSecret(DB_KEY);
         cS.Password = secret.Value.Value;
         options.UseSqlServer(cS.ConnectionString);

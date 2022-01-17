@@ -17,17 +17,25 @@ public class OrthopedagogueController : Controller
 {
     private readonly ILogger<OrthopedagogueController> _logger;
     private readonly WDPRContext _context;
+    private readonly UserManager<IdentityUser> _userManager;
 
-    public OrthopedagogueController(ILogger<OrthopedagogueController> logger, WDPRContext context)
+    public OrthopedagogueController(ILogger<OrthopedagogueController> logger, WDPRContext context, UserManager<IdentityUser> userManager)
     {
         _logger = logger;
         _context = context;
+        _userManager = userManager;
     }
 
-    public IActionResult Dashboard()
+    public IActionResult Index()
     {
-        Orthopedagogue Orthopedagogue = _context.Orthopedagogues.Where(o => o.Specialty == "ADHD").First();
-        List<Appointment> appointments = _context.Appointments.Include(a => a.IncomingClient).Include(a => a.Guardians).Where(a => a.OrthopedagogueId == Orthopedagogue.Id).OrderBy(a => a.AppointmentDate).ToList();
+        return RedirectToAction("Dashboard");
+    }
+
+    public async Task<IActionResult> Dashboard()
+    {
+        IdentityUser user = await _userManager.GetUserAsync(User);
+        var currentUser = _context.Orthopedagogues.Where(c => c.Id == user.Id).SingleOrDefault();
+        List<Appointment> appointments = _context.Appointments.Include(a => a.IncomingClient).Include(a => a.Guardians).Where(a => a.OrthopedagogueId == currentUser.Id).OrderBy(a => a.AppointmentDate).ToList();
         return View(appointments);
     }
 

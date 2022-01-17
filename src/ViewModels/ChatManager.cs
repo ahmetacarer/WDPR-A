@@ -1,21 +1,21 @@
 using WDPR_A.Models;
 
 namespace WDPR_A.ViewModels;
-public class Manage
+public class ChatManager
 {
     private readonly Generate _generate;
     private readonly WDPRContext _context;
 
 
-    public Manage(Generate generate, WDPRContext context)
+    public ChatManager(Generate generate, WDPRContext context)
     {
         _generate = generate;
         _context = context;
     }
 
-    public async Task CreateSelfHelpChatAsync(Orthopedagogue orthopedagogue, string subject, AgeCategory ageCategory)
+    public async Task CreateSelfHelpChatAsync(Orthopedagogue orthopedagogue, string roomName, string subject, AgeCategory ageCategory)
     {
-        var chat = new Chat() { Orthopedagogue = orthopedagogue, Subject = subject, AgeCategory = ageCategory };
+        var chat = new Chat() { RoomId = Guid.NewGuid().ToString(), RoomName = roomName, Orthopedagogue = orthopedagogue, Subject = subject, AgeCategory = ageCategory, IsPrivate = false };
         await _context.Chats.AddAsync(chat);
         await _context.SaveChangesAsync();
     }

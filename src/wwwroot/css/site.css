@@ -34,7 +34,6 @@ footer {
   color: black;
 }
 
-
 #logo {
   width: 150px;
 }
@@ -44,8 +43,6 @@ footer {
   height: 7.5%;
 }
 
-/* @media voor de footer erbij erin knallen  */
-
 #footertext {
   color: white;
   margin-top: 1.75%;
@@ -54,24 +51,41 @@ footer {
   align-items: center;
 }
 
-.ZMDHButton, button {
+.ZMDHButton,
+button {
   background-color: #3e424f;
   padding: 0.75% 5% 0.75% 5%;
 }
 
-.ZMDHButton:hover, button:hover {
+.ZMDHButton:hover,
+button:hover {
   background-color: #3e424f;
 }
 
-.ZMDHButton:active, button:active {
+.ZMDHButton:active,
+button:active {
   background-color: #3e424f;
-} 
+}
 
-.ZMDHButton:focus, button:focus {
+.ZMDHButton:focus,
+button:focus {
   background-color: #3e424f;
 }
 
 .LoginButton {
   margin: 0 5% 0 0;
   padding: 0.5% 2% 0.5% 2%;
+}
+
+.LoginButton:hover {
+  color: white;
+}
+
+@media (min-width: 576px) {
+  .LoginButton {
+    position: absolute;
+    justify-content: right;
+    align-items: right;
+    right: 3%;
+  }
 }

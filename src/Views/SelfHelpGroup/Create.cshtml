@@ -1,0 +1,26 @@
+@{
+    ViewData["Title"] = "Zelfhulpgroep aanmaken";
+}
+
+<h1>Zelfhulpgroep aanmaken</h1>
+
+
+<form asp-action="Create" method="post">
+
+  <br><div class="mb-3">
+    <label for="RoomNameInput" class="form-label">Chatgroep naam</label>
+    <input type="text" class="form-control" asp-validation-for="RoomName" aria-describedby="basic-addon1" id="RoomNameInput" name="roomName">
+  </div>
+
+  
+  <div class="input-group mb-3">
+    <label class="input-group-text" for="inputGroupSelect01">Leeftijdscategorie</label>
+    <select class="form-select" id="inputGroupSelect01" name="AgeCategory">
+      <option value="@AgeCategory.Jongste">Jongste</option>
+      <option value="@AgeCategory.Middelste">Middelste</option>
+      <option value="@AgeCategory.Oudste">Oudste</option>
+    </select>
+  </div>
+
+  <button type="submit"  class="btn btn-primary">Aanmaken</button>
+</form> 

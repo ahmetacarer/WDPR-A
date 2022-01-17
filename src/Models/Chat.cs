@@ -13,7 +13,7 @@ public class Chat
     public AgeCategory AgeCategory { get; set; }
     [Required]
     public Orthopedagogue Orthopedagogue { get; set; }
-    public IList<Client> Clients { get; set; }
+    public IList<Client> Clients { get; set; } = new List<Client>();
 
     public ICollection<Message> Messages { get; set; } = new HashSet<Message>();
 }

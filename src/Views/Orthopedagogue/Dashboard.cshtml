@@ -33,14 +33,14 @@
                   <p>Client voornaam: @Model[i].IncomingClient.FirstName</p>
                   <p>Client achternaam: @Model[i].IncomingClient.LastName</p>
 
-                  @if (Model[i].Guardians.Where(c => c.Email != null).Any())
-                  {
+                  
+                    @if(Model[i].Guardians.Any()){
                     <p>Ouders/voogden Email:</p>
-                    @foreach (var guardian in Model[i].Guardians)
+                    @foreach (var guardian in Model[i].Guardians.Where(c => c.EmailConfirmed != null))
                     {
                       <p>@guardian.Email</p>
                     }
-                  }
+                    }
                   @if (Model[i].IncomingClient.EmailConfirmed)
                   {
                     <form asp-action="AcceptClient" asp-route-appointmentId="@Model[i].Id" method="post">

@@ -39,8 +39,8 @@ public class AppointmentController : Controller
 
         if (_context.Users.Any(b => b.Email == client.Email))
         {
-
-            return RedirectToAction("Index");
+            ViewData["foutmelding"] = "email bestaat al";
+            return View();
         }
 
         // tijdelijk
@@ -82,11 +82,19 @@ public class AppointmentController : Controller
             protocol: Request.Scheme);
 
         string datum = appointmentDate.ToString("dd/MM/yyyy HH:mm");
-        // await SendVerificationEmail(client.Email, "Bevestig je mail",
-        //     $"Bevestig je mail door te <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>klikken</a>.</br>Jouw intake-gesprek vindt plaats op {datum}");
+        await SendEmail(client.Email, "Bevestig je mail",
+            $"Bevestig je mail door te <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>klikken</a>.</br>Jouw intake-gesprek vindt plaats op {datum}");
 
-
-
+        if (emailOfParent != null)
+        {
+            var guardianUrl = Url.Page(
+            "/Account/ConfirmEmail",
+            pageHandler: null,
+            values: new { area = "Identity", userId = client.Guardians[0].Id, code = code, returnUrl = "~/" },
+            protocol: Request.Scheme);
+            await SendEmail(emailOfParent, "Bevestig je mail",
+                $"Bevestig je mail door te <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>klikken</a>.</br>Jouw intake-gesprek vindt plaats op {datum}");
+        }
         return RedirectToAction("Succes");
     }
 

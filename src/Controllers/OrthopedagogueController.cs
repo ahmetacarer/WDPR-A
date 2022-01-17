@@ -10,6 +10,7 @@ using WDPR_A.ViewModels;
 using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
 using System.Linq;
+using System.Text.Encodings.Web;
 
 namespace WDPR_A.Controllers;
 
@@ -68,33 +69,32 @@ public class OrthopedagogueController : Controller
     [HttpPost]
     public async Task<IActionResult> AcceptClient(int appointmentId)
     {
-        
         // hier een email verzenden om zijn wachtwoord in te stellen en vervolgens update in de database.
         var appointment = await _context.Appointments.Include(a => a.Guardians)
+                                                     .ThenInclude(g => g.Clients)
                                                .Include(c => c.IncomingClient)
                                                .SingleOrDefaultAsync(a => a.Id == appointmentId);
         if (appointment == null || appointment.IncomingClient == null)
             return RedirectToAction("Dashboard");
-        
-        
+
+
         var callbackUrl = Url.Page(
             "/Account/Register",
             pageHandler: null,
-            values: new { area = "Identity", email = appointment.IncomingClient.Email, returnUrl = "~/" },
+            values: new { area = "Identity", userId = appointment.IncomingClientId, returnUrl = "~/" },
             protocol: Request.Scheme);
-            
-        await AppointmentController.SendEmail(appointment.IncomingClient.Email, "Wachtwoord Aanmaken", "");
-        
-        
-        if (appointment.Guardians != null && appointment.Guardians.Count > 0)
-            appointment.Guardians.Where(g => g.PasswordHash == null)
-                                 .ToList()
-                                 .ForEach(g => {
-                                    
-                                 });
-            await AppointmentController.SendEmail(appointment.Guardians[0].Email, "Wachtwoord Aanmaken", "");
-        
-        
+        await AppointmentController.SendEmail(appointment.IncomingClient.Email, "Wachtwoord Aanmaken", $"Maak je wachtwoord aan door <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>hier</a> te klikken.");
+
+        foreach (var guardian in appointment.Guardians.Where(g => g.PasswordHash == null && g.Clients.Count == 1))
+        {
+            callbackUrl = Url.Page(
+                "/Account/Register",
+                pageHandler: null,
+                values: new { area = "Identity", userId = guardian.Email, returnUrl = "~/" },
+                protocol: Request.Scheme);
+            await AppointmentController.SendEmail(guardian.Email, "Wachtwoord Aanmaken", $"Maak je wachtwoord aan door <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>hier</a> te klikken.");
+        }
+
         return RedirectToAction("Dashboard");
     }
 
@@ -105,9 +105,9 @@ public class OrthopedagogueController : Controller
                                                .ThenInclude(g => g.Clients)
                                                .Include(c => c.IncomingClient)
                                                .SingleOrDefaultAsync(a => a.Id == appointmentId);
-        if (appointment == null) 
+        if (appointment == null)
             return RedirectToAction("Dashboard");
-        
+
         var guardiansWithOneChild = _context.Guardians.Where(g => g.Clients.Count == 1 && g.Clients.Any(c => c.Id == appointment.IncomingClientId));
 
         if (guardiansWithOneChild != null) _context.RemoveRange(guardiansWithOneChild);
@@ -115,16 +115,5 @@ public class OrthopedagogueController : Controller
         _context.Remove(appointment);
         await _context.SaveChangesAsync();
         return RedirectToAction("Dashboard");
-    }
-
-    [HttpGet]
-    public async Task<IActionResult> CreatePassword(string userId)
-    {
-        // IdentityUser user = await _context.Clients.Where(c => c.Id == userId).FirstOrDefaultAsync();
-        // user ??= await _context.Guardians.Where(c => c.Id == userId).FirstOrDefaultAsync();
-        
-        // if (user == null)
-        //     return RedirectToAction("error");
-        return View();
     }
 }

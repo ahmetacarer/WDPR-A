@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace WDPR_A.ViewModels;
 
@@ -13,6 +14,26 @@ public class RoleSystem
         _context = context;
         _roleManager = roleManager;
         _userManager = userManager;
+    }
+
+    public static async Task Initialize(IServiceProvider serviceProvider)
+    {
+        var context = new WDPRContext(serviceProvider.GetRequiredService<DbContextOptions<WDPRContext>>());
+        var userManager = serviceProvider.GetService<UserManager<IdentityUser>>();
+        var roleManager = serviceProvider.GetService<RoleManager<IdentityRole>>();
+        var roles = new List<string> { "Client", "Guardian", "Orthopedagogue", "Moderator" };
+        foreach (var role in roles)
+        {
+            await roleManager.CreateAsync(new IdentityRole(role));
+        }
+        await context.SaveChangesAsync();
+        Console.WriteLine(context.Orthopedagogues);
+        foreach (var o in context.Orthopedagogues.ToList())
+        {
+            await userManager.AddToRolesAsync(o, new List<string> { "Orthopedagogue", "Moderator" });
+        }
+        await context.SaveChangesAsync();
+
     }
 
     public async Task SeedRoles()

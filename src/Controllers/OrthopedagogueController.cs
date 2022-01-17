@@ -10,7 +10,6 @@ using WDPR_A.ViewModels;
 using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
 using System.Linq;
-using System.Data.Entity;
 
 namespace WDPR_A.Controllers;
 

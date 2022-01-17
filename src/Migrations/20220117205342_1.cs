@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WDPR_A.Migrations
 {
-    public partial class Init : Migration
+    public partial class _1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -187,9 +187,8 @@ namespace WDPR_A.Migrations
                 columns: table => new
                 {
                     RoomId = table.Column<string>(type: "TEXT", nullable: false),
-                    RoomName = table.Column<string>(type: "TEXT", nullable: true),
-                    PrivateChatToken = table.Column<string>(type: "TEXT", nullable: true),
                     Subject = table.Column<string>(type: "TEXT", nullable: true),
+                    Condition = table.Column<string>(type: "TEXT", nullable: true),
                     IsPrivate = table.Column<bool>(type: "INTEGER", nullable: false),
                     AgeCategory = table.Column<int>(type: "INTEGER", nullable: false),
                     OrthopedagogueId = table.Column<string>(type: "TEXT", nullable: false)
@@ -284,22 +283,22 @@ namespace WDPR_A.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Specialty", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "0231e966-ab11-4a56-971a-3605f7a17338", 0, "7e71ad62-fa5c-4b6e-a39e-98192eaa9797", "Orthopedagogue", "sito@zmdh.nl", false, "Steven", "Ito", false, null, "SITO@ZMDH.NL", "SITO@ZMDH.NL", "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==", null, false, "dca2d3b5-a67a-48cd-b293-c164c6c93088", "Eetstoornis", false, "sito@zmdh.nl" });
+                values: new object[] { "15984fcc-67ab-4874-a91d-f8d8e3229540", 0, "4bdb9760-012a-4bde-ba42-d3df465e7160", "Orthopedagogue", "jlo@zmdh.nl", false, "Johan", "Lo", false, null, "JLO@ZMDH.NL", "JLO@ZMDH.NL", "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==", null, false, "f64cfdfe-8c28-45e7-b94d-5a05207aaeee", "Faalangst", false, "jlo@zmdh.nl" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Specialty", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "65f92804-164a-4941-9b31-bfc261284e34", 0, "894a2609-2d4b-4092-898b-f767642314e2", "Orthopedagogue", "mvdijk@zmdh.nl", false, "Marianne", "van Dijk", false, null, "MVDIJK@ZMDH.NL", "MVDIJK@ZMDH.NL", "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==", null, false, "f7f03c69-114c-41d7-8439-7c51cc72ac7f", "Dyslexie", false, "mvdijk@zmdh.nl" });
+                values: new object[] { "20c7a925-eb3b-4be7-8870-de6d4fb60a21", 0, "a839c720-8f5c-4f04-a6e7-e4740cb2150a", "Orthopedagogue", "sito@zmdh.nl", false, "Steven", "Ito", false, null, "SITO@ZMDH.NL", "SITO@ZMDH.NL", "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==", null, false, "4b6c90aa-a1e0-4c6c-92fd-a526e8f81e6f", "Eetstoornis", false, "sito@zmdh.nl" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Specialty", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "b2b1fbed-6255-4516-8a8a-63246c4dde33", 0, "f31bb64c-a757-465e-bd28-05d9b96bd8a4", "Orthopedagogue", "jlo@zmdh.nl", false, "Johan", "Lo", false, null, "JLO@ZMDH.NL", "JLO@ZMDH.NL", "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==", null, false, "88b659c5-864d-4617-862d-fbdc97e2323e", "Faalangst", false, "jlo@zmdh.nl" });
+                values: new object[] { "c1ffd24e-6dfb-454b-8bb3-5bd1bed880f1", 0, "196c7084-1ae8-4754-bd20-a110476f2d55", "Orthopedagogue", "kkemper@zmdh.nl", false, "Karin", "Kemper", false, null, "KKEMPER@ZMDH.NL", "KKEMPER@ZMDH.NL", "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==", null, false, "1439fe42-440f-416a-b8fd-cc4583261c18", "ADHD", false, "kkemper@zmdh.nl" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Specialty", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "baa1cf42-c251-44e9-b9c2-5e9a8cadfe8d", 0, "6a5ba5ec-f06c-48e1-9ca7-8b392ff28392", "Orthopedagogue", "kkemper@zmdh.nl", false, "Karin", "Kemper", false, null, "KKEMPER@ZMDH.NL", "KKEMPER@ZMDH.NL", "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==", null, false, "64c4c591-36b5-4ee2-868b-70071ca5b5c1", "ADHD", false, "kkemper@zmdh.nl" });
+                values: new object[] { "c359b893-4829-4d9a-81cd-0f9319ee37e8", 0, "b6e2b810-82f7-4abb-9a7a-3e29d5243cd2", "Orthopedagogue", "mvdijk@zmdh.nl", false, "Marianne", "van Dijk", false, null, "MVDIJK@ZMDH.NL", "MVDIJK@ZMDH.NL", "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==", null, false, "96202856-08f6-4aa5-9972-381e31db0f81", "Dyslexie", false, "mvdijk@zmdh.nl" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Appointments_IncomingClientId",

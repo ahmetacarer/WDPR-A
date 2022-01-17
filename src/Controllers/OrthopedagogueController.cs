@@ -9,6 +9,8 @@ using WDPR_A.Models;
 using WDPR_A.ViewModels;
 using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
+using System.Linq;
+using System.Data.Entity;
 
 namespace WDPR_A.Controllers;
 
@@ -76,12 +78,28 @@ public class OrthopedagogueController : Controller
         var appointment = await _context.Appointments.Include(a => a.Guardians)
                                                .Include(c => c.IncomingClient)
                                                .SingleOrDefaultAsync(a => a.Id == appointmentId);
-        if (appointment == null) 
+        if (appointment == null || appointment.IncomingClient == null)
             return RedirectToAction("Dashboard");
-        if (appointment.Guardians != null && appointment.Guardians.Count > 0)
-            await AppointmentController.SendEmail(appointment.Guardians[0].Email, "Wachtwoord Aanmaken", "");
-
+        
+        
+        var callbackUrl = Url.Page(
+            "/Account/Register",
+            pageHandler: null,
+            values: new { area = "Identity", email = appointment.IncomingClient.Email, returnUrl = "~/" },
+            protocol: Request.Scheme);
+            
         await AppointmentController.SendEmail(appointment.IncomingClient.Email, "Wachtwoord Aanmaken", "");
+        
+        
+        if (appointment.Guardians != null && appointment.Guardians.Count > 0)
+            appointment.Guardians.Where(g => g.PasswordHash == null)
+                                 .ToList()
+                                 .ForEach(g => {
+                                    
+                                 });
+            await AppointmentController.SendEmail(appointment.Guardians[0].Email, "Wachtwoord Aanmaken", "");
+        
+        
         return RedirectToAction("Dashboard");
     }
 
@@ -104,9 +122,14 @@ public class OrthopedagogueController : Controller
         return RedirectToAction("Dashboard");
     }
 
-    [HttpPost]
+    [HttpGet]
     public async Task<IActionResult> CreatePassword(string userId)
     {
-        return RedirectToAction("index", "home");
+        // IdentityUser user = await _context.Clients.Where(c => c.Id == userId).FirstOrDefaultAsync();
+        // user ??= await _context.Guardians.Where(c => c.Id == userId).FirstOrDefaultAsync();
+        
+        // if (user == null)
+        //     return RedirectToAction("error");
+        return View();
     }
 }

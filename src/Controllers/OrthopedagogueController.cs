@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace WDPR_A.Controllers;
 
-// [Authorize(Roles = "Orthopedagogue")]
+[Authorize(Roles = "Orthopedagogue")]
 public class OrthopedagogueController : Controller
 {
     private readonly ILogger<OrthopedagogueController> _logger;
@@ -38,18 +38,6 @@ public class OrthopedagogueController : Controller
         var currentUser = _context.Orthopedagogues.Where(c => c.Id == user.Id).SingleOrDefault();
         List<Appointment> appointments = _context.Appointments.Include(a => a.IncomingClient).Include(a => a.Guardians).Where(a => a.OrthopedagogueId == currentUser.Id).OrderBy(a => a.AppointmentDate).ToList();
         return View(appointments);
-    }
-
-    public async Task<IActionResult> Registration(int appointmentId)
-    {
-        var appointment = await _context.Appointments
-                                        .Include(a => a.IncomingClient)
-                                        .Include(a => a.Guardians)
-                                        .SingleAsync(a => a.Id == appointmentId);
-        if (appointment.Guardians?.Count == null || appointment.Guardians?.Count == 0)
-            return RedirectToPage("/Account/Register", new { area = "Identity", email = appointment.IncomingClient.Email });
-        // only one guardian can register together with client
-        return RedirectToPage("/Account/Register", new { area = "Identity", email = appointment.IncomingClient.Email, guardianEmail = appointment.Guardians[0].Email });
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

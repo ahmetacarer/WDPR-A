@@ -26,31 +26,36 @@ public class SelfHelpGroupController : Controller
         _chatManager = chatManager;
     }
 
-    public async Task<IActionResult> Index(string subject, AgeCategory? ageCategory)
+    public async Task<IActionResult> Index(string roomName, AgeCategory? ageCategory)
     {
         IdentityUser user = await _userManager.GetUserAsync(User);
-        var currentUser = _context.Orthopedagogues.Where(c => c.Id == user.Id).SingleOrDefault();
 
         var lijst = _context.Chats.Where(c => c.IsPrivate == false);
 
-        if (!String.IsNullOrEmpty(subject))
+        if (User.IsInRole("Client"))
         {
-            lijst = _context.Chats.Where(c => c.IsPrivate == false && c.Subject == subject);
-        }
+            var currentUser = _context.Clients.Where(c => c.Id == user.Id).SingleOrDefault();
+            lijst = lijst.Where(c => c.IsPrivate == false && c.Subject == currentUser.Condition);
 
-        if (!String.IsNullOrEmpty(ageCategory.ToString()))
-        {
-            lijst = _context.Chats.Where(c => c.IsPrivate == false && c.AgeCategory == ageCategory);
-        }
+            if (!String.IsNullOrEmpty(roomName))
+            {
+                lijst = lijst.Where(c => c.RoomName.Contains(roomName));
+            }
 
-        if (!String.IsNullOrEmpty(subject) && !String.IsNullOrEmpty(ageCategory.ToString()))
-        {
-            lijst = _context.Chats.Where(c => c.IsPrivate == false && c.Subject == subject && c.AgeCategory == ageCategory);
-        }
+            if (!String.IsNullOrEmpty(ageCategory.ToString()))
+            {
+                lijst = lijst.Where(c => c.AgeCategory == ageCategory);
+            }
 
-        if (lijst.Count() == 0)
-        {
-            ViewData["Melding"] = "Er zijn helaas geen chats gevonden.";
+            if (!String.IsNullOrEmpty(roomName) && !String.IsNullOrEmpty(ageCategory.ToString()))
+            {
+                lijst = lijst.Where(c => c.IsPrivate == false && c.RoomName.Contains(roomName) && c.AgeCategory == ageCategory);
+            }
+
+            if (lijst.Count() == 0)
+            {
+                ViewData["Melding"] = "Er zijn helaas geen chats gevonden.";
+            }
         }
 
         return View(await lijst.OrderBy(c => c.RoomName.ToLower()).Include(c => c.Clients).ToListAsync());

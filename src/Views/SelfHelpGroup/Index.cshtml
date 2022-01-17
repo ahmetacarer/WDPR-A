@@ -6,23 +6,16 @@
 
 <h1>Zelfhulpgroepen vinden</h1>
 <br>
+@if(User.IsInRole("Orthopedagogue"))
+{
+    <a asp-action="Create">Aanmaken van zelfhulpgroep</a>
+}
 
 
 <form method="get">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-5">
-                <div class="input-group mb-3">
-                    <label class="input-group-text" for="inputGroupSelect01">Aandoening</label>
-                    <select class="form-select" id="inputGroupSelect01" name="subject">
-                    <option value="">Kies...</option>
-                    <option value="ADHD">ADHD</option>
-                    <option value="Faalangst">Faalangst</option>
-                    <option value="Eetstoornis">Eetstoornis</option>
-                    <option value="Dyslexie">Dyslexie</option>
-                    </select>
-                </div>
-            </div>
+    <p>
+        <input type="text" name="roomName" />
+    </p>
 
             <div class="col-sm-5">
                 <div class="input-group mb-3">
@@ -60,7 +53,7 @@
           <td>
                 @Html.DisplayFor(modelItem => chat.AgeCategory)
           </td>
-          @if (User.IsInRole("Client") && !chat.Clients.Where(c => c.Email == User.Identity.Name).Any() )
+          @if (User.IsInRole("Client") && !chat.Clients.Where(c => c.Email == User.Identity.Name).Any())
           {
           <td>
                 <form asp-action="Join" asp-controller="SelfHelpGroup" method="post">

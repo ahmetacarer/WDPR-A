@@ -58,7 +58,7 @@ public class OrthopedagogueController : Controller
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 
-    public IActionResult Client()
+    public IActionResult ClientCheck()
     {
         return View();
     }

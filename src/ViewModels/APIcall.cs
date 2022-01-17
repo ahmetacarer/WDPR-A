@@ -17,6 +17,7 @@ namespace src.Controllers
             client.DefaultRequestHeaders.Add("key", $"{dateTime}|{encryptedData}");
             
             HttpResponseMessage response = await client.GetAsync("https://zorgdomeinhhs.azurewebsites.net/referral/" + birthDate + "/" + bsn);
+
             if (response.IsSuccessStatusCode)
             {
                 return await response.Content.ReadAsStringAsync();

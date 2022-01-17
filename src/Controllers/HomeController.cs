@@ -27,6 +27,16 @@ public class HomeController : Controller
         await _context.SaveChangesAsync();
         await _roleSystem.AddUserToRole(user1, "Orthopedagogue");
         await _context.SaveChangesAsync();
+
+        if (User.IsInRole("Guardian"))
+        {
+            return RedirectToAction("Dashboard", "Guardian");
+        }
+
+        if (User.IsInRole("Orthopedagogue"))
+        {
+            return RedirectToAction("Dashboard", "Orthopedagogue");
+        }
         return View();
     }
 

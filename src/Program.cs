@@ -39,15 +39,10 @@ builder.Services.AddTransient<Random>(); // injects a new instance to every serv
 builder.Services.AddScoped<Generate>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddTransient<ChatViewModel>();
+builder.Services.AddTransient<ChatManager>();
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-
-    await RoleSystem.Initialize(services);
-}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

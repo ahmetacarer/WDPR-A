@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace WDPR_A.Migrations
 {
     [DbContext(typeof(WDPRContext))]
-    [Migration("20220116205105_1")]
+    [Migration("20220117162202_1")]
     partial class _1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -72,6 +72,36 @@ namespace WDPR_A.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "006c921b-611f-4cf9-a18c-3d722840ee42",
+                            ConcurrencyStamp = "5a2d0de2-8aa4-45ca-bc96-92dd007274a0",
+                            Name = "Orthopedagogue",
+                            NormalizedName = "ORTHOPEDAGOGUE"
+                        },
+                        new
+                        {
+                            Id = "26d89e3f-e47f-468b-bd78-6f58aef3285e",
+                            ConcurrencyStamp = "308d7ca3-878f-45cf-b723-12527091bc20",
+                            Name = "Moderator",
+                            NormalizedName = "MODERATOR"
+                        },
+                        new
+                        {
+                            Id = "6e7321be-b891-44a3-abd8-71283880ddb9",
+                            ConcurrencyStamp = "02b67f38-d77b-4785-b20e-25ef3a85f0aa",
+                            Name = "Client",
+                            NormalizedName = "CLIENT"
+                        },
+                        new
+                        {
+                            Id = "ede8d0e5-2581-476c-ba45-a99d7089844a",
+                            ConcurrencyStamp = "e6b262cc-de23-4a2d-984c-31f58d9c0a2e",
+                            Name = "Guardian",
+                            NormalizedName = "GUARDIAN"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -227,6 +257,48 @@ namespace WDPR_A.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "13198681-ef68-4acf-bd7e-544e12fed291",
+                            RoleId = "26d89e3f-e47f-468b-bd78-6f58aef3285e"
+                        },
+                        new
+                        {
+                            UserId = "13198681-ef68-4acf-bd7e-544e12fed291",
+                            RoleId = "006c921b-611f-4cf9-a18c-3d722840ee42"
+                        },
+                        new
+                        {
+                            UserId = "7d028f6c-929e-45b0-8493-573078b85f79",
+                            RoleId = "26d89e3f-e47f-468b-bd78-6f58aef3285e"
+                        },
+                        new
+                        {
+                            UserId = "7d028f6c-929e-45b0-8493-573078b85f79",
+                            RoleId = "006c921b-611f-4cf9-a18c-3d722840ee42"
+                        },
+                        new
+                        {
+                            UserId = "1988e216-9179-42a1-8243-2b6bf362b1b4",
+                            RoleId = "26d89e3f-e47f-468b-bd78-6f58aef3285e"
+                        },
+                        new
+                        {
+                            UserId = "1988e216-9179-42a1-8243-2b6bf362b1b4",
+                            RoleId = "006c921b-611f-4cf9-a18c-3d722840ee42"
+                        },
+                        new
+                        {
+                            UserId = "4e3371ca-b20a-4c91-b6c2-7c872c310a54",
+                            RoleId = "26d89e3f-e47f-468b-bd78-6f58aef3285e"
+                        },
+                        new
+                        {
+                            UserId = "4e3371ca-b20a-4c91-b6c2-7c872c310a54",
+                            RoleId = "006c921b-611f-4cf9-a18c-3d722840ee42"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -394,56 +466,76 @@ namespace WDPR_A.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "df8c86b7-19df-4eee-824c-69962681b3e8",
+                            Id = "13198681-ef68-4acf-bd7e-544e12fed291",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e016a305-b8f5-414a-85c4-c4ab1731282f",
+                            ConcurrencyStamp = "338399f8-7fc7-4344-bcbc-17a201241719",
+                            Email = "kkemper@zmdh.nl",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
+                            NormalizedEmail = "KKEMPER@ZMDH.NL",
+                            NormalizedUserName = "KKEMPER@ZMDH.NL",
+                            PasswordHash = "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c2857c6c-2a72-490d-a686-2019bbc208d7",
+                            SecurityStamp = "101c02a5-7c45-4233-bef3-79f3774809b7",
                             TwoFactorEnabled = false,
+                            UserName = "kkemper@zmdh.nl",
                             FirstName = "Karin",
                             LastName = "Kemper",
                             Specialty = "ADHD"
                         },
                         new
                         {
-                            Id = "21a27634-32ea-4a23-a1dc-25d99d65f8de",
+                            Id = "7d028f6c-929e-45b0-8493-573078b85f79",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "85ac8b43-f25a-4ec1-adb8-7e18d3f81262",
+                            ConcurrencyStamp = "ce3b30c6-f844-49a9-8849-47d318ab809e",
+                            Email = "jlo@zmdh.nl",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
+                            NormalizedEmail = "JLO@ZMDH.NL",
+                            NormalizedUserName = "JLO@ZMDH.NL",
+                            PasswordHash = "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "fb75385b-85b7-4fe3-a24c-df8a5032762c",
+                            SecurityStamp = "f896f38a-efb3-46a0-ac35-aed0adc3c457",
                             TwoFactorEnabled = false,
+                            UserName = "jlo@zmdh.nl",
                             FirstName = "Johan",
                             LastName = "Lo",
                             Specialty = "Faalangst"
                         },
                         new
                         {
-                            Id = "33bbf5f3-6f07-4fb7-b809-d59024eac6aa",
+                            Id = "1988e216-9179-42a1-8243-2b6bf362b1b4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7fdb2bb3-19e0-4e8c-b84e-413ada6b3d77",
+                            ConcurrencyStamp = "762fb668-15b9-4122-a85f-68de2141aeae",
+                            Email = "sito@zmdh.nl",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
+                            NormalizedEmail = "SITO@ZMDH.NL",
+                            NormalizedUserName = "SITO@ZMDH.NL",
+                            PasswordHash = "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "88845a95-099a-49a4-8e6f-9b118cdfae90",
+                            SecurityStamp = "755260b8-0929-4aa9-b33d-b1c7c7bea6b8",
                             TwoFactorEnabled = false,
+                            UserName = "sito@zmdh.nl",
                             FirstName = "Steven",
                             LastName = "Ito",
                             Specialty = "Eetstoornis"
                         },
                         new
                         {
-                            Id = "a7dd7bda-09f7-4a8c-8ac2-8750306000b4",
+                            Id = "4e3371ca-b20a-4c91-b6c2-7c872c310a54",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "379b9b4d-4fea-4df2-b1d2-f851e9a8c630",
+                            ConcurrencyStamp = "51cc38c5-5335-46a4-b2f6-50f5e84d0dbb",
+                            Email = "mvdijk@zmdh.nl",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
+                            NormalizedEmail = "MVDIJK@ZMDH.NL",
+                            NormalizedUserName = "MVDIJK@ZMDH.NL",
+                            PasswordHash = "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5a7c3b78-f489-4b53-bc33-846afa17b8d6",
+                            SecurityStamp = "7fc6f61a-27bf-4d47-a075-7ed1e1e4beb1",
                             TwoFactorEnabled = false,
+                            UserName = "mvdijk@zmdh.nl",
                             FirstName = "Marianne",
                             LastName = "van Dijk",
                             Specialty = "Dyslexie"

@@ -19,6 +19,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using WDPR_A.ViewModels;
+using System.Data;
+using System.Linq;
 /// <summary>
 ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
 ///     directly from your code. This API may change or be removed in future releases.
@@ -61,24 +63,11 @@ namespace WDPR_A.Areas.Identity.Pages.Account
         [BindProperty]
         public InputModel Input { get; set; }
 
-        [BindProperty]
-        public InputModel Input2 { get; set; }
-
-
         public string ReturnUrl { get; set; }
-
-
-
-
-        public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
-            [Display(Name = "Email")]
-            public string Email { get; set; }
-
+            public string UserId { get; set; }
 
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
@@ -93,35 +82,37 @@ namespace WDPR_A.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
         }
 
-        public async Task OnGetAsync(string returnUrl = null, string email = null, string guardianEmail = null)
+        public async Task OnGetAsync(string returnUrl = null, string userId = null)
         {
-            ViewData["email"] = email;
-            ViewData["guardianEmail"] = guardianEmail;
+            ViewData["userId"] = userId;
             ReturnUrl = returnUrl;
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
-        {
-            await _roleSystem.SeedRoles();
-            returnUrl ??= Url.Content("~/");
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-            var user = _context.Clients.SingleOrDefault(s => s.Email == Input.Email);
-            var user2 = _context.Guardians.SingleOrDefault(s => s.Email == Input2.Email);
-            await CompleteAccount(user, Input);
-            await _roleSystem.AddUserToRole(user, "Client");
-            if (user2 is not null)
+        { 
+            var identityUser = _context.Users.SingleOrDefault(i => i.Id == Input.UserId);
+            var client =  _context.Clients.SingleOrDefault(c => c.Id == Input.UserId);
+            var guardian = _context.Guardians.SingleOrDefault(g => g.Id == Input.UserId);
+            if (Input.UserId == null || (client == null && guardian == null) || identityUser.PasswordHash != null || !identityUser.EmailConfirmed)
+                RedirectToAction("Index","Home");
+
+            if (client != null)
             {
-                await CompleteAccount(user2, Input2);
-                await _roleSystem.AddUserToRole(user2, "Guardian");
+                await CompleteAccount(client, Input);
+                await _roleSystem.AddUserToRole(client, "Client");
             }
-            return RedirectToPage("/Orthopedagogue/Dashboard");
+            else if (guardian != null)
+            {
+                await CompleteAccount(guardian, Input);
+                await _roleSystem.AddUserToRole(guardian, "Guardian");
+            }
+            return RedirectToAction("Succes", "Appointment");
         }
 
         private async Task CompleteAccount(IdentityUser user, InputModel input)
         {
-            await _userStore.SetUserNameAsync(user, input.Email, CancellationToken.None);
-            await _emailStore.SetEmailAsync(user, input.Email, CancellationToken.None);
+            await _userStore.SetUserNameAsync(user, user.Email, CancellationToken.None);
+            await _emailStore.SetEmailAsync(user, user.Email, CancellationToken.None);
             var result = await _userManager.AddPasswordAsync(user, input.Password);
             if (result.Succeeded)
             {

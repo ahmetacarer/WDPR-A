@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using WDPR_A.ViewModels;
 
 namespace WDPR_A.Areas.Identity.Pages.Account
 {
@@ -77,8 +78,11 @@ namespace WDPR_A.Areas.Identity.Pages.Account
             public bool RememberMe { get; set; }
         }
 
+       
+
         public async Task OnGetAsync(string returnUrl = null)
         {
+
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
                 ModelState.AddModelError(string.Empty, ErrorMessage);

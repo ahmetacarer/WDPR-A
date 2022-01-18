@@ -24,7 +24,7 @@ public class AppointmentTest
         WDPRContext WDPRContext = new WDPRContext(options);
 
         //Arrange
-        var controller = new AppointmentController(null, WDPRContext);
+        var controller = new AppointmentController(null,WDPRContext, null, null);
 
         //Act
         var result = controller.Index();
@@ -40,7 +40,7 @@ public class AppointmentTest
         WDPRContext WDPRContext = new WDPRContext(options);
 
         //Arrange
-        var controller = new AppointmentController(null, WDPRContext);
+        var controller = new AppointmentController(null,WDPRContext, null, null);
 
         var firstName = "hAns";
 
@@ -60,7 +60,7 @@ public class AppointmentTest
         WDPRContext WDPRContext = new WDPRContext(options);
 
         //Arrange
-        var sut = new AppointmentController(null, WDPRContext);
+        var sut = new AppointmentController(null,WDPRContext, null, null);
 
         var client = new Client {FirstName = "Hansie", LastName = "Bassie", Email = "testEmaghfghfghil@gmail.com", Condition = "ADHD"};
 
@@ -87,7 +87,7 @@ public class AppointmentTest
         //Arrange
         var expected = 0;
 
-        var sut = new AppointmentController(null, WDPRContext);
+        var sut = new AppointmentController(null,WDPRContext, null, null);
 
         var client = new Client { FirstName = "Hansie", LastName = "Bassie", Email = "testEmaghfghfghil@gmail.com", Condition = "ADHD" };
 
@@ -110,7 +110,7 @@ public class AppointmentTest
         //Arrange
         var expected = 0;
 
-        var sut = new AppointmentController(null, WDPRContext);
+        var sut = new AppointmentController(null,WDPRContext, null, null);
 
         var client = new Client { FirstName = "Hansie", LastName = "Bassie", Email = "testEmaghfghfghil@gmail.com", Condition = "ADHD" };
 

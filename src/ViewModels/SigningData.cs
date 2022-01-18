@@ -2,31 +2,23 @@ using System.Security.Cryptography;
 using System.Text;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
+using Microsoft.Extensions.Configuration;
 
 namespace src.Controllers
 {
     public static class SigningData
     {
-        private static byte[] RSAkey;
-        public static async Task<string> encryptData(string message)
+        private static byte[] _RSAkey; 
+
+        public static async Task SetPrivateKey(string vaultUrl, string keyName)
         {
+            var client = new SecretClient(new Uri(vaultUrl), new DefaultAzureCredential());
+            var secret = await client.GetSecretAsync(keyName);
+            _RSAkey = Convert.FromBase64String(secret.Value.Value);
+        }
 
-            try
-            {
-                if (RSAkey == null || RSAkey.Length == 0)
-                {
-                    var kvUri = "https://wdpr-keys.vault.azure.net/";
-                    var client = new SecretClient(new Uri(kvUri), new DefaultAzureCredential());
-                    var secret = await client.GetSecretAsync("PrivateKey");
-
-                    RSAkey = Convert.FromBase64String(secret.Value.Value);
-                }
-            }
-            catch (FileNotFoundException ex)
-            {
-                throw new Exception("Can't find private key", ex);
-            }
-
+        public static async Task<string> EncryptData(string message)
+        {
             /// The array to store the signed message in bytes
             byte[] signedBytes;
             using (var rsa = new RSACryptoServiceProvider())
@@ -38,7 +30,7 @@ namespace src.Controllers
                 try
                 {
                     /// Import the private key used for signing the message
-                    rsa.ImportRSAPrivateKey(RSAkey, out _);
+                    rsa.ImportRSAPrivateKey(_RSAkey, out _);
 
                     /// Sign the data, using SHA512 as the hashing algorithm 
                     signedBytes = rsa.SignData(originalData, CryptoConfig.MapNameToOID("SHA256"));

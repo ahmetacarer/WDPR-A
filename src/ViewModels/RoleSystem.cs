@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace WDPR_A.ViewModels;
 
@@ -49,7 +50,6 @@ public class RoleSystem
             await _userManager.AddToRoleAsync(user, roleName);
             await _context.SaveChangesAsync();
         }
-
     }
 
     public async Task RemoveRoleFromUser(IdentityUser user, string roleName)

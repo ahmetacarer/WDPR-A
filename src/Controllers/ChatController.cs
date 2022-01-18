@@ -48,7 +48,6 @@ public class ChatController : Controller
         
         if (!isAjax) 
             return RedirectToAction("Index", "Home");
-        System.Console.WriteLine(chatRoomId);
         var chat = _context.Chats.Include(c => c.Messages)
                                  .Include(c => c.Clients)
                                  .Include(c => c.Orthopedagogue)

@@ -2,24 +2,25 @@ using System.Security.Cryptography;
 using System.Text;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
+using Microsoft.Extensions.Configuration;
 
 namespace src.Controllers
 {
     public static class SigningData
     {
-        private static byte[] RSAkey;
-        public static async Task<string> encryptData(string message)
+        private static byte[] _RSAkey; 
+        public static async Task<string> EncryptData(string message, IConfiguration configuration)
         {
 
             try
             {
-                if (RSAkey == null || RSAkey.Length == 0)
+                if (_RSAkey == null || _RSAkey.Length == 0)
                 {
-                    var kvUri = "https://wdpr-keys.vault.azure.net/";
+                    var kvUri = configuration.GetConnectionString("VAULT_URL");
+                    var VAULT_KEY_NAME = configuration.GetConnectionString("VAULT_KEY_NAME"); 
                     var client = new SecretClient(new Uri(kvUri), new DefaultAzureCredential());
-                    var secret = await client.GetSecretAsync("PrivateKey");
-
-                    RSAkey = Convert.FromBase64String(secret.Value.Value);
+                    var secret = await client.GetSecretAsync(VAULT_KEY_NAME);
+                    _RSAkey = Convert.FromBase64String(secret.Value.Value);
                 }
             }
             catch (FileNotFoundException ex)
@@ -38,7 +39,7 @@ namespace src.Controllers
                 try
                 {
                     /// Import the private key used for signing the message
-                    rsa.ImportRSAPrivateKey(RSAkey, out _);
+                    rsa.ImportRSAPrivateKey(_RSAkey, out _);
 
                     /// Sign the data, using SHA512 as the hashing algorithm 
                     signedBytes = rsa.SignData(originalData, CryptoConfig.MapNameToOID("SHA256"));

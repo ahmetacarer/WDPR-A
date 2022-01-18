@@ -20,12 +20,14 @@ public class OrthopedagogueController : Controller
     private readonly ILogger<OrthopedagogueController> _logger;
     private readonly WDPRContext _context;
     private readonly UserManager<IdentityUser> _userManager;
+    private readonly IConfiguration _configuration;
 
-    public OrthopedagogueController(ILogger<OrthopedagogueController> logger, WDPRContext context, UserManager<IdentityUser> userManager)
+    public OrthopedagogueController(ILogger<OrthopedagogueController> logger, WDPRContext context, UserManager<IdentityUser> userManager, IConfiguration configuration)
     {
         _logger = logger;
         _context = context;
         _userManager = userManager;
+        _configuration = configuration;
     }
 
     public IActionResult Index()
@@ -55,7 +57,7 @@ public class OrthopedagogueController : Controller
     [HttpPost]
     public async Task<IActionResult> OnPostPartial(int BSN, DateTime birthDate)
     {
-        string result = await APIcall.GetClientFile(birthDate.ToString("dd MM yyyy"), BSN);
+        string result = await APIcall.GetClientFile(birthDate.ToString("dd MM yyyy"), BSN, _configuration);
 
         if (result.Equals("Error"))
         {
@@ -94,7 +96,7 @@ public class OrthopedagogueController : Controller
                 protocol: Request.Scheme);
             await AppointmentController.SendEmail(guardian.Email, "Wachtwoord Aanmaken", $"Maak je wachtwoord aan door <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>hier</a> te klikken.");
         }
-
+        _context.Appointments.Remove(appointment);
         return RedirectToAction("Dashboard");
     }
 

@@ -98,7 +98,7 @@ public class AppointmentController : Controller
         return RedirectToAction("Succes");
     }
 
-
+    // voldoet niet aan single responsibility
     public static async Task SendEmail(string receiver, string subject, string body)
     {
         var apiKey = "";

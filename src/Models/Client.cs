@@ -4,11 +4,11 @@ namespace WDPR_A.Models
     public class Client : User
     {
         [Required]
-        public String? Condition { get; set; }  //Aandoening
+        public String? Condition { get; set; }
         public AgeCategory AgeCategory { get; set; }
-        public string? PrivateChatToken { get; set; }  //Eenmalige code
         public IList<Guardian>? Guardians { get; set; }
         public IList<Chat>? Chats { get; set; }
+        public bool IsBlocked { get; set; }
 
 
         public AgeCategory DecideAgeCategory(int age)

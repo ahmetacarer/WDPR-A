@@ -7,27 +7,17 @@
 <h1>Zelfhulpgroepen vinden</h1>
 <br>
 
-
 <form method="get">
-    <div class="container">
+    <div class="container"> 
         <div class="row">
             <div class="col-sm-5">
-                <div class="input-group mb-3">
-                    <label class="input-group-text" for="inputGroupSelect01">Aandoening</label>
-                    <select class="form-select" id="inputGroupSelect01" name="subject">
-                    <option value="">Kies...</option>
-                    <option value="ADHD">ADHD</option>
-                    <option value="Faalangst">Faalangst</option>
-                    <option value="Eetstoornis">Eetstoornis</option>
-                    <option value="Dyslexie">Dyslexie</option>
-                    </select>
-                </div>
+                <label for="subject" class="form-label">Onderwerp:</label>
+                <input type="text" name="subject" />
             </div>
-
             <div class="col-sm-5">
                 <div class="input-group mb-3">
-                    <label class="input-group-text" for="inputGroupSelect02">Leeftijdscategorie</label>
-                    <select class="form-select" id="inputGroupSelect03" name="ageCategory">
+                    <label class="input-group-text" for="ageCategory">Leeftijdscategorie</label>
+                    <select class="form-select" id="ageCategory" name="ageCategory">
                     <option value="">Kies...</option>
                     <option value="@AgeCategory.Jongste">Jongste</option>
                     <option value="@AgeCategory.Middelste">Middelste</option>
@@ -37,7 +27,7 @@
             </div>
 
             <div class="col-sm-2">
-                    <input type="submit" value="Filter" class="btn btn-primary">
+                <input type="submit" value="Filter" class="btn btn-primary">
             </div>
         </div>
     </div>
@@ -45,22 +35,22 @@
 
 <table class="table">
     <tr>
-      <th>Chatnaam</th>
       <th>Onderwerp</th>
       <th>Leeftijdscategorie</th>
+      <th>Aandoening</th>
     </tr>
     @foreach (var chat in Model) {
      <tr>
-          <td>
-                @Html.DisplayFor(modelItem => chat.RoomName)
-          </td>
           <td>
                 @Html.DisplayFor(modelItem => chat.Subject)
           </td>
           <td>
                 @Html.DisplayFor(modelItem => chat.AgeCategory)
           </td>
-          @if (User.IsInRole("Client") && !chat.Clients.Where(c => c.Email == User.Identity.Name).Any() )
+          <td>
+                @Html.DisplayFor(modelItem => chat.Condition)
+          </td>
+          @if (User.IsInRole("Client") && !chat.Clients.Where(c => c.Email == User.Identity.Name).Any())
           {
           <td>
                 <form asp-action="Join" asp-controller="SelfHelpGroup" method="post">
@@ -73,3 +63,7 @@
     }
 </table>
 @ViewData["Melding"]
+@if(User.IsInRole("Orthopedagogue"))
+{
+    <p><a asp-action="Create">Aanmaken van een nieuwe zelfhulpgroep</a></p>
+}

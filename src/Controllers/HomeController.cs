@@ -26,6 +26,8 @@ public class HomeController : Controller
         await _roleSystem.CreateRole("Orthopedagogue");
         await _context.SaveChangesAsync();
         await _roleSystem.AddUserToRole(user1, "Orthopedagogue");
+        var user2 = _context.Orthopedagogues.First(c => c.FirstName == "Steven");
+        await _roleSystem.AddUserToRole(user2, "Orthopedagogue");
         await _context.SaveChangesAsync();
 
         if (User.IsInRole("Guardian"))

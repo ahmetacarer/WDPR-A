@@ -41,24 +41,18 @@
                                     <a class="nav-link text-dark" asp-controller="Orthopedagogue" asp-action="Client">Dossier</a>
                                     </li>
 
-                                    @if (ViewContext.RouteData.Values["controller"] != null && ViewContext.RouteData.Values["Action"].ToString() != "Dashboard")
-                                    {
                                     <li class="nav-item">                      
                                         <a class="nav-link text-dark" asp-controller="Orthopedagogue" asp-action="Dashboard">Dashboard</a>
                                     </li>
-                                    }
                                     
                                 }
                             }
 
                             @if (User.IsInRole("Guardian"))
                                 {
-                                    @if (ViewContext.RouteData.Values["controller"] != null && ViewContext.RouteData.Values["Action"].ToString() != "Dashboard")
-                                    {
                                     <li class="nav-item">                      
                                     <a class="nav-link text-dark" asp-controller="Guardian" asp-action="Dashboard">Dashboard</a>
                                     </li>
-                                    }
                                 }
                                 <li class="nav-item">
                                     <button type="button" class="btn LoginButton border-dark border-1 rounded-3" onclick="location.href='/identity/account/logout'">

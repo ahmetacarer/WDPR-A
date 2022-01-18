@@ -27,8 +27,9 @@ public class AppointmentController : Controller
     public async Task<IActionResult> Index([Bind("FirstName, LastName, Email, Condition")] Client client, [Bind("appointmentDate")] DateTime appointmentDate, string? emailOfParent = null)
     {
 
-        if (_context.Users.Any(b => b.Email == client.Email)) {
-            
+        if (_context.Users.Any(b => b.Email == client.Email))
+        {
+
             return RedirectToAction("Index");
         }
 
@@ -39,7 +40,7 @@ public class AppointmentController : Controller
 
         if (emailOfParent != null)
             client.Guardians = new List<Guardian>() { new Guardian { Email = emailOfParent } };
-            
+
         var orthopedagogue = _context.Orthopedagogues.FirstOrDefault(o => o.Specialty == client.Condition);
         Console.WriteLine(orthopedagogue == null);
         Appointment appointment = new Appointment()
@@ -54,15 +55,16 @@ public class AppointmentController : Controller
 
         SendEmailThroughMailhog(client.Email, appointmentDate, false);
 
-        if (emailOfParent != null) {
-             SendEmailThroughMailhog(emailOfParent, appointmentDate, true);
+        if (emailOfParent != null)
+        {
+            SendEmailThroughMailhog(emailOfParent, appointmentDate, true);
         }
 
         System.Console.WriteLine(client.FirstName + " " + client.LastName);
 
         _context.Appointments.Add(appointment);
         _context.SaveChanges();
-        
+
         // BONUS
         //
         // await Execute(client.Email, appointmentDate, false);                 
@@ -76,10 +78,11 @@ public class AppointmentController : Controller
 
     public IActionResult Succes()
     {
-        return View(); 
+        return View();
     }
 
-    public void SendEmailThroughMailhog (string receiverEmail, DateTime AppointmentDate, bool isParent) {
+    public void SendEmailThroughMailhog(string receiverEmail, DateTime AppointmentDate, bool isParent)
+    {
         //AppointmentDate.ToString("MM/dd/yyyy hh:mm");
         string datum = AppointmentDate.ToString("MM/dd/yyyy");
         Console.WriteLine(datum);
@@ -96,44 +99,45 @@ public class AppointmentController : Controller
 
         if (isParent)
         {
-            processInfo.Arguments = $@"& Send-MailMessage -To '{receiverEmail}' -From 'no-reply@ZMDHKliniek.com' -Subject 'ZMDH intakegesprek bevestiging' -Body 'U kind heeft zich aangemeld voor een intakegesprek op {datum} om {tijd}' -SmtpServer 'localhost' -Port 1025";
+            processInfo.Arguments = $@"& Send-MailMessage -To '{receiverEmail}' -From 'no-reply@ZMDHKliniek.com' -Condition 'ZMDH intakegesprek bevestiging' -Body 'U kind heeft zich aangemeld voor een intakegesprek op {datum} om {tijd}' -SmtpServer 'localhost' -Port 1025";
 
         }
         else
         {
-            processInfo.Arguments = $@"& Send-MailMessage -To '{receiverEmail}' -From 'no-reply@ZMDHKliniek.com' -Subject 'ZMDH intakegesprek bevestiging' -Body 'Je hebt jezelf aangemeld voor een intakegesprek op {datum} om {tijd}' -SmtpServer 'localhost' -Port 1025";
+            processInfo.Arguments = $@"& Send-MailMessage -To '{receiverEmail}' -From 'no-reply@ZMDHKliniek.com' -Condition 'ZMDH intakegesprek bevestiging' -Body 'Je hebt jezelf aangemeld voor een intakegesprek op {datum} om {tijd}' -SmtpServer 'localhost' -Port 1025";
 
         }
 
-            //processInfo.Arguments = $@"& Send-MailMessage -To '{receiverEmail}' -From 'no-reply@ZMDHKliniek.com' -Subject 'ZMDH intakegesprek bevestiging' -Body 'Je hebt jezelf aangemeld voor een intakegesprek op {AppointmentDate} met email {receiverEmail}' -SmtpServer 'localhost' -Port 1025";
-            processInfo.RedirectStandardError = true;
-            processInfo.RedirectStandardOutput = true;
-            processInfo.UseShellExecute = false;
-            processInfo.CreateNoWindow = true;
+        //processInfo.Arguments = $@"& Send-MailMessage -To '{receiverEmail}' -From 'no-reply@ZMDHKliniek.com' -Condition 'ZMDH intakegesprek bevestiging' -Body 'Je hebt jezelf aangemeld voor een intakegesprek op {AppointmentDate} met email {receiverEmail}' -SmtpServer 'localhost' -Port 1025";
+        processInfo.RedirectStandardError = true;
+        processInfo.RedirectStandardOutput = true;
+        processInfo.UseShellExecute = false;
+        processInfo.CreateNoWindow = true;
 
-            //start powershell process using process start info
-            Process process = new Process();
-            process.StartInfo = processInfo;
-            process.Start();
+        //start powershell process using process start info
+        Process process = new Process();
+        process.StartInfo = processInfo;
+        process.Start();
 
-            Console.WriteLine("Output - {0}", process.StandardOutput.ReadToEnd());
-            Console.WriteLine("Errors - {0}", process.StandardError.ReadToEnd());
-            process.Close();
+        Console.WriteLine("Output - {0}", process.StandardOutput.ReadToEnd());
+        Console.WriteLine("Errors - {0}", process.StandardError.ReadToEnd());
+        process.Close();
     }
 
-    public string MakeFirstNameCapitalLetter(string firstName) 
+    public string MakeFirstNameCapitalLetter(string firstName)
     {
-        if (firstName.Length > 1) { //Execute the following code when the name is longer than 1 character
+        if (firstName.Length > 1)
+        { //Execute the following code when the name is longer than 1 character
             string capitalLetter = firstName.Substring(0, 1);
             capitalLetter = capitalLetter.ToUpper();
             string restaint = firstName.Substring(1);
             restaint = restaint.ToLower();
             string good = capitalLetter + restaint;
-            
+
             return good;
-        } 
-        else 
-        { 
+        }
+        else
+        {
             return firstName.ToUpper();
         }
     }
@@ -151,7 +155,7 @@ public class AppointmentController : Controller
     //     Console.WriteLine("-------------------------------------------------------------------------------------------------------------------");
     //     var client = new SendGridClient(apiKey);
     //     var from = new EmailAddress("[HIER KOMT SENDGRID EMAIL]]", "ZMDH Kliniek");  //Voer verzender email in
-    //     var subject = "ZMDH intakegesprek bevestiging";
+    //     var condition = "ZMDH intakegesprek bevestiging";
     //     var to = new EmailAddress(receiverEmail, "Intakegesprek cliënt");
     //     var plainTextContent = "";
     //     string htmlContent;
@@ -162,7 +166,7 @@ public class AppointmentController : Controller
     //         htmlContent = "Je hebt jezelf aangemeld voor een intakegesprek op <strong>" + AppointmentDate + "</strong> met email " + receiverEmail ;
     //     }
 
-    //     var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+    //     var msg = MailHelper.CreateSingleEmail(from, to, condition, plainTextContent, htmlContent);
     //     var response = await client.SendEmailAsync(msg);
     // }
 

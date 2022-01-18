@@ -54,9 +54,9 @@ public class ChatController : Controller
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 
-    // nog niet async
+
     [HttpPost]
-    public IActionResult OnGetChatPartial(string chatRoomId)
+    public async Task<IActionResult> OnGetChatPartial(string chatRoomId)
     {
         bool isAjax = HttpContext.Request.IsAjax("POST");
 
@@ -67,6 +67,8 @@ public class ChatController : Controller
                                  .Include(c => c.Orthopedagogue)
                                  .Where(c => c.RoomId == chatRoomId)
                                  .SingleOrDefault();
+
+        ViewData["CurrentUserID"] =(await _userManager.GetUserAsync(User)).Id;
         return PartialView("_ChatPartial", chat);
     }
 }

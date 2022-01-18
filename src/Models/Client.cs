@@ -5,10 +5,20 @@ namespace WDPR_A.Models
     {
         [Required]
         public String? Condition { get; set; }
+        [Required]
         public AgeCategory AgeCategory { get; set; }
+        [Required]
         public IList<Guardian>? Guardians { get; set; }
+
+        [Required]
         public IList<Chat>? Chats { get; set; }
         public bool IsBlocked { get; set; }
+
+        [Required]
+        public string Adres { get; set; }
+
+        [Required]
+        public string Woonplaats { get; set; }
 
 
         public AgeCategory DecideAgeCategory(int age)

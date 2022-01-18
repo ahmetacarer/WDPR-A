@@ -1,16 +1,30 @@
 @model Chat
 
-<div id="messages">
+
+<div id="messages" class="overflow-auto" style="max-height: 25em;">
     @foreach (var message in Model.Messages)
     {
-        <div class="card col-9 offset-3">
-            <div class="card-header bg-warning">
-                @message.Sender.FirstName
+        if (message.Sender.Id == ViewData["CurrentUserID"].ToString()) {
+
+            <div class="card col-6 offset-6">
+                <div class="card-body" style="background-color: lightgreen;">
+                    <strong class="card-title" >Jij</strong> <br>
+                    <h6 class="card-text" style="color: #4F4F4F;">@message.Text</h6>
+                    <p class="card-text" style="color: #4F4F4F;">@message.When</p> 
+                </div>
+            </div> 
+            <br>
+
+        } else {
+
+            <div class="card col-6 offset-0">
+                <div class="card-body" style="background-color: lightblue;">
+                    <strong class="card-title">@message.Sender.FirstName</strong> <br>
+                    <h6 class="card-text" style="color: #4F4F4F;">@message.Text</h6>
+                    <p class="card-text" style="color: #4F4F4F;">@message.When</p>
+                </div>
             </div>
-            <div class="card-body">
-                <h5 class="card-title">@message.Text</h5>
-                <p class="card-text">@message.When</p>
-            </div>
-        </div>
+            <br>
+        }
     }
 </div>

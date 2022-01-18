@@ -65,7 +65,7 @@ public class AppointmentTest
         var client = new Client {FirstName = "Hansie", LastName = "Bassie", Email = "testEmaghfghfghil@gmail.com", Condition = "ADHD"};
 
         //Act
-        sut.Index(client, DateTime.Now, "Ouder@email.com");
+        sut.Index(client, DateTime.Now, AgeCategory.Jongste, "Ouder@email.com");
         
 
         //Assert
@@ -92,7 +92,7 @@ public class AppointmentTest
         var client = new Client { FirstName = "Hansie", LastName = "Bassie", Email = "testEmaghfghfghil@gmail.com", Condition = "ADHD" };
 
         //Act
-        sut.Index(client, DateTime.Now);
+        sut.Index(client, DateTime.Now, AgeCategory.Jongste, null);
 
 
         //Assert
@@ -115,7 +115,7 @@ public class AppointmentTest
         var client = new Client { FirstName = "Hansie", LastName = "Bassie", Email = "testEmaghfghfghil@gmail.com", Condition = "ADHD" };
 
         //Act
-        sut.Index(client, DateTime.Now, "Ouder@email.com");
+        sut.Index(client, DateTime.Now, AgeCategory.Jongste, "Ouder@email.com");
 
 
         //Assert

@@ -35,8 +35,7 @@ public class ChatManager
     public async Task CreateChatAsync(Orthopedagogue orthopedagogue, Client client)
     {
         var privateChatToken = GetUniquePrivateChatToken();
-        var chat = new Chat() { PrivateChatToken = privateChatToken, Orthopedagogue = orthopedagogue };
-        client.PrivateChatToken = privateChatToken;
+        var chat = new Chat() {Orthopedagogue = orthopedagogue };
         await _context.Chats.AddAsync(chat);
         await _context.SaveChangesAsync();
     }

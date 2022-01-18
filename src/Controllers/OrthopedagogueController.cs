@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WDPR_A.Controllers;
 
-// [Authorize(Roles = "Orthopedagogue")]
+[Authorize(Roles = "Orthopedagogue")]
 public class OrthopedagogueController : Controller
 {
     private readonly ILogger<OrthopedagogueController> _logger;
@@ -34,8 +34,13 @@ public class OrthopedagogueController : Controller
     public async Task<IActionResult> Dashboard()
     {
         IdentityUser user = await _userManager.GetUserAsync(User);
-        var currentUser = _context.Orthopedagogues.Where(c => c.Id == user.Id).SingleOrDefault();
-        List<Appointment> appointments = _context.Appointments.Include(a => a.IncomingClient).Include(a => a.Guardians).Where(a => a.OrthopedagogueId == currentUser.Id).OrderBy(a => a.AppointmentDate).ToList();
+        var currentUser = await _context.Orthopedagogues.FindAsync(user.Id);
+        ViewData["Naam"] = currentUser.FirstName.FirstOrDefault() + ". " + currentUser.LastName;
+        List<Appointment> appointments = await _context.Appointments.Include(a => a.IncomingClient).Include(a => a.Guardians).Include(c => c.Orthopedagogue).Where(a => a.OrthopedagogueId == currentUser.Id).OrderBy(a => a.AppointmentDate).ToListAsync();
+        if (appointments.Count() == 0)
+        {
+            ViewData["Melding"] = "Er zijn momenteel geen afspraken ingepland.";
+        }
         return View(appointments);
     }
 

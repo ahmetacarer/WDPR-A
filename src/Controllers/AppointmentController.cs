@@ -104,7 +104,7 @@ public class AppointmentController : Controller
         var apiKey = "";
         var client = new SendGridClient(apiKey);
 
-        var from = new EmailAddress("", "ZMDH Kliniek");  //Voer verzender email in
+        var from = new EmailAddress("zmdh@gmail.com", "ZMDH Kliniek");  //Voer verzender email in
         var to = new EmailAddress(receiver, "Intakegesprek cliënt");
         var plainTextContent = "";
 

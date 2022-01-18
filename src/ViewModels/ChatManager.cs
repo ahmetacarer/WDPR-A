@@ -13,9 +13,9 @@ public class ChatManager
         _context = context;
     }
 
-    public async Task CreateSelfHelpChatAsync(Orthopedagogue orthopedagogue, string roomName, string subject, AgeCategory ageCategory)
+    public async Task CreateSelfHelpChatAsync(Orthopedagogue orthopedagogue, string subject, string condition, AgeCategory ageCategory)
     {
-        var chat = new Chat() { RoomId = Guid.NewGuid().ToString(), RoomName = roomName, Orthopedagogue = orthopedagogue, Subject = subject, AgeCategory = ageCategory, IsPrivate = false };
+        var chat = new Chat() { RoomId = Guid.NewGuid().ToString(), Subject = subject, Orthopedagogue = orthopedagogue, Condition = condition, AgeCategory = ageCategory, IsPrivate = false };
         await _context.Chats.AddAsync(chat);
         await _context.SaveChangesAsync();
     }
@@ -34,21 +34,8 @@ public class ChatManager
 
     public async Task CreateChatAsync(Orthopedagogue orthopedagogue, Client client)
     {
-        var privateChatToken = GetUniquePrivateChatToken();
-        var chat = new Chat() {Orthopedagogue = orthopedagogue };
+        var chat = new Chat() { Orthopedagogue = orthopedagogue };
         await _context.Chats.AddAsync(chat);
         await _context.SaveChangesAsync();
-    }
-
-    public string GetUniquePrivateChatToken()
-    {
-        string PrivateChatToken = _generate.RandomPrivateChatToken();
-        bool isUnique = !_context.Chats.Any(c => c.PrivateChatToken == PrivateChatToken);
-        while (!isUnique)
-        {
-            PrivateChatToken = _generate.RandomPrivateChatToken();
-            isUnique = !_context.Chats.Any(c => c.PrivateChatToken == PrivateChatToken);
-        }
-        return PrivateChatToken;
     }
 }

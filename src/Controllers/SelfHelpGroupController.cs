@@ -26,26 +26,63 @@ public class SelfHelpGroupController : Controller
         _chatManager = chatManager;
     }
 
-    public async Task<IActionResult> Index(string subject, AgeCategory? ageCategory)
+    public async Task<IQueryable<Chat>> OrthopedagogueSearch(IQueryable<Chat> lijst, string subject, AgeCategory? ageCategory)
     {
-        IdentityUser user = await _userManager.GetUserAsync(User);
-        var currentUser = _context.Orthopedagogues.Where(c => c.Id == user.Id).SingleOrDefault();
-
-        var lijst = _context.Chats.Where(c => c.IsPrivate == false);
-
         if (!String.IsNullOrEmpty(subject))
         {
-            lijst = _context.Chats.Where(c => c.IsPrivate == false && c.Subject == subject);
+            lijst = lijst.Where(c => c.Subject.ToLower().Substring(0, subject.Length) == subject.ToLower());
         }
 
         if (!String.IsNullOrEmpty(ageCategory.ToString()))
         {
-            lijst = _context.Chats.Where(c => c.IsPrivate == false && c.AgeCategory == ageCategory);
+            lijst = lijst.Where(c => c.AgeCategory == ageCategory);
         }
 
         if (!String.IsNullOrEmpty(subject) && !String.IsNullOrEmpty(ageCategory.ToString()))
         {
-            lijst = _context.Chats.Where(c => c.IsPrivate == false && c.Subject == subject && c.AgeCategory == ageCategory);
+            lijst = lijst.Where(c => c.IsPrivate == false && c.Subject.ToLower().Substring(0, subject.Length) == subject.ToLower() && c.AgeCategory == ageCategory);
+        }
+
+        return lijst;
+    }
+
+    public async Task<IQueryable<Chat>> ClientSearch(IQueryable<Chat> lijst, string subject, AgeCategory? ageCategory)
+    {
+        IdentityUser user = await _userManager.GetUserAsync(User);
+        var currentUser = await _context.Clients.FindAsync(user.Id);
+        lijst = lijst.Where(c => c.IsPrivate == false && c.Condition == currentUser.Condition);
+
+        if (!String.IsNullOrEmpty(subject))
+        {
+            lijst = lijst.Where(c => c.Subject.ToLower().Substring(0, subject.Length) == subject.ToLower());
+        }
+
+        if (!String.IsNullOrEmpty(ageCategory.ToString()))
+        {
+            lijst = lijst.Where(c => c.AgeCategory == ageCategory);
+        }
+
+        if (!String.IsNullOrEmpty(subject) && !String.IsNullOrEmpty(ageCategory.ToString()))
+        {
+            lijst = lijst.Where(c => c.IsPrivate == false && c.Subject.ToLower().Substring(0, subject.Length) == subject.ToLower() && c.AgeCategory == ageCategory);
+        }
+
+        return lijst;
+    }
+
+    public async Task<IActionResult> Index(string subject, AgeCategory? ageCategory)
+    {
+
+        var lijst = _context.Chats.Where(c => c.IsPrivate == false);
+
+        if (User.IsInRole("Orthopedagogue"))
+        {
+            lijst = await OrthopedagogueSearch(lijst, subject, ageCategory);
+        }
+
+        if (User.IsInRole("Client"))
+        {
+            lijst = await ClientSearch(lijst, subject, ageCategory);
         }
 
         if (lijst.Count() == 0)
@@ -53,7 +90,7 @@ public class SelfHelpGroupController : Controller
             ViewData["Melding"] = "Er zijn helaas geen chats gevonden.";
         }
 
-        return View(await lijst.OrderBy(c => c.RoomName.ToLower()).Include(c => c.Clients).ToListAsync());
+        return View(await lijst.OrderBy(c => c.Subject.ToLower()).Include(c => c.Clients).ToListAsync());
     }
 
     [Authorize(Roles = "Orthopedagogue")]
@@ -64,12 +101,12 @@ public class SelfHelpGroupController : Controller
 
     [HttpPost]
     [Authorize(Roles = "Orthopedagogue")]
-    public async Task<IActionResult> Create(string roomName, AgeCategory ageCategory)
+    public async Task<IActionResult> Create(string subject, AgeCategory ageCategory)
     {
         IdentityUser user = await _userManager.GetUserAsync(User);
         var currentUser = _context.Orthopedagogues.Where(c => c.Id == user.Id).SingleOrDefault();
 
-        await _chatManager.CreateSelfHelpChatAsync(currentUser, roomName, currentUser.Specialty, ageCategory);
+        await _chatManager.CreateSelfHelpChatAsync(currentUser, subject, currentUser.Specialty, ageCategory);
         return RedirectToAction("Index");
     }
 

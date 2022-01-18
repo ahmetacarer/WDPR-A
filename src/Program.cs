@@ -8,6 +8,7 @@ using Microsoft.Data.SqlClient;
 using Azure.Security.KeyVault.Secrets;
 using Azure.Identity;
 using System;
+using src.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 // connectie string voor sqlserver of sqlite (dezelfde naam )
@@ -50,10 +51,11 @@ var app = builder.Build();
 // dan vermijd je ook onnodige parameters
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
+    // app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
-    
+    await EmailSender.SetApiKey(app.Configuration.GetConnectionString("VAULT_URL"),app.Configuration.GetConnectionString("VAULT_SENDGRID_NAME"));
+    await SigningData.SetPrivateKey(app.Configuration.GetConnectionString("VAULT_URL"),app.Configuration.GetConnectionString("VAULT_KEY_NAME"));
 }
 
 app.UseHttpsRedirection();

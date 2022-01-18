@@ -82,7 +82,7 @@ public class AppointmentController : Controller
             protocol: Request.Scheme);
 
         string datum = appointmentDate.ToString("dd/MM/yyyy HH:mm");
-        await SendEmail(client.Email, "Bevestig je mail",
+        await EmailSender.SendEmail(client.Email, "Bevestig je mail",
             $"Bevestig je mail door te <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>klikken</a>.</br>Jouw intake-gesprek vindt plaats op {datum}");
 
         if (emailOfParent != null)
@@ -92,24 +92,10 @@ public class AppointmentController : Controller
             pageHandler: null,
             values: new { area = "Identity", userId = client.Guardians[0].Id, code = code, returnUrl = "~/" },
             protocol: Request.Scheme);
-            await SendEmail(emailOfParent, "Bevestig je mail",
+            await EmailSender.SendEmail(emailOfParent, "Bevestig je mail",
                 $"Bevestig je mail door te <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>klikken</a>.</br>Jouw intake-gesprek vindt plaats op {datum}");
         }
         return RedirectToAction("Succes");
-    }
-
-    // voldoet niet aan single responsibility
-    public static async Task SendEmail(string receiver, string subject, string body)
-    {
-        var apiKey = "";
-        var client = new SendGridClient(apiKey);
-
-        var from = new EmailAddress("zmdh@gmail.com", "ZMDH Kliniek");  //Voer verzender email in
-        var to = new EmailAddress(receiver, "Intakegesprek cliënt");
-        var plainTextContent = "";
-
-        var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, body);
-        var response = await client.SendEmailAsync(msg);
     }
 
     public IActionResult Succes()

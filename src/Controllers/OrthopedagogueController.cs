@@ -20,14 +20,12 @@ public class OrthopedagogueController : Controller
     private readonly ILogger<OrthopedagogueController> _logger;
     private readonly WDPRContext _context;
     private readonly UserManager<IdentityUser> _userManager;
-    private readonly IConfiguration _configuration;
 
-    public OrthopedagogueController(ILogger<OrthopedagogueController> logger, WDPRContext context, UserManager<IdentityUser> userManager, IConfiguration configuration)
+    public OrthopedagogueController(ILogger<OrthopedagogueController> logger, WDPRContext context, UserManager<IdentityUser> userManager)
     {
         _logger = logger;
         _context = context;
         _userManager = userManager;
-        _configuration = configuration;
     }
 
     public IActionResult Index()
@@ -57,7 +55,7 @@ public class OrthopedagogueController : Controller
     [HttpPost]
     public async Task<IActionResult> OnPostPartial(int BSN, DateTime birthDate)
     {
-        string result = await APIcall.GetClientFile(birthDate.ToString("dd MM yyyy"), BSN, _configuration);
+        string result = await APIcall.GetClientFile(birthDate.ToString("dd MM yyyy"), BSN);
 
         if (result.Equals("Error"))
         {
@@ -85,7 +83,7 @@ public class OrthopedagogueController : Controller
             pageHandler: null,
             values: new { area = "Identity", userId = appointment.IncomingClientId, returnUrl = "~/" },
             protocol: Request.Scheme);
-        await AppointmentController.SendEmail(appointment.IncomingClient.Email, "Wachtwoord Aanmaken", $"Maak je wachtwoord aan door <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>hier</a> te klikken.");
+        await EmailSender.SendEmail(appointment.IncomingClient.Email, "Wachtwoord Aanmaken", $"Maak je wachtwoord aan door <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>hier</a> te klikken.");
 
         foreach (var guardian in appointment.Guardians.Where(g => g.PasswordHash == null && g.Clients.Count == 1))
         {
@@ -94,7 +92,7 @@ public class OrthopedagogueController : Controller
                 pageHandler: null,
                 values: new { area = "Identity", userId = guardian.Email, returnUrl = "~/" },
                 protocol: Request.Scheme);
-            await AppointmentController.SendEmail(guardian.Email, "Wachtwoord Aanmaken", $"Maak je wachtwoord aan door <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>hier</a> te klikken.");
+            await EmailSender.SendEmail(guardian.Email, "Wachtwoord Aanmaken", $"Maak je wachtwoord aan door <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>hier</a> te klikken.");
         }
         _context.Appointments.Remove(appointment);
         return RedirectToAction("Dashboard");

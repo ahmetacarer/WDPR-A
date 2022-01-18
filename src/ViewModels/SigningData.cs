@@ -9,25 +9,16 @@ namespace src.Controllers
     public static class SigningData
     {
         private static byte[] _RSAkey; 
-        public static async Task<string> EncryptData(string message, IConfiguration configuration)
+
+        public static async Task SetPrivateKey(string vaultUrl, string keyName)
         {
+            var client = new SecretClient(new Uri(vaultUrl), new DefaultAzureCredential());
+            var secret = await client.GetSecretAsync(keyName);
+            _RSAkey = Convert.FromBase64String(secret.Value.Value);
+        }
 
-            try
-            {
-                if (_RSAkey == null || _RSAkey.Length == 0)
-                {
-                    var kvUri = configuration.GetConnectionString("VAULT_URL");
-                    var VAULT_KEY_NAME = configuration.GetConnectionString("VAULT_KEY_NAME"); 
-                    var client = new SecretClient(new Uri(kvUri), new DefaultAzureCredential());
-                    var secret = await client.GetSecretAsync(VAULT_KEY_NAME);
-                    _RSAkey = Convert.FromBase64String(secret.Value.Value);
-                }
-            }
-            catch (FileNotFoundException ex)
-            {
-                throw new Exception("Can't find private key", ex);
-            }
-
+        public static async Task<string> EncryptData(string message)
+        {
             /// The array to store the signed message in bytes
             byte[] signedBytes;
             using (var rsa = new RSACryptoServiceProvider())

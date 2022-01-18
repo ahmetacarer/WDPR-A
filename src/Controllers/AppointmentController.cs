@@ -24,9 +24,9 @@ public class AppointmentController : Controller
 
 
     [HttpPost]
-    public async Task<IActionResult> Index([Bind("FirstName, LastName, Email, Condition")] Client client, [Bind("appointmentDate")] DateTime appointmentDate, string? emailOfParent = null)
+    public async Task<IActionResult> Index([Bind("FirstName, LastName, Email, Condition")] Client client, DateTime appointmentDate, DateTime appointmentTime, string? emailOfParent = null)
     {
-
+        
         if (_context.Users.Any(b => b.Email == client.Email)) {
             
             return RedirectToAction("Index");
@@ -44,7 +44,7 @@ public class AppointmentController : Controller
         Console.WriteLine(orthopedagogue == null);
         Appointment appointment = new Appointment()
         {
-            AppointmentDate = appointmentDate,
+            AppointmentDate = appointmentDate.Date + new TimeSpan(appointmentTime.Hour, appointmentTime.Minute, 0),
             IncomingClient = client,
             IncomingClientId = client.Id,
             Guardians = client.Guardians, // misschien null reference zonder parent

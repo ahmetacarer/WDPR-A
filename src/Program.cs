@@ -12,6 +12,7 @@ using System;
 var builder = WebApplication.CreateBuilder(args);
 // connectie string voor sqlserver of sqlite (dezelfde naam )
 var connectionString = builder.Configuration.GetConnectionString("WDPRContextConnection");
+
 builder.Services.AddDbContext<WDPRContext>(options =>
 {
     if (builder.Environment.IsProduction())
@@ -45,11 +46,14 @@ var app = builder.Build();
 
 
 // Configure the HTTP request pipeline.
+// hier kan ook de static variables alvast assignen
+// dan vermijd je ook onnodige parameters
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
+    
 }
 
 app.UseHttpsRedirection();

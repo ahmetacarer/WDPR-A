@@ -5,9 +5,8 @@
 }
 
 <div class="text-center">
-  <h1 class="display-4"><strong>Dashboard</strong></h1>
-  <h2 class="display-8">Welkom @Model.First().Orthopedagogue.FirstName.First(). @Model.First().Orthopedagogue.LastName
-  </h2>
+    <h1 class="display-4"><strong>Dashboard</strong></h1>
+    <h2 class="display-8">Welkom @ViewData["Naam"]</h2>
 </div>
 
 <div class="row">
@@ -18,7 +17,6 @@
         <div class="accordion" id="accordionExample">
           @for (int i = 0; i < Model.Count; i++)
           {
-
             <div class="accordion-item">
               <h2 class="accordion-header" id="heading@(i)">
                 <button class="accordion-button ZMDHButton" type="button" data-bs-toggle="collapse"
@@ -55,6 +53,7 @@
               </div>
             </div>
           }
+          @ViewData["Melding"]
         </div>
       </div>
     </div>

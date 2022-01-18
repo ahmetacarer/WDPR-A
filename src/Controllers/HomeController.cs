@@ -22,12 +22,6 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Index()
     {
-        var user1 = _context.Orthopedagogues.First(c => c.FirstName == "Karin");
-        await _roleSystem.CreateRole("Orthopedagogue");
-        await _context.SaveChangesAsync();
-        await _roleSystem.AddUserToRole(user1, "Orthopedagogue");
-        await _context.SaveChangesAsync();
-
         if (User.IsInRole("Guardian"))
         {
             return RedirectToAction("Dashboard", "Guardian");

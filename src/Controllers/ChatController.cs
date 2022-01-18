@@ -24,13 +24,27 @@ public class ChatController : Controller
 
     public async Task<IActionResult> Index()
     {
-        var currentUser = await _userManager.GetUserAsync(User);
-        var client = _context.Clients.FirstOrDefault(c => c.Id == currentUser.Id);
-        var chats = await _context.Chats.Include(c => c.Orthopedagogue)
-                                        .Include(c => c.Clients)
-                                        .Include(c => c.Messages)
-                                        .Where(c => c.Clients.Any(cl => cl.Id == client.Id))
-                                        .ToListAsync();
+        IdentityUser user = await _userManager.GetUserAsync(User);
+        var chats = new List<Chat>();
+
+        if (User.IsInRole("Client"))
+        {
+            var currentUser = await _context.Clients.FindAsync(user.Id);
+            var client = _context.Clients.FirstOrDefault(c => c.Id == currentUser.Id);
+            chats = await _context.Chats.Include(c => c.Orthopedagogue)
+                                            .Include(c => c.Clients)
+                                            .Include(c => c.Messages)
+                                            .Where(c => c.Clients.Any(cl => cl.Id == client.Id))
+                                            .ToListAsync();
+        }
+
+        else
+        {
+            var currentUser = await _context.Orthopedagogues.FindAsync(user.Id);
+            var orthopedagogue = _context.Orthopedagogues.FirstOrDefault(c => c.Id == currentUser.Id);
+            chats = await _context.Chats.Include(c => c.Clients).Include(c => c.Messages).Where(c => c.Orthopedagogue.Id == orthopedagogue.Id).ToListAsync();
+        }
+
         return View(chats);
     }
 
@@ -45,8 +59,8 @@ public class ChatController : Controller
     public IActionResult OnGetChatPartial(string chatRoomId)
     {
         bool isAjax = HttpContext.Request.IsAjax("POST");
-        
-        if (!isAjax) 
+
+        if (!isAjax)
             return RedirectToAction("Index", "Home");
         var chat = _context.Chats.Include(c => c.Messages)
                                  .Include(c => c.Clients)

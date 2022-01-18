@@ -36,8 +36,8 @@
 <table class="table">
     <tr>
       <th>Onderwerp</th>
-      <th>Aandoening</th>
       <th>Leeftijdscategorie</th>
+      <th>Aandoening</th>
     </tr>
     @foreach (var chat in Model) {
      <tr>
@@ -45,10 +45,10 @@
                 @Html.DisplayFor(modelItem => chat.Subject)
           </td>
           <td>
-                @Html.DisplayFor(modelItem => chat.Condition)
+                @Html.DisplayFor(modelItem => chat.AgeCategory)
           </td>
           <td>
-                @Html.DisplayFor(modelItem => chat.AgeCategory)
+                @Html.DisplayFor(modelItem => chat.Condition)
           </td>
           @if (User.IsInRole("Client") && !chat.Clients.Where(c => c.Email == User.Identity.Name).Any())
           {
@@ -65,5 +65,5 @@
 @ViewData["Melding"]
 @if(User.IsInRole("Orthopedagogue"))
 {
-    <a asp-action="Create">Aanmaken van zelfhulpgroep</a>
+    <p><a asp-action="Create">Aanmaken van een nieuwe zelfhulpgroep</a></p>
 }

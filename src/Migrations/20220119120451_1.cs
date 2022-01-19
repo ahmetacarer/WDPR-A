@@ -71,6 +71,7 @@ namespace WDPR_A.Migrations
                     AgeCategory = table.Column<int>(type: "INTEGER", nullable: true),
                     Adres = table.Column<string>(type: "TEXT", nullable: true),
                     Woonplaats = table.Column<string>(type: "TEXT", nullable: true),
+                    IsBlocked = table.Column<bool>(type: "INTEGER", nullable: true),
                     AppointmentId = table.Column<int>(type: "INTEGER", nullable: true),
                     Specialty = table.Column<string>(type: "TEXT", nullable: true),
                     UserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
@@ -262,7 +263,8 @@ namespace WDPR_A.Migrations
                     SenderId = table.Column<string>(type: "TEXT", nullable: false),
                     Text = table.Column<string>(type: "TEXT", nullable: false),
                     When = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    ChatRoomId = table.Column<string>(type: "TEXT", nullable: false)
+                    ChatRoomId = table.Column<string>(type: "TEXT", nullable: false),
+                    ReportCount = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -282,24 +284,84 @@ namespace WDPR_A.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Specialty", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "27e03f6f-64c7-4bba-a7c6-a203c87a7bca", 0, "8fd259a9-430c-4ced-a893-bca48c01d758", "Orthopedagogue", "mvdijk@zmdh.nl", false, "Marianne", "van Dijk", false, null, "MVDIJK@ZMDH.NL", "MVDIJK@ZMDH.NL", "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==", null, false, "308a83b8-24ce-4e55-a3d5-54caf990ad5e", "Dyslexie", false, "mvdijk@zmdh.nl" });
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "006c921b-611f-4cf9-a18c-3d722840ee42", "33e3ccf3-82a7-437c-95f5-6882715d163b", "Orthopedagogue", "ORTHOPEDAGOGUE" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "26d89e3f-e47f-468b-bd78-6f58aef3285e", "86344c71-6d4e-49e4-9299-8654e302b3b7", "Moderator", "MODERATOR" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "6e7321be-b891-44a3-abd8-71283880ddb9", "65e053bc-5f21-4bd7-b0e8-58321d3b27d6", "Client", "CLIENT" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "ede8d0e5-2581-476c-ba45-a99d7089844a", "4f67cb52-044b-41d6-a555-61f15876fa29", "Guardian", "GUARDIAN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Specialty", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "372919cb-8b83-4dbd-93ad-dea4947cf76b", 0, "44073176-ede5-451c-9ad5-cd7d44132859", "Orthopedagogue", "sito@zmdh.nl", false, "Steven", "Ito", false, null, "SITO@ZMDH.NL", "SITO@ZMDH.NL", "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==", null, false, "28124dff-b0f4-49a0-9121-af1d3858f535", "Eetstoornis", false, "sito@zmdh.nl" });
+                values: new object[] { "13198681-ef68-4acf-bd7e-544e12fed291", 0, "0b2c51fa-670a-4220-845b-0ff7143fa115", "Orthopedagogue", "kkemper@zmdh.nl", false, "Karin", "Kemper", false, null, "KKEMPER@ZMDH.NL", "KKEMPER@ZMDH.NL", "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==", null, false, "a301cd4d-e5b5-4d9e-8099-cf91d3ea9a4d", "ADHD", false, "kkemper@zmdh.nl" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Specialty", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "991e7305-5722-47b0-bb8f-1a44aeeea39c", 0, "c6d12bfa-6ac0-4956-b320-2fcee764c89c", "Orthopedagogue", "jlo@zmdh.nl", false, "Johan", "Lo", false, null, "JLO@ZMDH.NL", "JLO@ZMDH.NL", "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==", null, false, "cd11d911-41c0-4a8a-9d5d-bc3db7dc6f12", "Faalangst", false, "jlo@zmdh.nl" });
+                values: new object[] { "1988e216-9179-42a1-8243-2b6bf362b1b4", 0, "ab56c191-14c1-4753-a6d3-2cad9485bb71", "Orthopedagogue", "sito@zmdh.nl", false, "Steven", "Ito", false, null, "SITO@ZMDH.NL", "SITO@ZMDH.NL", "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==", null, false, "de5c5f44-f13f-406a-a946-7db4efe38c1d", "Eetstoornis", false, "sito@zmdh.nl" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Specialty", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "ec76bc28-a031-41df-94c4-d8fe9686abe2", 0, "c1ad8d18-45cb-4f01-9504-46222a2fa4e6", "Orthopedagogue", "kkemper@zmdh.nl", false, "Karin", "Kemper", false, null, "KKEMPER@ZMDH.NL", "KKEMPER@ZMDH.NL", "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==", null, false, "dbca64fd-e4f0-4479-8c27-541ef810c235", "ADHD", false, "kkemper@zmdh.nl" });
+                values: new object[] { "4e3371ca-b20a-4c91-b6c2-7c872c310a54", 0, "37d916d9-c27b-4fb8-8339-14307dd76e48", "Orthopedagogue", "mvdijk@zmdh.nl", false, "Marianne", "van Dijk", false, null, "MVDIJK@ZMDH.NL", "MVDIJK@ZMDH.NL", "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==", null, false, "84d41240-5ea1-4b8b-8dab-aca57df8f53b", "Dyslexie", false, "mvdijk@zmdh.nl" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Specialty", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "7d028f6c-929e-45b0-8493-573078b85f79", 0, "2f00a5fb-3a19-46e1-94ab-9d62a9bbae1c", "Orthopedagogue", "jlo@zmdh.nl", false, "Johan", "Lo", false, null, "JLO@ZMDH.NL", "JLO@ZMDH.NL", "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==", null, false, "f2e14ae3-294e-40d4-8171-8d18ae234a4f", "Faalangst", false, "jlo@zmdh.nl" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "006c921b-611f-4cf9-a18c-3d722840ee42", "13198681-ef68-4acf-bd7e-544e12fed291" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "26d89e3f-e47f-468b-bd78-6f58aef3285e", "13198681-ef68-4acf-bd7e-544e12fed291" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "006c921b-611f-4cf9-a18c-3d722840ee42", "1988e216-9179-42a1-8243-2b6bf362b1b4" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "26d89e3f-e47f-468b-bd78-6f58aef3285e", "1988e216-9179-42a1-8243-2b6bf362b1b4" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "006c921b-611f-4cf9-a18c-3d722840ee42", "4e3371ca-b20a-4c91-b6c2-7c872c310a54" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "26d89e3f-e47f-468b-bd78-6f58aef3285e", "4e3371ca-b20a-4c91-b6c2-7c872c310a54" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "006c921b-611f-4cf9-a18c-3d722840ee42", "7d028f6c-929e-45b0-8493-573078b85f79" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "26d89e3f-e47f-468b-bd78-6f58aef3285e", "7d028f6c-929e-45b0-8493-573078b85f79" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Appointments_IncomingClientId",

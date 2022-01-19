@@ -4,21 +4,50 @@
 <div id="messages" class="overflow-auto" style="max-height: 25em;">
     @foreach (var message in Model.Messages)
     {
-        if (message.Sender.Id == ViewData["CurrentUserID"].ToString()) {
+        if (message.Sender.Id == ViewData["CurrentUserID"].ToString())
+        {
 
             <div class="card col-6 offset-6">
                 <div class="card-body" style="background-color: lightgreen;">
-                    <strong class="card-title" >Jij</strong> <br>
+                    <strong class="card-title">Jij</strong> <br>
                     <h6 class="card-text" style="color: #4F4F4F;">@message.Text</h6>
-                    <p class="card-text" style="color: #4F4F4F;">@message.When</p> 
+                    <p class="card-text" style="color: #4F4F4F;">@message.When</p>
                 </div>
-            </div> 
+            </div>
             <br>
 
-        } else {
-
+        }
+        else
+        {
             <div class="card col-6 offset-0">
                 <div class="card-body" style="background-color: lightblue;">
+                    @if (User.IsInRole("Client"))
+                    {
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                                ...
+                            </button>
+                            <input type="hidden" name="messageId" value="@message.Id" id="@message.Id">
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" type="submit" onclick="reportMessage()">Rapporteer</a></li>
+                            </ul>
+                        </div>
+                    }
+
+                    @if (User.IsInRole("Moderator"))
+                    {
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                                ...
+                            </button>
+                            <ul class="dropdown-menu">
+                                <input type="hidden" name="messageId" value="@message.Id">
+                                <li><a class="dropdown-item" href="javascript:void(0);">Blokkeer</a></li>
+                            </ul>
+                        </div>
+                    }
                     <strong class="card-title">@message.Sender.FirstName</strong> <br>
                     <h6 class="card-text" style="color: #4F4F4F;">@message.Text</h6>
                     <p class="card-text" style="color: #4F4F4F;">@message.When</p>
@@ -28,3 +57,25 @@
         }
     }
 </div>
+
+<script>
+    async function reportMessage(messageId) {
+        const messageId = document.getElementById("messageId");
+        alert(messageId);
+        const response = await fetch('ReportClient', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ "messageId": messageId })
+        });
+    }
+
+
+</script>
+
+
+@* <form action="JavaScript: reportMessage();" method="post" id="deleteform">
+    <input type="hidden" name="messageId" value="@message.Id" id="@message.Id">
+    <ul class="dropdown-menu">
+    <li><input class="dropdown-item" type="submit" value="Raporteer"></li>
+    </ul>
+    </form> *@

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace WDPR_A.Migrations
 {
     [DbContext(typeof(WDPRContext))]
-    [Migration("20220118104318_1")]
+    [Migration("20220119120451_1")]
     partial class _1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -72,6 +72,36 @@ namespace WDPR_A.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "006c921b-611f-4cf9-a18c-3d722840ee42",
+                            ConcurrencyStamp = "33e3ccf3-82a7-437c-95f5-6882715d163b",
+                            Name = "Orthopedagogue",
+                            NormalizedName = "ORTHOPEDAGOGUE"
+                        },
+                        new
+                        {
+                            Id = "26d89e3f-e47f-468b-bd78-6f58aef3285e",
+                            ConcurrencyStamp = "86344c71-6d4e-49e4-9299-8654e302b3b7",
+                            Name = "Moderator",
+                            NormalizedName = "MODERATOR"
+                        },
+                        new
+                        {
+                            Id = "6e7321be-b891-44a3-abd8-71283880ddb9",
+                            ConcurrencyStamp = "65e053bc-5f21-4bd7-b0e8-58321d3b27d6",
+                            Name = "Client",
+                            NormalizedName = "CLIENT"
+                        },
+                        new
+                        {
+                            Id = "ede8d0e5-2581-476c-ba45-a99d7089844a",
+                            ConcurrencyStamp = "4f67cb52-044b-41d6-a555-61f15876fa29",
+                            Name = "Guardian",
+                            NormalizedName = "GUARDIAN"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -227,6 +257,48 @@ namespace WDPR_A.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "13198681-ef68-4acf-bd7e-544e12fed291",
+                            RoleId = "26d89e3f-e47f-468b-bd78-6f58aef3285e"
+                        },
+                        new
+                        {
+                            UserId = "13198681-ef68-4acf-bd7e-544e12fed291",
+                            RoleId = "006c921b-611f-4cf9-a18c-3d722840ee42"
+                        },
+                        new
+                        {
+                            UserId = "7d028f6c-929e-45b0-8493-573078b85f79",
+                            RoleId = "26d89e3f-e47f-468b-bd78-6f58aef3285e"
+                        },
+                        new
+                        {
+                            UserId = "7d028f6c-929e-45b0-8493-573078b85f79",
+                            RoleId = "006c921b-611f-4cf9-a18c-3d722840ee42"
+                        },
+                        new
+                        {
+                            UserId = "1988e216-9179-42a1-8243-2b6bf362b1b4",
+                            RoleId = "26d89e3f-e47f-468b-bd78-6f58aef3285e"
+                        },
+                        new
+                        {
+                            UserId = "1988e216-9179-42a1-8243-2b6bf362b1b4",
+                            RoleId = "006c921b-611f-4cf9-a18c-3d722840ee42"
+                        },
+                        new
+                        {
+                            UserId = "4e3371ca-b20a-4c91-b6c2-7c872c310a54",
+                            RoleId = "26d89e3f-e47f-468b-bd78-6f58aef3285e"
+                        },
+                        new
+                        {
+                            UserId = "4e3371ca-b20a-4c91-b6c2-7c872c310a54",
+                            RoleId = "006c921b-611f-4cf9-a18c-3d722840ee42"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -314,6 +386,9 @@ namespace WDPR_A.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("ReportCount")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("SenderId")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -364,6 +439,9 @@ namespace WDPR_A.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("IsBlocked")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Woonplaats")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -396,9 +474,9 @@ namespace WDPR_A.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "ec76bc28-a031-41df-94c4-d8fe9686abe2",
+                            Id = "13198681-ef68-4acf-bd7e-544e12fed291",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c1ad8d18-45cb-4f01-9504-46222a2fa4e6",
+                            ConcurrencyStamp = "0b2c51fa-670a-4220-845b-0ff7143fa115",
                             Email = "kkemper@zmdh.nl",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -406,7 +484,7 @@ namespace WDPR_A.Migrations
                             NormalizedUserName = "KKEMPER@ZMDH.NL",
                             PasswordHash = "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "dbca64fd-e4f0-4479-8c27-541ef810c235",
+                            SecurityStamp = "a301cd4d-e5b5-4d9e-8099-cf91d3ea9a4d",
                             TwoFactorEnabled = false,
                             UserName = "kkemper@zmdh.nl",
                             FirstName = "Karin",
@@ -415,9 +493,9 @@ namespace WDPR_A.Migrations
                         },
                         new
                         {
-                            Id = "991e7305-5722-47b0-bb8f-1a44aeeea39c",
+                            Id = "7d028f6c-929e-45b0-8493-573078b85f79",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c6d12bfa-6ac0-4956-b320-2fcee764c89c",
+                            ConcurrencyStamp = "2f00a5fb-3a19-46e1-94ab-9d62a9bbae1c",
                             Email = "jlo@zmdh.nl",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -425,7 +503,7 @@ namespace WDPR_A.Migrations
                             NormalizedUserName = "JLO@ZMDH.NL",
                             PasswordHash = "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "cd11d911-41c0-4a8a-9d5d-bc3db7dc6f12",
+                            SecurityStamp = "f2e14ae3-294e-40d4-8171-8d18ae234a4f",
                             TwoFactorEnabled = false,
                             UserName = "jlo@zmdh.nl",
                             FirstName = "Johan",
@@ -434,9 +512,9 @@ namespace WDPR_A.Migrations
                         },
                         new
                         {
-                            Id = "372919cb-8b83-4dbd-93ad-dea4947cf76b",
+                            Id = "1988e216-9179-42a1-8243-2b6bf362b1b4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "44073176-ede5-451c-9ad5-cd7d44132859",
+                            ConcurrencyStamp = "ab56c191-14c1-4753-a6d3-2cad9485bb71",
                             Email = "sito@zmdh.nl",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -444,7 +522,7 @@ namespace WDPR_A.Migrations
                             NormalizedUserName = "SITO@ZMDH.NL",
                             PasswordHash = "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "28124dff-b0f4-49a0-9121-af1d3858f535",
+                            SecurityStamp = "de5c5f44-f13f-406a-a946-7db4efe38c1d",
                             TwoFactorEnabled = false,
                             UserName = "sito@zmdh.nl",
                             FirstName = "Steven",
@@ -453,9 +531,9 @@ namespace WDPR_A.Migrations
                         },
                         new
                         {
-                            Id = "27e03f6f-64c7-4bba-a7c6-a203c87a7bca",
+                            Id = "4e3371ca-b20a-4c91-b6c2-7c872c310a54",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8fd259a9-430c-4ced-a893-bca48c01d758",
+                            ConcurrencyStamp = "37d916d9-c27b-4fb8-8339-14307dd76e48",
                             Email = "mvdijk@zmdh.nl",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -463,7 +541,7 @@ namespace WDPR_A.Migrations
                             NormalizedUserName = "MVDIJK@ZMDH.NL",
                             PasswordHash = "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "308a83b8-24ce-4e55-a3d5-54caf990ad5e",
+                            SecurityStamp = "84d41240-5ea1-4b8b-8dab-aca57df8f53b",
                             TwoFactorEnabled = false,
                             UserName = "mvdijk@zmdh.nl",
                             FirstName = "Marianne",

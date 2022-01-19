@@ -19,14 +19,14 @@
 </svg>
 @if (ViewData["foutmelding"] != null)
 {
-  <div class="alert alert-warning" role="alert">
-    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:">
-      <use xlink:href="#exclamation-triangle-fill" />
-    </svg>
-    <div>
+            <div class="alert alert-warning" role="alert">
+              <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:">
+                <use xlink:href="#exclamation-triangle-fill" />
+              </svg>
+              <div>
       @ViewData["foutmelding"].ToString()
-    </div>
-  </div>
+              </div>
+            </div>
 }
 
 <form asp-action="Index" method="post">
@@ -94,8 +94,8 @@
   <div class="mb-3">
     <div>
       <label for="intakeDate" class="form-label">Welke dag wilt u de afspraak hebben?</label>
-      <input id="date" type="date" class="intakeDate " name="appointmentDate">
-      <div class="alert alert-danger" role="alert">
+      <input id="date" type="date" class="intakeDate" name="appointmentDate">
+      <div class="alertDate alert-danger" role="alert">
         Weekenden is niet mogelijk!
       </div>
     </div>
@@ -112,31 +112,39 @@
 {
 <script>
   //Dissable to choose weekends
-  $(".alert").hide();
+  $(".alertDate").hide();
   const picker = document.getElementById('date');
   picker.addEventListener('input', function (e) {
     var day = new Date(this.value).getUTCDay();
     if ([6, 0].includes(day)) {
       e.preventDefault();
       this.value = '';
-      $(".alert").show();
+      $(".alertDate").show();
     }
   });
-  var now = new Date();
-  now.setDate(now.getDate() + 7);
-  $(".intakeDate")[0].min = now.toISOString().slice(0, 10);
 
-  function changeParentVisibility() {
+  //minimum value for appointmentDate
+  var minValue = new Date();
+  minValue.setDate(minValue.getDate() + 7);
+  $(".intakeDate")[0].min = minValue.toISOString().slice(0, 10);
 
-    let checkbox = document.getElementById("flexCheckDefault");
-    let fieldset = document.getElementById("parentEmailFieldSet");
-    if (checkbox.checked) {
-      fieldset.disabled = false;
+  //maximum value for appointmentDate
+  let maxValue = new Date();
+  maxValue.setDate(maxValue.getDate() + 365);
+  $(".intakeDate")[0].max = maxValue.toISOString().slice(0, 10);
+
+
+    function changeParentVisibility() {
+
+      let checkbox = document.getElementById("flexCheckDefault");
+      let fieldset = document.getElementById("parentEmailFieldSet");
+      if (checkbox.checked) {
+        fieldset.disabled = false;
+      }
+      else {
+        fieldset.disabled = true;
+      }
     }
-    else {
-      fieldset.disabled = true;
-    }
-  }
 
   function emailsAreEqual(event) {
     let clientEmail = document.getElementById("exampleInputEmail1").value;

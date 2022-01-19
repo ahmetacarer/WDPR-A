@@ -48,7 +48,7 @@
   </div><br>
 
   <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Email van kind</label>
+    <label for="exampleInputEmail1" class="form-label">Email</label>
     <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="Email" required>
     <div id="emailHelp" class="form-text">We zullen je e-mailadres nooit met iemand anders delen.</div>
   </div><br>
@@ -69,24 +69,13 @@
   @* AgeCategory dropdown section *@
   <div class="input-group mb-3">
     <label class="input-group-text" for="inputGroupSelect01">Leeftijdscategorie</label>
-    <select class="form-select" id="inputGroupSelectAgeCategory" name="AgeCategory" onchange="change16YearCheckbox()"
-      required>
+    <select class="form-select" id="inputGroupSelectAgeCategory" name="AgeCategory" onchange="change16YearCheckbox()" required>
       <option selected>Kies...</option>
       <option value="@AgeCategory.Jongste">Ik ben jonger dan 12 jaar</option>
       <option value="@AgeCategory.Middelste">Ik ben jonger dan 16 jaar</option>
       <option value="@AgeCategory.Oudste">Ik ben ouder dan 16 jaar</option>
     </select>
   </div><br>
-
-
-  @* Younger than 16 section *@
-  @* <div class="form-check">
-    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" onchange="changeParentVisibility()">
-    <label class="form-check-label" for="flexCheckDefault">
-    Ben je jonger dan 16 jaar?
-    </label>
-    </div><br> *@
-
 
   @* ouders/voogd email section *@
   <fieldset disabled id="parentEmailFieldSet">
@@ -101,7 +90,7 @@
             d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.496 6.033h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286a.237.237 0 0 0 .241.247zm2.325 6.443c.61 0 1.029-.394 1.029-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94 0 .533.425.927 1.01.927z" />
         </svg></span>
 
-      <input type="email" id="disabledTextInput" class="form-control" placeholder="Email van je ouder(s)/voogd"
+      <input type="email" id="disabledTextInput" class="form-control parentEmailInput" placeholder="Email van je ouder(s)/voogd"
         name="emailOfParent">
     </div>
   </fieldset><br>
@@ -130,8 +119,8 @@
   <div class="mb-3">
     <div>
       <label for="intakeDate" class="form-label">Op welke dag wilt u de afspraak hebben?</label>
-      <input id="date" type="date" class="intakeDate" name="appointmentDate">
-      <div hidden class="alertDate alert-danger" role="alert">
+      <input id="intakeDate" type="date" class="intakeDate" name="appointmentDate">
+            <div class="alert alertIntakeDate alert-danger" role="alert">
         Weekenden is niet mogelijk!
       </div>
     </div>
@@ -148,14 +137,14 @@
 {
 <script>
   //Dissable to choose weekends
-  $(".alertDate").hide();
-  const picker = document.getElementById('date');
+  $(".alertIntakeDate").hide();
+  const picker = document.getElementById('intakeDate');
   picker.addEventListener('input', function (e) {
     var day = new Date(this.value).getUTCDay();
     if ([6, 0].includes(day)) {
       e.preventDefault();
       this.value = '';
-      $(".alertDate").show();
+      $(".alertIntakeDate").show();
     }
   });
 
@@ -170,30 +159,17 @@
   $(".intakeDate")[0].max = maxValue.toISOString().slice(0, 10);
 
 
-  function changeParentVisibility() {
-
-    let checkbox = document.getElementById("flexCheckDefault");
+    function change16YearCheckbox() {
+    let getAgeCategory = document.getElementById("inputGroupSelectAgeCategory").value;
     let fieldset = document.getElementById("parentEmailFieldSet");
-    if (checkbox.checked) {
+
+    if (getAgeCategory === "Jongste" || getAgeCategory === "Middelste") {
       fieldset.disabled = false;
-    }
-    else {
+    } else {
+      $(".parentEmailInput").val("");
       fieldset.disabled = true;
     }
-
-
-    document.getElementsByClassName("intakeDateTime")[0].min = today;
-
-
-    function change16YearCheckbox() {
-      let getAgeCategory = document.getElementById("inputGroupSelectAgeCategory").value;
-      let fieldset = document.getElementById("parentEmailFieldSet");
-
-      if (getAgeCategory === "Jongste" || getAgeCategory === "Middelste") {
-        fieldset.disabled = false;
-      } else {
-        fieldset.disabled = true;
-      }
+  }
 
       function emailsAreEqual(event) {
         let clientEmail = document.getElementById("exampleInputEmail1").value;
@@ -202,14 +178,6 @@
           event.preventDefault();
           alert('Foutmelding, ouder email en jongere email kunnen niet hetzelfde blijven', 'danger');
         }
-      }
-
-
-      function alert(message, type) {
-        let alertPlaceholder = document.getElementById('alertPlaceHolder');
-        let wrapper = document.createElement('div');
-        wrapper.innerHTML = '<div id="alertPlaceHolder" class="alert alert-' + type + ' alert-dismissible" role="alert">' + message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
-        alertPlaceholder.replaceWith(wrapper);
       }
 </script>
 }

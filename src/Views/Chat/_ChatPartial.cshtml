@@ -24,13 +24,12 @@
                     @if (User.IsInRole("Client"))
                     {
                         <div class="btn-group">
-                            <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown"
-                    aria-expanded="false">
+                            <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                 ...
                             </button>
-                            <input type="hidden" name="messageId" value="@message.Id" id="@message.Id">
+                            <input type="hidden" name="messageId" value="@message.Id" id="@message.Id"/>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" type="submit" onclick="reportMessage()">Rapporteer</a></li>
+                                <li><a class="dropdown-item" type="submit" onclick="">Rapporteer</a></li>
                             </ul>
                         </div>
                     }

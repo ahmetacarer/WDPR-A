@@ -5,19 +5,24 @@
 <h1>Aanmelden intake gesprek</h1>
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
   <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
-    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+    <path
+      d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
   </symbol>
   <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
-    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+    <path
+      d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
   </symbol>
   <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
-    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+    <path
+      d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
   </symbol>
 </svg>
-@if(ViewData["foutmelding"] != null)
+@if (ViewData["foutmelding"] != null)
 {
   <div class="alert alert-warning" role="alert">
-  <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:">
+      <use xlink:href="#exclamation-triangle-fill" />
+    </svg>
     <div>
       @ViewData["foutmelding"].ToString()
     </div>
@@ -28,18 +33,22 @@
   <br>
   <div class="mb-3">
     <label for="firstNameInput" class="form-label">Voornaam</label>
-    <input type="text" class="form-control" aria-describedby="basic-addon1" id="firstNameInput" name="FirstName" pattern="^[a-zA-Z]+$" minlength="2" maxlength="40" required>
-    <div id="firstNameHelp" class="form-text">Voornaam moet minstens 2 karakters lang zijn en geen nummers bevatten</div>
+    <input type="text" class="form-control" aria-describedby="basic-addon1" id="firstNameInput" name="FirstName"
+      pattern="^[a-zA-Z]+$" minlength="2" maxlength="40" required>
+    <div id="firstNameHelp" class="form-text">Voornaam moet minstens 2 karakters lang zijn en geen nummers bevatten
+    </div>
   </div><br>
 
   <div class="mb-3">
     <label for="lastNameInput" class="form-label">Achternaam</label>
-    <input type="text" class="form-control" asp aria-describedby="basic-addon1" id="lastNameInput" name="LastName" pattern="^[a-zA-Z]+$" minlength="2" maxlength="40" required>
-    <div id="lastNameHelp" class="form-text">Achternaam moet minstens 2 karakters lang zijn en geen nummers bevatten</div>
+    <input type="text" class="form-control" asp aria-describedby="basic-addon1" id="lastNameInput" name="LastName"
+      pattern="^[a-zA-Z]+$" minlength="2" maxlength="40" required>
+    <div id="lastNameHelp" class="form-text">Achternaam moet minstens 2 karakters lang zijn en geen nummers bevatten
+    </div>
   </div><br>
 
   <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Email van kind</label>
+    <label for="exampleInputEmail1" class="form-label">Email</label>
     <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="Email" required>
     <div id="emailHelp" class="form-text">We zullen je e-mailadres nooit met iemand anders delen.</div>
   </div><br>
@@ -57,7 +66,7 @@
     </select>
   </div><br>
 
-   @* AgeCategory dropdown section *@
+  @* AgeCategory dropdown section *@
   <div class="input-group mb-3">
     <label class="input-group-text" for="inputGroupSelect01">Leeftijdscategorie</label>
     <select class="form-select" id="inputGroupSelectAgeCategory" name="AgeCategory" onchange="change16YearCheckbox()" required>
@@ -67,16 +76,6 @@
       <option value="@AgeCategory.Oudste">Ik ben ouder dan 16 jaar</option>
     </select>
   </div><br>
-
-
- @* Younger than 16 section *@
-  @* <div class="form-check">
-    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" onchange="changeParentVisibility()">
-    <label class="form-check-label" for="flexCheckDefault">
-      Ben je jonger dan 16 jaar?
-    </label>
-  </div><br> *@
-
 
   @* ouders/voogd email section *@
   <fieldset disabled id="parentEmailFieldSet">
@@ -91,62 +90,94 @@
             d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.496 6.033h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286a.237.237 0 0 0 .241.247zm2.325 6.443c.61 0 1.029-.394 1.029-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94 0 .533.425.927 1.01.927z" />
         </svg></span>
 
-      <input type="email" id="disabledTextInput" class="form-control" placeholder="Email van je ouder(s)/voogd"
+      <input type="email" id="disabledTextInput" class="form-control parentEmailInput" placeholder="Email van je ouder(s)/voogd"
         name="emailOfParent">
     </div>
   </fieldset><br>
 
 
   @* NAW gegevens section *@
-  
+
   <div class="mb-3">
     <label for="adressInput" class="form-label">Adres</label>
-    <input type="text" class="form-control" asp-validation-for="Adres" aria-describedby="basic-addon1" id="adressInput" name="Adres"  minlength="2" maxlength="40" required>
+    <input type="text" class="form-control" asp-validation-for="Adres" aria-describedby="basic-addon1" id="adressInput"
+      name="Adres" minlength="2" maxlength="40" required>
     <div id="adressHelp" class="form-text">Adres moet ook het huisnummer bevatten</div>
   </div><br>
 
   <div class="mb-3">
     <label for="woonplaatsInput" class="form-label">Woonplaats</label>
-    <input type="text" class="form-control" asp aria-describedby="basic-addon1" id="woonplaatsInput" name="Woonplaats" pattern="^([A-z]+[,.]?[ ]?|[A-z]+['-]?)+$" minlength="2" maxlength="40" required>
-    <div id="woonplaatsHelp" class="form-text">Woonplaats moet minstens 2 karakters lang zijn en geen nummers bevatten</div>
+    <input type="text" class="form-control" asp aria-describedby="basic-addon1" id="woonplaatsInput" name="Woonplaats"
+      pattern="^([A-z]+[,.]?[ ]?|[A-z]+['-]?)+$" minlength="2" maxlength="40" required>
+    <div id="woonplaatsHelp" class="form-text">Woonplaats moet minstens 2 karakters lang zijn en geen nummers bevatten
+    </div>
   </div><br>
 
 
 
- @* Date and Time picker section *@
-  <div class="mb-3"> 
+  @* Date and Time picker section *@
+  <div class="mb-3">
     <div>
-      <label for="intakeDateTime" class="form-label">Wanneer wil je het gesprek hebben?</label>
+      <label for="intakeDate" class="form-label">Op welke dag wilt u de afspraak hebben?</label>
+      <input id="intakeDate" type="date" class="intakeDate" name="appointmentDate">
+            <div class="alert alertIntakeDate alert-danger" role="alert">
+        Weekenden is niet mogelijk!
+      </div>
     </div>
     <div>
-      <input type="datetime-local" class="intakeDateTime" asp-validation-for="AppointmentDate" name="appointmentDate" required>
+      <label for="intakeTime" class="form-label">Op welk tijdstip wilt u de afspraak hebben?</label>
+      <input type="time" min="09:00" max="15:00" name="appointmentTime" required>
     </div>
   </div>
   <div id="alertPlaceHolder"></div>
   <button type="submit" class="btn btn-primary ZMDHButton" onclick="emailsAreEqual(event);">Verzenden</button>
 </form>
 
-
-
+@section scripts
+{
 <script>
-  let today = new Date().toISOString().slice(0, 16);
+  //Dissable to choose weekends
+  $(".alertIntakeDate").hide();
+  const picker = document.getElementById('intakeDate');
+  picker.addEventListener('input', function (e) {
+    var day = new Date(this.value).getUTCDay();
+    if ([6, 0].includes(day)) {
+      e.preventDefault();
+      this.value = '';
+      $(".alertIntakeDate").show();
+    }
+  });
 
-  
+  //minimum value for appointmentDate
+  var minValue = new Date();
+  minValue.setDate(minValue.getDate() + 7);
+  $(".intakeDate")[0].min = minValue.toISOString().slice(0, 10);
 
-  document.getElementsByClassName("intakeDateTime")[0].min = today;
+  //maximum value for appointmentDate
+  let maxValue = new Date();
+  maxValue.setDate(maxValue.getDate() + 365);
+  $(".intakeDate")[0].max = maxValue.toISOString().slice(0, 10);
 
 
-  function change16YearCheckbox () {
+    function change16YearCheckbox() {
     let getAgeCategory = document.getElementById("inputGroupSelectAgeCategory").value;
     let fieldset = document.getElementById("parentEmailFieldSet");
 
     if (getAgeCategory === "Jongste" || getAgeCategory === "Middelste") {
       fieldset.disabled = false;
     } else {
+      $(".parentEmailInput").val("");
       fieldset.disabled = true;
     }
   }
 
-
-</script>  
-
+      function emailsAreEqual(event) {
+        let clientEmail = document.getElementById("exampleInputEmail1").value;
+        let guardianEmail = document.getElementById("disabledTextInput").value;
+        if (clientEmail == guardianEmail) {
+          event.preventDefault();
+          alert('Foutmelding, ouder email en jongere email kunnen niet hetzelfde blijven', 'danger');
+        }
+      }
+</script>
+}

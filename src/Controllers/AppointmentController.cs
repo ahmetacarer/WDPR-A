@@ -18,7 +18,7 @@ public class AppointmentController : Controller
     private readonly UserManager<IdentityUser> _userManager;
     private readonly IUserStore<IdentityUser> _userStore;
 
-    public AppointmentController(ILogger<AppointmentController> logger, WDPRContext context, UserManager<IdentityUser> userManager,IUserStore<IdentityUser> userStore)
+    public AppointmentController(ILogger<AppointmentController> logger, WDPRContext context, UserManager<IdentityUser> userManager, IUserStore<IdentityUser> userStore)
     {
         _logger = logger;
         _context = context;
@@ -34,7 +34,7 @@ public class AppointmentController : Controller
 
 
     [HttpPost]
-    public async Task<IActionResult> Index([Bind("FirstName, LastName, Email, Condition, Adres, Woonplaats")] Client client, [Bind("appointmentDate")] DateTime appointmentDate, AgeCategory AgeCategory, string? emailOfParent = null)
+    public async Task<IActionResult> Index([Bind("FirstName, LastName, Email, Condition, Adres, Woonplaats")] Client client, DateTime appointmentDate, DateTime appointmentTime, AgeCategory AgeCategory, string? emailOfParent = null)
     {
 
         if (_context.Users.Any(b => b.Email == client.Email))
@@ -54,7 +54,7 @@ public class AppointmentController : Controller
         var orthopedagogue = _context.Orthopedagogues.FirstOrDefault(o => o.Specialty == client.Condition);
         Appointment appointment = new Appointment()
         {
-            AppointmentDate = appointmentDate,
+            AppointmentDate = appointmentDate.Date + new TimeSpan(appointmentTime.Hour, appointmentTime.Minute, 0),
             IncomingClient = client,
             IncomingClientId = client.Id,
             Guardians = client.Guardians, // misschien null reference zonder parent

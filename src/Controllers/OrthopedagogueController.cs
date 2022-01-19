@@ -99,6 +99,7 @@ public class OrthopedagogueController : Controller
             await EmailSender.SendEmail(guardian.Email, "Wachtwoord Aanmaken", $"Maak je wachtwoord aan door <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>hier</a> te klikken.");
         }
         _context.Appointments.Remove(appointment);
+        await _context.SaveChangesAsync();
         return RedirectToAction("Dashboard");
     }
 

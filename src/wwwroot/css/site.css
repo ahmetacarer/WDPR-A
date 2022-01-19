@@ -24,6 +24,13 @@ footer {
   color: #eee;
 }
 
+
+
+.list-group-item.active {
+  background-color: gray;
+  border-color: gray;
+}
+
 .OrthopedagogueImage {
   width: 368px;
   height: 368px;

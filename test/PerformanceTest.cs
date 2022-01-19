@@ -15,10 +15,11 @@ using System.Collections.Generic;
 
 namespace test;
 
-public class PerformanceTest {
+public class PerformanceTest
+{
 
     [Fact]
-    public void AverageResponseTime_HomepageTest_1000Requests()
+    public void AverageResponseTime_HomepageTest_True()
     {
         var allResponseTimes = new List<(DateTime Start, DateTime End)>();
         for (var i = 0; i < 1000; i++)
@@ -26,7 +27,7 @@ public class PerformanceTest {
             using (var client = new HttpClient())
             {
                 var start = DateTime.Now;
-                var response = client.GetAsync("https://localhost:7181/");
+                var response = client.GetAsync("https://zmdh-hhs.azurewebsites.net/");
                 var end = DateTime.Now;
                 allResponseTimes.Add((start, end));
             }
@@ -36,4 +37,26 @@ public class PerformanceTest {
         .Select(r => (r.End - r.Start).TotalMilliseconds).Average();
         Assert.True(actual <= expected);
     }
+
+    [Fact]
+    public void AverageResponseTime_AppointmentTest_True()
+    {
+        var allResponseTimes = new List<(DateTime Start, DateTime End)>();
+        for (var i = 0; i < 1000; i++)
+        {
+            using (var client = new HttpClient())
+            {
+                var start = DateTime.Now;
+                var response = client.GetAsync("https://localhost:7181/Appointment");
+                var end = DateTime.Now;
+                allResponseTimes.Add((start, end));
+            }
+        }
+        var expected = 1;
+        var actual = (int)allResponseTimes
+        .Select(r => (r.End - r.Start).TotalMilliseconds).Average();
+        Assert.True(actual <= expected);
+    }
+
+
 }

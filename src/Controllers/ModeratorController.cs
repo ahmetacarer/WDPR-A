@@ -7,7 +7,7 @@ using WDPR_A.Models;
 
 namespace WDPR_A.Controllers;
 
-[Authorize(Roles = "Moderator")]
+// [Authorize(Roles = "Moderator")]
 public class ModeratorController : Controller
 {
     private readonly WDPRContext _context;
@@ -25,25 +25,49 @@ public class ModeratorController : Controller
     {
         return RedirectToAction("Dashboard");
     }
-
-    public async Task<IActionResult> Dashboard()
+    public async Task<IActionResult> Dashboard(string? waarde)
     {
-        IdentityUser user = await _userManager.GetUserAsync(User);
-        var currentUser = _context.Orthopedagogues.Find(user.Id);
-        var role = await _context.Roles.SingleAsync(r => r.Name == "Moderator");
-        var moderatorIds = await _context.UserRoles.Where(u => u.RoleId == role.Id).ToListAsync();
-        var orthopedagogues = await _context.Orthopedagogues.Include(c => c.Chats)
-                                                      .ThenInclude(c => c.Messages)
-                                                      .ThenInclude(m => m.Sender)
-                                                      .Where(u => u.Id != currentUser.Id && moderatorIds.Any(m => m.UserId == u.Id)).ToListAsync();
-        return View(orthopedagogues);
+        // IdentityUser user = await _userManager.GetUserAsync(User);
+        // var currentUser = _context.Orthopedagogues.Find(user.Id);
+        // var role = await _context.Roles.SingleAsync(r => r.Name == "Moderator");
+        // var moderatorIds = await _context.UserRoles.Where(u => u.RoleId == role.Id).ToListAsync();
+        // var orthopedagogues = await _context.Orthopedagogues.Include(c => c.Chats)
+        //                                               .ThenInclude(c => c.Messages)
+        //                                               .ThenInclude(m => m.Sender)
+        //                                               .Where(u => u.Id != currentUser.Id).ToListAsync();
+
+        // if (waarde == "blockedClients")
+        // {
+        //     var list = await showAllBlockClients();
+        //     return View(list);
+        // }
+
+        // else if (waarde == "reportedMessages")
+        // {
+        //     var list = await showAllReportedMessages();
+        //     return View(list);
+        // }
+
+        return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> showAllBlockClients()
+    {
+        var clients = await _context.Clients.Where(c => c.IsBlocked).ToListAsync();
+        return PartialView("_blockedClients", clients);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> showAllReportedMessages()
+    {
+        var messages = await _context.Messages.Include(c => c.Sender).Include(c => c.Chat).Where(c => c.ReportCount > 0).ToListAsync();
+        return PartialView("_reportedMessages", messages);
     }
 
     [HttpPost]
     public async Task<IActionResult> BlockClient(string clientId)
     {
-        IdentityUser user = await _userManager.GetUserAsync(User);
-        var currentUser = await _context.Orthopedagogues.FindAsync(user.Id);
         var client = await _context.Clients.SingleOrDefaultAsync(c => c.Id == clientId);
 
         if (client == null)
@@ -51,14 +75,12 @@ public class ModeratorController : Controller
 
         client.IsBlocked = true;
         await _context.SaveChangesAsync();
-        return RedirectToAction("Dashboard", "Moderator");
+        return RedirectToAction("showAllReportedMessages");
     }
 
     [HttpPost]
     public async Task<IActionResult> UnblockClient(string clientId)
     {
-        IdentityUser user = await _userManager.GetUserAsync(User);
-        var currentUser = await _context.Orthopedagogues.FindAsync(user.Id);
         var client = await _context.Clients.SingleOrDefaultAsync(c => c.Id == clientId);
 
         if (client == null)
@@ -66,7 +88,7 @@ public class ModeratorController : Controller
 
         client.IsBlocked = false;
         await _context.SaveChangesAsync();
-        return RedirectToAction("Dashboard", "Moderator");
+        return RedirectToAction();
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

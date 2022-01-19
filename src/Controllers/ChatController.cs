@@ -47,8 +47,9 @@ public class ChatController : Controller
 
         return View(chats);
     }
+
     [HttpPost]
-    public async Task ReportClient(int messageId)
+    public async void ReportClient(int messageId)
     {
         var reportedMessage = await _context.Messages.FindAsync(messageId);
         if (reportedMessage != null)
@@ -78,7 +79,7 @@ public class ChatController : Controller
                                  .Where(c => c.RoomId == chatRoomId)
                                  .SingleOrDefault();
 
-        ViewData["CurrentUserID"] =(await _userManager.GetUserAsync(User)).Id;
+        ViewData["CurrentUserID"] = (await _userManager.GetUserAsync(User)).Id;
         return PartialView("_ChatPartial", chat);
     }
 }

@@ -74,7 +74,6 @@ public class OrthopedagogueController : Controller
     [HttpPost]
     public async Task<IActionResult> AcceptClient(int appointmentId)
     {
-        // hier een email verzenden om zijn wachtwoord in te stellen en vervolgens update in de database.
         var appointment = await _context.Appointments.Include(a => a.Guardians)
                                                      .ThenInclude(g => g.Clients)
                                                .Include(c => c.IncomingClient)

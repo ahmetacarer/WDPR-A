@@ -2,7 +2,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,10 +9,9 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace WDPR_A.Migrations
 {
     [DbContext(typeof(WDPRContext))]
-    [Migration("20220118104318_1")]
-    partial class _1
+    partial class WDPRContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.1");
@@ -72,6 +70,36 @@ namespace WDPR_A.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "006c921b-611f-4cf9-a18c-3d722840ee42",
+                            ConcurrencyStamp = "4dc52f43-cde3-47dc-8f7b-c6fbdd689585",
+                            Name = "Orthopedagogue",
+                            NormalizedName = "ORTHOPEDAGOGUE"
+                        },
+                        new
+                        {
+                            Id = "26d89e3f-e47f-468b-bd78-6f58aef3285e",
+                            ConcurrencyStamp = "30629444-22ad-45fd-9ce4-f67e3b0f3c79",
+                            Name = "Moderator",
+                            NormalizedName = "MODERATOR"
+                        },
+                        new
+                        {
+                            Id = "6e7321be-b891-44a3-abd8-71283880ddb9",
+                            ConcurrencyStamp = "8393af54-9d01-40c8-b916-0ad3673fbee2",
+                            Name = "Client",
+                            NormalizedName = "CLIENT"
+                        },
+                        new
+                        {
+                            Id = "ede8d0e5-2581-476c-ba45-a99d7089844a",
+                            ConcurrencyStamp = "f8ae8655-cfbf-408b-b669-fc218e5c95e7",
+                            Name = "Guardian",
+                            NormalizedName = "GUARDIAN"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -227,6 +255,48 @@ namespace WDPR_A.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "13198681-ef68-4acf-bd7e-544e12fed291",
+                            RoleId = "26d89e3f-e47f-468b-bd78-6f58aef3285e"
+                        },
+                        new
+                        {
+                            UserId = "13198681-ef68-4acf-bd7e-544e12fed291",
+                            RoleId = "006c921b-611f-4cf9-a18c-3d722840ee42"
+                        },
+                        new
+                        {
+                            UserId = "7d028f6c-929e-45b0-8493-573078b85f79",
+                            RoleId = "26d89e3f-e47f-468b-bd78-6f58aef3285e"
+                        },
+                        new
+                        {
+                            UserId = "7d028f6c-929e-45b0-8493-573078b85f79",
+                            RoleId = "006c921b-611f-4cf9-a18c-3d722840ee42"
+                        },
+                        new
+                        {
+                            UserId = "1988e216-9179-42a1-8243-2b6bf362b1b4",
+                            RoleId = "26d89e3f-e47f-468b-bd78-6f58aef3285e"
+                        },
+                        new
+                        {
+                            UserId = "1988e216-9179-42a1-8243-2b6bf362b1b4",
+                            RoleId = "006c921b-611f-4cf9-a18c-3d722840ee42"
+                        },
+                        new
+                        {
+                            UserId = "4e3371ca-b20a-4c91-b6c2-7c872c310a54",
+                            RoleId = "26d89e3f-e47f-468b-bd78-6f58aef3285e"
+                        },
+                        new
+                        {
+                            UserId = "4e3371ca-b20a-4c91-b6c2-7c872c310a54",
+                            RoleId = "006c921b-611f-4cf9-a18c-3d722840ee42"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -396,9 +466,9 @@ namespace WDPR_A.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "ec76bc28-a031-41df-94c4-d8fe9686abe2",
+                            Id = "13198681-ef68-4acf-bd7e-544e12fed291",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c1ad8d18-45cb-4f01-9504-46222a2fa4e6",
+                            ConcurrencyStamp = "a2c583f4-911a-416f-9e06-215eb2d9b165",
                             Email = "kkemper@zmdh.nl",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -406,7 +476,7 @@ namespace WDPR_A.Migrations
                             NormalizedUserName = "KKEMPER@ZMDH.NL",
                             PasswordHash = "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "dbca64fd-e4f0-4479-8c27-541ef810c235",
+                            SecurityStamp = "d1a55fc9-f1e9-4f88-9143-e790352b9f32",
                             TwoFactorEnabled = false,
                             UserName = "kkemper@zmdh.nl",
                             FirstName = "Karin",
@@ -415,9 +485,9 @@ namespace WDPR_A.Migrations
                         },
                         new
                         {
-                            Id = "991e7305-5722-47b0-bb8f-1a44aeeea39c",
+                            Id = "7d028f6c-929e-45b0-8493-573078b85f79",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c6d12bfa-6ac0-4956-b320-2fcee764c89c",
+                            ConcurrencyStamp = "1cfed670-05a5-4a4e-931a-274874378172",
                             Email = "jlo@zmdh.nl",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -425,7 +495,7 @@ namespace WDPR_A.Migrations
                             NormalizedUserName = "JLO@ZMDH.NL",
                             PasswordHash = "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "cd11d911-41c0-4a8a-9d5d-bc3db7dc6f12",
+                            SecurityStamp = "07aeb2a0-1860-4a55-876a-15113b0be80b",
                             TwoFactorEnabled = false,
                             UserName = "jlo@zmdh.nl",
                             FirstName = "Johan",
@@ -434,9 +504,9 @@ namespace WDPR_A.Migrations
                         },
                         new
                         {
-                            Id = "372919cb-8b83-4dbd-93ad-dea4947cf76b",
+                            Id = "1988e216-9179-42a1-8243-2b6bf362b1b4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "44073176-ede5-451c-9ad5-cd7d44132859",
+                            ConcurrencyStamp = "421331c9-9278-470a-9d7a-115b85779ee4",
                             Email = "sito@zmdh.nl",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -444,7 +514,7 @@ namespace WDPR_A.Migrations
                             NormalizedUserName = "SITO@ZMDH.NL",
                             PasswordHash = "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "28124dff-b0f4-49a0-9121-af1d3858f535",
+                            SecurityStamp = "f7814e6a-8cf2-43f8-8b70-920778cee25d",
                             TwoFactorEnabled = false,
                             UserName = "sito@zmdh.nl",
                             FirstName = "Steven",
@@ -453,9 +523,9 @@ namespace WDPR_A.Migrations
                         },
                         new
                         {
-                            Id = "27e03f6f-64c7-4bba-a7c6-a203c87a7bca",
+                            Id = "4e3371ca-b20a-4c91-b6c2-7c872c310a54",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8fd259a9-430c-4ced-a893-bca48c01d758",
+                            ConcurrencyStamp = "7556edd9-0ecb-49fc-bafa-ddf2581ceea3",
                             Email = "mvdijk@zmdh.nl",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -463,7 +533,7 @@ namespace WDPR_A.Migrations
                             NormalizedUserName = "MVDIJK@ZMDH.NL",
                             PasswordHash = "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "308a83b8-24ce-4e55-a3d5-54caf990ad5e",
+                            SecurityStamp = "3a80486d-5ba9-4487-ae6c-15853106c02f",
                             TwoFactorEnabled = false,
                             UserName = "mvdijk@zmdh.nl",
                             FirstName = "Marianne",

@@ -19,33 +19,37 @@
 </svg>
 @if (ViewData["foutmelding"] != null)
 {
-            <div class="alert alert-warning" role="alert">
-              <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:">
-                <use xlink:href="#exclamation-triangle-fill" />
-              </svg>
-              <div>
+  <div class="alert alert-warning" role="alert">
+    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:">
+      <use xlink:href="#exclamation-triangle-fill" />
+    </svg>
+    <div>
       @ViewData["foutmelding"].ToString()
-              </div>
-            </div>
+    </div>
+  </div>
 }
 
 <form asp-action="Index" method="post">
   <br>
   <div class="mb-3">
     <label for="firstNameInput" class="form-label">Voornaam</label>
-    <input type="text" class="form-control" asp-validation-for="FirstName" aria-describedby="basic-addon1"
-      id="firstNameInput" name="FirstName" pattern="^[a-zA-Z]+$" minlength="2" maxlength="40">
+    <input type="text" class="form-control" aria-describedby="basic-addon1" id="firstNameInput" name="FirstName"
+      pattern="^[a-zA-Z]+$" minlength="2" maxlength="40" required>
+    <div id="firstNameHelp" class="form-text">Voornaam moet minstens 2 karakters lang zijn en geen nummers bevatten
+    </div>
   </div><br>
 
   <div class="mb-3">
     <label for="lastNameInput" class="form-label">Achternaam</label>
     <input type="text" class="form-control" asp aria-describedby="basic-addon1" id="lastNameInput" name="LastName"
-      pattern="^[a-zA-Z]+$" minlength="2" maxlength="40">
+      pattern="^[a-zA-Z]+$" minlength="2" maxlength="40" required>
+    <div id="lastNameHelp" class="form-text">Achternaam moet minstens 2 karakters lang zijn en geen nummers bevatten
+    </div>
   </div><br>
 
   <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Email</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="Email">
+    <label for="exampleInputEmail1" class="form-label">Email van kind</label>
+    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="Email" required>
     <div id="emailHelp" class="form-text">We zullen je e-mailadres nooit met iemand anders delen.</div>
   </div><br>
 
@@ -53,7 +57,7 @@
   @* Condition dropdown section *@
   <div class="input-group mb-3">
     <label class="input-group-text" for="inputGroupSelect01">Aandoening</label>
-    <select class="form-select" id="inputGroupSelect01" name="Condition">
+    <select class="form-select" id="inputGroupSelect01" name="Condition" required>
       <option selected>Kies...</option>
       <option value="ADHD">ADHD</option>
       <option value="Faalangst">Faalangst</option>
@@ -62,14 +66,26 @@
     </select>
   </div><br>
 
+  @* AgeCategory dropdown section *@
+  <div class="input-group mb-3">
+    <label class="input-group-text" for="inputGroupSelect01">Leeftijdscategorie</label>
+    <select class="form-select" id="inputGroupSelectAgeCategory" name="AgeCategory" onchange="change16YearCheckbox()"
+      required>
+      <option selected>Kies...</option>
+      <option value="@AgeCategory.Jongste">Ik ben jonger dan 12 jaar</option>
+      <option value="@AgeCategory.Middelste">Ik ben jonger dan 16 jaar</option>
+      <option value="@AgeCategory.Oudste">Ik ben ouder dan 16 jaar</option>
+    </select>
+  </div><br>
+
 
   @* Younger than 16 section *@
-  <div class="form-check">
+  @* <div class="form-check">
     <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" onchange="changeParentVisibility()">
     <label class="form-check-label" for="flexCheckDefault">
-      Ben je jonger dan 16 jaar?
+    Ben je jonger dan 16 jaar?
     </label>
-  </div><br>
+    </div><br> *@
 
 
   @* ouders/voogd email section *@
@@ -90,18 +106,38 @@
     </div>
   </fieldset><br>
 
+
+  @* NAW gegevens section *@
+
+  <div class="mb-3">
+    <label for="adressInput" class="form-label">Adres</label>
+    <input type="text" class="form-control" asp-validation-for="Adres" aria-describedby="basic-addon1" id="adressInput"
+      name="Adres" minlength="2" maxlength="40" required>
+    <div id="adressHelp" class="form-text">Adres moet ook het huisnummer bevatten</div>
+  </div><br>
+
+  <div class="mb-3">
+    <label for="woonplaatsInput" class="form-label">Woonplaats</label>
+    <input type="text" class="form-control" asp aria-describedby="basic-addon1" id="woonplaatsInput" name="Woonplaats"
+      pattern="^([A-z]+[,.]?[ ]?|[A-z]+['-]?)+$" minlength="2" maxlength="40" required>
+    <div id="woonplaatsHelp" class="form-text">Woonplaats moet minstens 2 karakters lang zijn en geen nummers bevatten
+    </div>
+  </div><br>
+
+
+
   @* Date and Time picker section *@
   <div class="mb-3">
     <div>
-      <label for="intakeDate" class="form-label">Welke dag wilt u de afspraak hebben?</label>
+      <label for="intakeDate" class="form-label">Op welke dag wilt u de afspraak hebben?</label>
       <input id="date" type="date" class="intakeDate" name="appointmentDate">
-      <div class="alertDate alert-danger" role="alert">
+      <div hidden class="alertDate alert-danger" role="alert">
         Weekenden is niet mogelijk!
       </div>
     </div>
     <div>
-      <label for="intakeTime" class="form-label">Welke tijdstip wilt u de afspraak hebben?</label>
-      <input type="time" min="09:00" max="15:00" name="appointmentTime">
+      <label for="intakeTime" class="form-label">Op welk tijdstip wilt u de afspraak hebben?</label>
+      <input type="time" min="09:00" max="15:00" name="appointmentTime" required>
     </div>
   </div>
   <div id="alertPlaceHolder"></div>
@@ -134,33 +170,46 @@
   $(".intakeDate")[0].max = maxValue.toISOString().slice(0, 10);
 
 
-    function changeParentVisibility() {
+  function changeParentVisibility() {
 
-      let checkbox = document.getElementById("flexCheckDefault");
+    let checkbox = document.getElementById("flexCheckDefault");
+    let fieldset = document.getElementById("parentEmailFieldSet");
+    if (checkbox.checked) {
+      fieldset.disabled = false;
+    }
+    else {
+      fieldset.disabled = true;
+    }
+
+
+    document.getElementsByClassName("intakeDateTime")[0].min = today;
+
+
+    function change16YearCheckbox() {
+      let getAgeCategory = document.getElementById("inputGroupSelectAgeCategory").value;
       let fieldset = document.getElementById("parentEmailFieldSet");
-      if (checkbox.checked) {
+
+      if (getAgeCategory === "Jongste" || getAgeCategory === "Middelste") {
         fieldset.disabled = false;
-      }
-      else {
+      } else {
         fieldset.disabled = true;
       }
-    }
 
-  function emailsAreEqual(event) {
-    let clientEmail = document.getElementById("exampleInputEmail1").value;
-    let guardianEmail = document.getElementById("disabledTextInput").value;
-    if (clientEmail == guardianEmail) {
-      event.preventDefault();
-      alert('Foutmelding, ouder email en jongere email kunnen niet hetzelfde blijven', 'danger');
-    }
-  }
+      function emailsAreEqual(event) {
+        let clientEmail = document.getElementById("exampleInputEmail1").value;
+        let guardianEmail = document.getElementById("disabledTextInput").value;
+        if (clientEmail == guardianEmail) {
+          event.preventDefault();
+          alert('Foutmelding, ouder email en jongere email kunnen niet hetzelfde blijven', 'danger');
+        }
+      }
 
 
-  function alert(message, type) {
-    let alertPlaceholder = document.getElementById('alertPlaceHolder');
-    let wrapper = document.createElement('div');
-    wrapper.innerHTML = '<div id="alertPlaceHolder" class="alert alert-' + type + ' alert-dismissible" role="alert">' + message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
-    alertPlaceholder.replaceWith(wrapper);
-  }
+      function alert(message, type) {
+        let alertPlaceholder = document.getElementById('alertPlaceHolder');
+        let wrapper = document.createElement('div');
+        wrapper.innerHTML = '<div id="alertPlaceHolder" class="alert alert-' + type + ' alert-dismissible" role="alert">' + message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
+        alertPlaceholder.replaceWith(wrapper);
+      }
 </script>
 }

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace WDPR_A.Migrations
 {
     [DbContext(typeof(WDPRContext))]
-    [Migration("20220119134259_1")]
+    [Migration("20220120122254_1")]
     partial class _1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -77,28 +77,28 @@ namespace WDPR_A.Migrations
                         new
                         {
                             Id = "006c921b-611f-4cf9-a18c-3d722840ee42",
-                            ConcurrencyStamp = "697710e1-6a8e-415c-ab69-dc8b542a55d6",
+                            ConcurrencyStamp = "7e2ec758-cc8c-41ff-95f6-6bd1dd77f8bf",
                             Name = "Orthopedagogue",
                             NormalizedName = "ORTHOPEDAGOGUE"
                         },
                         new
                         {
                             Id = "26d89e3f-e47f-468b-bd78-6f58aef3285e",
-                            ConcurrencyStamp = "133a5fb4-e608-4cbc-91ce-5eaf607a97f5",
+                            ConcurrencyStamp = "ada9f6b5-bc2a-42bf-b85a-2b389ce7c96b",
                             Name = "Moderator",
                             NormalizedName = "MODERATOR"
                         },
                         new
                         {
                             Id = "6e7321be-b891-44a3-abd8-71283880ddb9",
-                            ConcurrencyStamp = "ef74adb6-c18f-4cff-947d-11d308db8c01",
+                            ConcurrencyStamp = "eede6365-442e-4bd9-acf1-5d2e481a48dd",
                             Name = "Client",
                             NormalizedName = "CLIENT"
                         },
                         new
                         {
                             Id = "ede8d0e5-2581-476c-ba45-a99d7089844a",
-                            ConcurrencyStamp = "d0f8b3c5-3723-4e67-9fac-fbe117dd7f19",
+                            ConcurrencyStamp = "3dbfe0a5-835a-4366-9baa-e928504f86b7",
                             Name = "Guardian",
                             NormalizedName = "GUARDIAN"
                         });
@@ -476,7 +476,7 @@ namespace WDPR_A.Migrations
                         {
                             Id = "13198681-ef68-4acf-bd7e-544e12fed291",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "788e1b1b-c068-45e1-89dd-ec4e387a491e",
+                            ConcurrencyStamp = "7f8656f2-44e2-4cae-8dd5-4487aa365ce1",
                             Email = "kkemper@zmdh.nl",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -484,7 +484,7 @@ namespace WDPR_A.Migrations
                             NormalizedUserName = "KKEMPER@ZMDH.NL",
                             PasswordHash = "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c0e2420a-5028-4c46-92f3-70fe75fc0d5a",
+                            SecurityStamp = "85d46e13-2437-4a4d-9c63-f7a9a8b23fcc",
                             TwoFactorEnabled = false,
                             UserName = "kkemper@zmdh.nl",
                             FirstName = "Karin",
@@ -495,7 +495,7 @@ namespace WDPR_A.Migrations
                         {
                             Id = "7d028f6c-929e-45b0-8493-573078b85f79",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "aaca5494-1cdf-4d96-8421-dd3367dc8d6f",
+                            ConcurrencyStamp = "070891c7-b2ba-4a9c-8b2f-1e3471448537",
                             Email = "jlo@zmdh.nl",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -503,7 +503,7 @@ namespace WDPR_A.Migrations
                             NormalizedUserName = "JLO@ZMDH.NL",
                             PasswordHash = "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5581021a-0685-4c48-bc7d-752ee1513115",
+                            SecurityStamp = "01dbe156-11d7-4bdf-abc6-d51d8940285c",
                             TwoFactorEnabled = false,
                             UserName = "jlo@zmdh.nl",
                             FirstName = "Johan",
@@ -514,7 +514,7 @@ namespace WDPR_A.Migrations
                         {
                             Id = "1988e216-9179-42a1-8243-2b6bf362b1b4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d89c4319-c2bf-4432-afd8-697c8b364ec6",
+                            ConcurrencyStamp = "23d1a8ce-04cb-42e9-84ed-37c89081788a",
                             Email = "sito@zmdh.nl",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -522,7 +522,7 @@ namespace WDPR_A.Migrations
                             NormalizedUserName = "SITO@ZMDH.NL",
                             PasswordHash = "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "3b05d9d9-e150-44b9-983a-896cedababe6",
+                            SecurityStamp = "5c77c637-0dd3-4d58-ac49-9af6ca815a6c",
                             TwoFactorEnabled = false,
                             UserName = "sito@zmdh.nl",
                             FirstName = "Steven",
@@ -533,7 +533,7 @@ namespace WDPR_A.Migrations
                         {
                             Id = "4e3371ca-b20a-4c91-b6c2-7c872c310a54",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b553c802-0f37-46e9-ad53-a5c7891bb96c",
+                            ConcurrencyStamp = "f98a1247-7b29-46d2-b45a-9c48418bcc27",
                             Email = "mvdijk@zmdh.nl",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -541,7 +541,7 @@ namespace WDPR_A.Migrations
                             NormalizedUserName = "MVDIJK@ZMDH.NL",
                             PasswordHash = "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ca85640f-cc2a-4152-a905-0a88999972a1",
+                            SecurityStamp = "fec44171-b0d6-4e63-8136-f353ad6f0271",
                             TwoFactorEnabled = false,
                             UserName = "mvdijk@zmdh.nl",
                             FirstName = "Marianne",

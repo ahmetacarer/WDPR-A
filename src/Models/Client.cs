@@ -16,7 +16,7 @@ namespace WDPR_A.Models
         [Required]
         public string Woonplaats { get; set; }
 
-        public bool IsBlocked { get; set; }
+        public bool IsBlocked { get; set; } = false;
 
         public AgeCategory DecideAgeCategory(int age)
         {

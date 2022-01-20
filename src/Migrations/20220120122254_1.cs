@@ -286,42 +286,42 @@ namespace WDPR_A.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "006c921b-611f-4cf9-a18c-3d722840ee42", "697710e1-6a8e-415c-ab69-dc8b542a55d6", "Orthopedagogue", "ORTHOPEDAGOGUE" });
+                values: new object[] { "006c921b-611f-4cf9-a18c-3d722840ee42", "7e2ec758-cc8c-41ff-95f6-6bd1dd77f8bf", "Orthopedagogue", "ORTHOPEDAGOGUE" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "26d89e3f-e47f-468b-bd78-6f58aef3285e", "133a5fb4-e608-4cbc-91ce-5eaf607a97f5", "Moderator", "MODERATOR" });
+                values: new object[] { "26d89e3f-e47f-468b-bd78-6f58aef3285e", "ada9f6b5-bc2a-42bf-b85a-2b389ce7c96b", "Moderator", "MODERATOR" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "6e7321be-b891-44a3-abd8-71283880ddb9", "ef74adb6-c18f-4cff-947d-11d308db8c01", "Client", "CLIENT" });
+                values: new object[] { "6e7321be-b891-44a3-abd8-71283880ddb9", "eede6365-442e-4bd9-acf1-5d2e481a48dd", "Client", "CLIENT" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "ede8d0e5-2581-476c-ba45-a99d7089844a", "d0f8b3c5-3723-4e67-9fac-fbe117dd7f19", "Guardian", "GUARDIAN" });
+                values: new object[] { "ede8d0e5-2581-476c-ba45-a99d7089844a", "3dbfe0a5-835a-4366-9baa-e928504f86b7", "Guardian", "GUARDIAN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Specialty", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "13198681-ef68-4acf-bd7e-544e12fed291", 0, "788e1b1b-c068-45e1-89dd-ec4e387a491e", "Orthopedagogue", "kkemper@zmdh.nl", false, "Karin", "Kemper", false, null, "KKEMPER@ZMDH.NL", "KKEMPER@ZMDH.NL", "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==", null, false, "c0e2420a-5028-4c46-92f3-70fe75fc0d5a", "ADHD", false, "kkemper@zmdh.nl" });
+                values: new object[] { "13198681-ef68-4acf-bd7e-544e12fed291", 0, "7f8656f2-44e2-4cae-8dd5-4487aa365ce1", "Orthopedagogue", "kkemper@zmdh.nl", false, "Karin", "Kemper", false, null, "KKEMPER@ZMDH.NL", "KKEMPER@ZMDH.NL", "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==", null, false, "85d46e13-2437-4a4d-9c63-f7a9a8b23fcc", "ADHD", false, "kkemper@zmdh.nl" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Specialty", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "1988e216-9179-42a1-8243-2b6bf362b1b4", 0, "d89c4319-c2bf-4432-afd8-697c8b364ec6", "Orthopedagogue", "sito@zmdh.nl", false, "Steven", "Ito", false, null, "SITO@ZMDH.NL", "SITO@ZMDH.NL", "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==", null, false, "3b05d9d9-e150-44b9-983a-896cedababe6", "Eetstoornis", false, "sito@zmdh.nl" });
+                values: new object[] { "1988e216-9179-42a1-8243-2b6bf362b1b4", 0, "23d1a8ce-04cb-42e9-84ed-37c89081788a", "Orthopedagogue", "sito@zmdh.nl", false, "Steven", "Ito", false, null, "SITO@ZMDH.NL", "SITO@ZMDH.NL", "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==", null, false, "5c77c637-0dd3-4d58-ac49-9af6ca815a6c", "Eetstoornis", false, "sito@zmdh.nl" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Specialty", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "4e3371ca-b20a-4c91-b6c2-7c872c310a54", 0, "b553c802-0f37-46e9-ad53-a5c7891bb96c", "Orthopedagogue", "mvdijk@zmdh.nl", false, "Marianne", "van Dijk", false, null, "MVDIJK@ZMDH.NL", "MVDIJK@ZMDH.NL", "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==", null, false, "ca85640f-cc2a-4152-a905-0a88999972a1", "Dyslexie", false, "mvdijk@zmdh.nl" });
+                values: new object[] { "4e3371ca-b20a-4c91-b6c2-7c872c310a54", 0, "f98a1247-7b29-46d2-b45a-9c48418bcc27", "Orthopedagogue", "mvdijk@zmdh.nl", false, "Marianne", "van Dijk", false, null, "MVDIJK@ZMDH.NL", "MVDIJK@ZMDH.NL", "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==", null, false, "fec44171-b0d6-4e63-8136-f353ad6f0271", "Dyslexie", false, "mvdijk@zmdh.nl" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Specialty", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "7d028f6c-929e-45b0-8493-573078b85f79", 0, "aaca5494-1cdf-4d96-8421-dd3367dc8d6f", "Orthopedagogue", "jlo@zmdh.nl", false, "Johan", "Lo", false, null, "JLO@ZMDH.NL", "JLO@ZMDH.NL", "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==", null, false, "5581021a-0685-4c48-bc7d-752ee1513115", "Faalangst", false, "jlo@zmdh.nl" });
+                values: new object[] { "7d028f6c-929e-45b0-8493-573078b85f79", 0, "070891c7-b2ba-4a9c-8b2f-1e3471448537", "Orthopedagogue", "jlo@zmdh.nl", false, "Johan", "Lo", false, null, "JLO@ZMDH.NL", "JLO@ZMDH.NL", "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==", null, false, "01dbe156-11d7-4bdf-abc6-d51d8940285c", "Faalangst", false, "jlo@zmdh.nl" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",

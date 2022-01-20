@@ -1,35 +1,33 @@
 @model List<WDPR_A.Models.Message>
 
 <div id="listClient">
-    <table class="table">
+    <table class="table table-hover">
         <tr>
             <th>De verzender</th>
             <th>Bericht</th>
-            <th>Groeps onderwerp</th>
-            <th>Rapportering aantal</th>
+            <th>Groepsonderwerp</th>
+            <th>Aantal keer gerapporteerd</th>
         </tr>
         @foreach (var message in Model)
         {
-            @if (!@message.Sender.IsBlocked)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => message.Sender.FirstName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => message.Text)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => message.Chat.Subject)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => message.ReportCount)
-                    </td>
-                    <td>
-                        <button class="btn btn-danger" onclick="blockClient('@(message.Sender.Id)')">Blokkeren</button>
-                    </td>
-                </tr>
-            }
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => message.Sender.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => message.Text)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => message.Chat.Subject)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => message.ReportCount)
+
+                </td>
+                <td>
+                    <button class="btn btn-danger" onclick="blockClient('@(message.Sender.Id)')">Blokkeren</button>
+                </td>
+            </tr>
         }
     </table>
 </div>

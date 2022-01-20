@@ -81,7 +81,7 @@ public class AppointmentController : Controller
             values: new { area = "Identity", userId = client.Id, code = code, returnUrl = "~/" },
             protocol: Request.Scheme);
 
-        string datum = appointmentDate.ToString("dd/MM/yyyy HH:mm");
+        string datum = appointmentDate.ToString("dd/MM/yyyy hh:mm");
         await EmailSender.SendEmail(client.Email, "Bevestig je mail",
             $"Bevestig je mail door te <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>klikken</a>.</br>Jouw intake-gesprek vindt plaats op {datum}");
 

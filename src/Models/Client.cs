@@ -16,10 +16,10 @@ namespace WDPR_A.Models
         public IList<Chat>? Chats { get; set; }
 
         [Required]
-        public string Adres { get; set; }
+        public string Address { get; set; }
 
         [Required]
-        public string Woonplaats { get; set; }
+        public string Residence { get; set; }
 
 
         public AgeCategory DecideAgeCategory(int age)

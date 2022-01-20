@@ -61,24 +61,12 @@ public class ModeratorController : Controller
     [HttpPost]
     public async Task<IActionResult> showAllReportedMessages()
     {
-        // var attribuut = "";
-        // var messages = await _context.Messages.Include(c => c.Sender).Include(c => c.Chat)
-        // Where(c => c.ReportCount > 0 && c.Chat.Clients.All(c => c.IsBlocked == false)).ToListAsync();
-
-
-        // var test = await _context.Messages.Where(c => c.ReportCount > 0 && c.Chat.Clients.All(c => c.IsBlocked == false)).ToListAsync();
-
-        var test2 = await _context.Messages.Include(c => c.Sender)
+        var reportedMessages = await _context.Messages.Include(c => c.Sender)
                                             .Include(c => c.Chat)
                                             .ThenInclude(c => c.Clients)
-                                          .Where(c => c.ReportCount > 0 && c.Chat.Clients.Any(cl => cl.Id == c.Sender.Id && !cl.IsBlocked))
-                                          .ToListAsync();
-
-        // var test = await _context.Messages.Include(c => c.Chat)
-        //                                   .Include(c => c.Sender)
-        //                                   .Where(c => c.ReportCount > 0 && c.Chat.Clients.Where(c => c.IsBlocked == false))
-        //                                   .ToListAsync();
-        return PartialView("_reportedMessages", test2);
+                                            .Where(c => c.ReportCount > 0 && c.Chat.Clients.Any(cl => cl.Id == c.Sender.Id && (cl.IsBlocked == null || cl.IsBlocked == false)))
+                                            .ToListAsync();
+        return PartialView("_reportedMessages", reportedMessages);
     }
 
     [HttpPost]

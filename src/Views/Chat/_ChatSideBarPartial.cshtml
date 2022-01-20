@@ -31,7 +31,14 @@
                     <div class="d-flex w-100 align-items-center justify-content-between">
                       @if (chat.IsPrivate)
                       {
-                        <strong class="mb-1">@chat.Orthopedagogue.FirstName @chat.Orthopedagogue.LastName</strong>
+                        @if(User.IsInRole("Orthopedagogue"))
+                        {
+                          <strong class="mb-1">@chat.Subject</strong>
+                        }
+                        else
+                        {
+                          <strong class="mb-1">@chat.Orthopedagogue.FirstName @chat.Orthopedagogue.LastName</strong>
+                        }
                       }
                       else
                       {

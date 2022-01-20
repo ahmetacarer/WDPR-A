@@ -75,28 +75,28 @@ namespace WDPR_A.Migrations
                         new
                         {
                             Id = "006c921b-611f-4cf9-a18c-3d722840ee42",
-                            ConcurrencyStamp = "9d3bf2b1-bf34-4b83-8345-3e2ec15412d1",
+                            ConcurrencyStamp = "5b7900fb-9151-4c77-a5a8-d74b9c366287",
                             Name = "Orthopedagogue",
                             NormalizedName = "ORTHOPEDAGOGUE"
                         },
                         new
                         {
                             Id = "26d89e3f-e47f-468b-bd78-6f58aef3285e",
-                            ConcurrencyStamp = "221e64c6-b952-4d53-87e0-c9c8ea590c17",
+                            ConcurrencyStamp = "1cc60221-e6f8-4bf2-acb5-ce762ddcd2e6",
                             Name = "Moderator",
                             NormalizedName = "MODERATOR"
                         },
                         new
                         {
                             Id = "6e7321be-b891-44a3-abd8-71283880ddb9",
-                            ConcurrencyStamp = "4004718d-4f33-46aa-8da0-c688ebaebdc7",
+                            ConcurrencyStamp = "1c850c91-d8a5-4968-b4f5-a01e10f8cb31",
                             Name = "Client",
                             NormalizedName = "CLIENT"
                         },
                         new
                         {
                             Id = "ede8d0e5-2581-476c-ba45-a99d7089844a",
-                            ConcurrencyStamp = "b627bb77-63d5-4484-9922-ee5145bc1ec5",
+                            ConcurrencyStamp = "2855e5f4-235c-4a4c-ab63-3af2d8c2b6db",
                             Name = "Guardian",
                             NormalizedName = "GUARDIAN"
                         });
@@ -474,7 +474,7 @@ namespace WDPR_A.Migrations
                         {
                             Id = "13198681-ef68-4acf-bd7e-544e12fed291",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "cb9d25d1-5701-4152-8098-202c7fa9bf7d",
+                            ConcurrencyStamp = "2b9678b2-d653-4a41-ad6d-9baea79ccdf5",
                             Email = "kkemper@zmdh.nl",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -482,7 +482,7 @@ namespace WDPR_A.Migrations
                             NormalizedUserName = "KKEMPER@ZMDH.NL",
                             PasswordHash = "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "7cf6776e-7086-4d31-bf38-f96bb7a40347",
+                            SecurityStamp = "ce8e0f34-0651-4e7d-9bca-8a8fd3b9f2a4",
                             TwoFactorEnabled = false,
                             UserName = "kkemper@zmdh.nl",
                             FirstName = "Karin",
@@ -493,7 +493,7 @@ namespace WDPR_A.Migrations
                         {
                             Id = "7d028f6c-929e-45b0-8493-573078b85f79",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fda5b378-a025-4461-939b-81dc15889c7e",
+                            ConcurrencyStamp = "ced03aed-2fc8-4f17-9b13-04d08d4d7bf9",
                             Email = "jlo@zmdh.nl",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -501,7 +501,7 @@ namespace WDPR_A.Migrations
                             NormalizedUserName = "JLO@ZMDH.NL",
                             PasswordHash = "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e512de73-1d53-4d06-9f49-3563b9dc67a9",
+                            SecurityStamp = "142eb5ba-268d-4b1d-af12-46d65da80eab",
                             TwoFactorEnabled = false,
                             UserName = "jlo@zmdh.nl",
                             FirstName = "Johan",
@@ -512,7 +512,7 @@ namespace WDPR_A.Migrations
                         {
                             Id = "1988e216-9179-42a1-8243-2b6bf362b1b4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "626cbd10-b10a-43d7-9261-1998acfda282",
+                            ConcurrencyStamp = "5a7e536e-95ba-4731-9a3e-72901de75f20",
                             Email = "sito@zmdh.nl",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -520,7 +520,7 @@ namespace WDPR_A.Migrations
                             NormalizedUserName = "SITO@ZMDH.NL",
                             PasswordHash = "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "bcf09454-b800-4ffd-a4ac-e0c6f5fc42dc",
+                            SecurityStamp = "9c0d3284-0768-4b98-9652-e15a21d613d3",
                             TwoFactorEnabled = false,
                             UserName = "sito@zmdh.nl",
                             FirstName = "Steven",
@@ -531,7 +531,7 @@ namespace WDPR_A.Migrations
                         {
                             Id = "4e3371ca-b20a-4c91-b6c2-7c872c310a54",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d4567fc9-a562-4b2d-b030-f9a7f78178f7",
+                            ConcurrencyStamp = "d198e904-b533-48c6-bc38-bb735d9a9c46",
                             Email = "mvdijk@zmdh.nl",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -539,7 +539,7 @@ namespace WDPR_A.Migrations
                             NormalizedUserName = "MVDIJK@ZMDH.NL",
                             PasswordHash = "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "50c18286-2512-4074-891f-d005423318ee",
+                            SecurityStamp = "ba62bffc-7065-4fc4-b3e4-2b466710bfea",
                             TwoFactorEnabled = false,
                             UserName = "mvdijk@zmdh.nl",
                             FirstName = "Marianne",

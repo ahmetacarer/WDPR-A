@@ -41,6 +41,7 @@
                 clientId: clientId
             },
             success: function (msg) {
+                console.log(msg)
                 $("#listClient").replaceWith(msg);
             },
             error: function (req, status, error) {

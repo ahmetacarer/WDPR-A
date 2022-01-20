@@ -74,11 +74,6 @@ public class ModeratorController : Controller
     {
         var client = await _context.Clients.SingleOrDefaultAsync(c => c.Id == clientId);
 
-        // var test = await _context.Messages.Include(c => c.Chat)
-        //                                 .Include(c => c.Sender)
-        //                                 .Where(c => c.ReportCount > 0 && c.Chat.Clients.Where(c => c.IsBlocked == false))
-        //                                 .ToListAsync();
-
         if (client == null)
             return RedirectToAction("Dashboard", "Moderator");
 

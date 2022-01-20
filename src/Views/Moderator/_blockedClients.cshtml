@@ -26,29 +26,33 @@
                     @Html.DisplayFor(modelItem => client.Woonplaats)
                 </td>
                 <td>
-                    <button class="btn btn-warning" onsubmit="blockClient() return false;">deblokkeren</button>
+                    <button class="btn btn-warning" onclick="deblockClient('@(client.Id)')">deblokkeren</button>
                 </td>
             </tr>
         }
     </table>
 </div>
 
+@section script{
 <script>
-    function blockClient(obj) {
-        console.log(obj);
-        // $.ajax({
-        //     type: "POST",
-        //     url: "@Url.Action("UnblockClient")",
-        //     data: {
-        //         stringId: client.Id
-        //     },
-        //     dataType: "text",
-        //     success: function (msg) {
-        //         $("#listClient").replaceWith(msg);
-        //     },
-        //     error: function (req, status, error) {
-        //         console.log(error)
-        //     }
-        // });
+    console.log(222222);
+
+    function deblockClient(clientId) {
+        console.log(23);
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("UnblockClient")",
+            data: {
+                stringId: clientId
+            },
+            dataType: "text",
+            success: function (msg) {
+                $("#listClient").replaceWith(msg);
+            },
+            error: function (req, status, error) {
+                console.log(error)
+            }
+        });
     }
 </script>
+}

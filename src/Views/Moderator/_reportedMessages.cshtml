@@ -1,0 +1,51 @@
+@model List<WDPR_A.Models.Message>
+
+<div id="listClient">
+    <table class="table table-hover">
+        <tr>
+            <th>De verzender</th>
+            <th>Bericht</th>
+            <th>Groepsonderwerp</th>
+            <th>Aantal keer gerapporteerd</th>
+        </tr>
+        @foreach (var message in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => message.Sender.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => message.Text)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => message.Chat.Subject)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => message.ReportCount)
+
+                </td>
+                <td>
+                    <button class="btn btn-danger" onclick="blockClient('@(message.Sender.Id)')">Blokkeren</button>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+<script>
+    function blockClient(clientId) {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("showAllReportedMessages")",
+            data: {
+                clientId: clientId
+            },
+            success: function (msg) {
+                $("#listClient").replaceWith(msg);
+            },
+            error: function (req, status, error) {
+                console.log(error)
+            }
+        });
+    }
+</script>

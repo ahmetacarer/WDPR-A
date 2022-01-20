@@ -4,22 +4,44 @@
 <div id="messages" class="overflow-auto" style="max-height: 25em;">
     @foreach (var message in Model.Messages)
     {
-        if (message.Sender.Id == ViewData["CurrentUserID"].ToString()) {
-
+        @if (message.Sender.Id == ViewData["CurrentUserID"].ToString())
+        {
             <div class="card col-6 offset-6">
                 <div class="card-body" style="background-color: lightgreen;">
-                    <strong class="card-title" >Jij</strong> <br>
+                    <strong class="card-title">Jij</strong> <br>
                     <h6 class="card-text" style="color: #4F4F4F;">@message.Text</h6>
-                    <p class="card-text" style="color: #4F4F4F;">@message.When</p> 
+                    <p class="card-text" style="color: #4F4F4F;">@message.When</p>
                 </div>
-            </div> 
+            </div>
             <br>
-
-        } else {
-
+        }
+        else
+        {
             <div class="card col-6 offset-0">
                 <div class="card-body" style="background-color: lightblue;">
-                    <strong class="card-title">@message.Sender.FirstName</strong> <br>
+                    @if (User.IsInRole("Client"))
+                    {
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                                ...
+                            </button>
+                            <input type="hidden" name="messageId" value="@message.Id" id="@message.Id" />
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" type="submit" onclick="">Rapporteer</a></li>
+                            </ul>
+                        </div>
+                    }
+
+                    @if (User.IsInRole("Moderator"))
+                    {
+                        <form onsubmit="reportUser(); return false">
+                            <input type="hidden" name="messageId" value="@message.Id" id="@message.Id">
+                            <input type="submit" value="Rapporteer">
+                        </form>
+                    }
+                    <strong class="card-title">@message.Sender.FirstName @message.Sender.LastName</strong>
+                    <br>
                     <h6 class="card-text" style="color: #4F4F4F;">@message.Text</h6>
                     <p class="card-text" style="color: #4F4F4F;">@message.When</p>
                 </div>
@@ -28,3 +50,22 @@
         }
     }
 </div>
+
+
+<script>
+    function reportUser() {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("ReportClient", "Chat")",
+            data: {
+                messageId: $('input').val()
+            },
+            success: function (msg) {
+                // wat moet hier komen als het succes is????
+            },
+            error: function (req, status, error) {
+                console.log(error)
+            }
+        });
+    }
+</script>

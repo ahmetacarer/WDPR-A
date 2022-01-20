@@ -95,10 +95,10 @@ public class AppointmentController : Controller
             await EmailSender.SendEmail(emailOfParent, "Bevestig je mail",
                 $"Bevestig je mail door te <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>klikken</a>.</br>Jouw intake-gesprek vindt plaats op {datum}");
         }
-        return RedirectToAction("Succes");
+        return RedirectToAction("SuccessAppointment");
     }
 
-    public IActionResult Succes()
+    public IActionResult SuccessAppointment()
     {
         return View();
     }

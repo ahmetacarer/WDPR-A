@@ -36,12 +36,11 @@
     function blockClient(clientId) {
         $.ajax({
             type: "POST",
-            url: "@Url.Action("BlockClient")",
+            url: "@Url.Action("showAllReportedMessages")",
             data: {
                 clientId: clientId
             },
             success: function (msg) {
-                console.log(msg)
                 $("#listClient").replaceWith(msg);
             },
             error: function (req, status, error) {

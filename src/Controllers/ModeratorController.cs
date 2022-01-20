@@ -36,31 +36,23 @@ public class ModeratorController : Controller
         //                                               .ThenInclude(m => m.Sender)
         //                                               .Where(u => u.Id != currentUser.Id).ToListAsync();
 
-        // if (waarde == "blockedClients")
-        // {
-        //     var list = await showAllBlockClients();
-        //     return View(list);
-        // }
-
-        // else if (waarde == "reportedMessages")
-        // {
-        //     var list = await showAllReportedMessages();
-        //     return View(list);
-        // }
-
         return View();
     }
 
     [HttpPost]
-    public async Task<IActionResult> showAllBlockClients()
+    public async Task<IActionResult> showAllBlockClients(string clientId)
     {
+        var result = UnblockClient(clientId);
+
         var clients = await _context.Clients.Where(c => c.IsBlocked).ToListAsync();
         return PartialView("_blockedClients", clients);
     }
 
     [HttpPost]
-    public async Task<IActionResult> showAllReportedMessages()
+    public async Task<IActionResult> showAllReportedMessages(string clientId)
     {
+        var result = BlockClient(clientId);
+
         var reportedMessages = await _context.Messages.Include(c => c.Sender)
                                             .Include(c => c.Chat)
                                             .ThenInclude(c => c.Clients)
@@ -70,29 +62,32 @@ public class ModeratorController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> BlockClient(string clientId)
+    public async Task<Boolean> BlockClient(string clientId)
     {
         var client = await _context.Clients.SingleOrDefaultAsync(c => c.Id == clientId);
+        var messages = await _context.Messages.Where(m => client.Id == m.Sender.Id && m.ReportCount > 0).ToListAsync();
 
-        if (client == null)
-            return RedirectToAction("Dashboard", "Moderator");
+        if (client == null) return false;
+        if (messages == null) return false;
 
         client.IsBlocked = true;
+        _context.Messages.RemoveRange(messages);
+
         await _context.SaveChangesAsync();
-        return RedirectToAction("showAllReportedMessages");
+
+        return true;
     }
 
     [HttpPost]
-    public async Task<IActionResult> UnblockClient(string clientId)
+    public async Task<Boolean> UnblockClient(string clientId)
     {
         var client = await _context.Clients.SingleOrDefaultAsync(c => c.Id == clientId);
 
-        if (client == null)
-            return RedirectToAction("Dashboard", "Moderator");
+        if (client == null) return false;
 
         client.IsBlocked = false;
         await _context.SaveChangesAsync();
-        return RedirectToAction();
+        return true;
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

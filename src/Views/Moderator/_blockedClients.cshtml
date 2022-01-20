@@ -33,19 +33,14 @@
     </table>
 </div>
 
-@section script{
 <script>
-    console.log(222222);
-
     function deblockClient(clientId) {
-        console.log(23);
         $.ajax({
             type: "POST",
-            url: "@Url.Action("UnblockClient")",
+            url: "@Url.Action("showAllBlockClients")",
             data: {
-                stringId: clientId
+                clientId: clientId
             },
-            dataType: "text",
             success: function (msg) {
                 $("#listClient").replaceWith(msg);
             },
@@ -55,4 +50,3 @@
         });
     }
 </script>
-}

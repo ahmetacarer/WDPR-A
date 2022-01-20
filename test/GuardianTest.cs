@@ -85,19 +85,4 @@ public class GuardianTest
         var sut = new GuardianController(null, context, userManager);
         Assert.Null(sut.User);
     }
-
-    // [Fact]
-    // public void Dashboard_Guardian_Authorize()
-    // {   
-    //     var loginmodel = new Login {
-    //     Username = "arwinortiz",
-    //     Password = "123456"
-    // };
-    //     var controller = new GuardianController(null, GetWDPRContext(), null);
-    //     var mock = new Mock<ControllerContext>();
-    //     mock.SetupGet(x => x.HttpContext.User.Identity.Name).Returns("Guardian");
-    //     mock.Setup(x => x.HttpContext.User.IsInRole("Guardian")).Returns(true);
-    //     controller.ControllerContext = mock.Object;
-
-    // }
 }

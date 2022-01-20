@@ -77,6 +77,7 @@ public class OrthopedagogueController : Controller
         var appointment = await _context.Appointments.Include(a => a.Guardians)
                                                      .ThenInclude(g => g.Clients)
                                                .Include(c => c.IncomingClient)
+                                               .Include(c => c.Orthopedagogue)
                                                .SingleOrDefaultAsync(a => a.Id == appointmentId);
         if (appointment == null || appointment.IncomingClient == null)
             return RedirectToAction("Dashboard");
@@ -98,6 +99,10 @@ public class OrthopedagogueController : Controller
                 protocol: Request.Scheme);
             await EmailSender.SendEmail(guardian.Email, "Wachtwoord Aanmaken", $"Maak je wachtwoord aan door <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>hier</a> te klikken.");
         }
+        
+        await _context.Chats.AddAsync(new Chat { RoomId = Guid.NewGuid().ToString(), Subject = $"Prive Behandeling {appointment.IncomingClient.FirstName} {appointment.IncomingClient.LastName}", 
+                                    Condition = appointment.IncomingClient.Condition, IsPrivate = true, AgeCategory = appointment.IncomingClient.AgeCategory, 
+                                    Orthopedagogue = appointment.Orthopedagogue, Clients = new List<Client>{appointment.IncomingClient}});
         _context.Appointments.Remove(appointment);
         await _context.SaveChangesAsync();
         return RedirectToAction("Dashboard");

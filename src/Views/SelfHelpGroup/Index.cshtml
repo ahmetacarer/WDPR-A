@@ -10,23 +10,27 @@
 <form method="get">
     <div class="container">
         <div class="row">
-            <div class="col-sm-5">
+            <div class="col-sm-auto">
                 <label for="subject" class="form-label">Onderwerp:</label>
                 <input type="text" name="subject" />
             </div>
-            <div class="col-sm-5">
-                <div class="input-group mb-3">
-                    <label class="input-group-text" for="ageCategory">Leeftijdscategorie</label>
-                    <select class="form-select" id="ageCategory" name="ageCategory">
-                        <option value="">Kies...</option>
-                        <option value="@AgeCategory.Jongste">Jongste</option>
-                        <option value="@AgeCategory.Middelste">Middelste</option>
-                        <option value="@AgeCategory.Oudste">Oudste</option>
-                    </select>
-                </div>
-            </div>
 
-            <div class="col-sm-2">
+            @if (User.IsInRole("Orthopedagogue"))
+            {
+                <div class="col-sm-auto">
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="ageCategory">Leeftijdscategorie</label>
+                        <select class="form-select" id="ageCategory" name="ageCategory">
+                            <option value="">Kies...</option>
+                            <option value="@AgeCategory.Jongste">Jongste</option>
+                            <option value="@AgeCategory.Middelste">Middelste</option>
+                            <option value="@AgeCategory.Oudste">Oudste</option>
+                        </select>
+                    </div>
+                </div>
+            }
+
+            <div class="col-sm-auto">
                 <input type="submit" value="Filter" class="btn btn-primary">
             </div>
         </div>

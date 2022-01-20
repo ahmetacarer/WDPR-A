@@ -101,13 +101,13 @@
   <div class="mb-3">
     <label for="adressInput" class="form-label">Adres</label>
     <input type="text" class="form-control" asp-validation-for="Adres" aria-describedby="basic-addon1" id="adressInput"
-      name="Adres" minlength="2" maxlength="40" required>
+      name="Address" minlength="2" maxlength="40" required>
     <div id="adressHelp" class="form-text">Adres moet ook het huisnummer bevatten</div>
   </div><br>
 
   <div class="mb-3">
     <label for="woonplaatsInput" class="form-label">Woonplaats</label>
-    <input type="text" class="form-control" asp aria-describedby="basic-addon1" id="woonplaatsInput" name="Woonplaats"
+    <input type="text" class="form-control" asp aria-describedby="basic-addon1" id="woonplaatsInput" name="Residence"
       pattern="^([A-z]+[,.]?[ ]?|[A-z]+['-]?)+$" minlength="2" maxlength="40" required>
     <div id="woonplaatsHelp" class="form-text">Woonplaats moet minstens 2 karakters lang zijn en geen nummers bevatten
     </div>

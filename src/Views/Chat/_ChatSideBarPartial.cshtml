@@ -27,11 +27,18 @@
                 {
                   <a href="javascript:void(0)" id="@Html.Raw(chat.RoomId)"
                 class="sidebar_button list-group-item list-group-item-action py-3 lh-tight" 
-                aria-current="true" >
+                aria-current="true">
                     <div class="d-flex w-100 align-items-center justify-content-between">
                       @if (chat.IsPrivate)
                       {
-                        <strong class="mb-1">@chat.Orthopedagogue.FirstName @chat.Orthopedagogue.LastName</strong>
+                        @if(User.IsInRole("Orthopedagogue"))
+                        {
+                          <strong class="mb-1">@chat.Subject</strong>
+                        }
+                        else
+                        {
+                          <strong class="mb-1">@chat.Orthopedagogue.FirstName @chat.Orthopedagogue.LastName</strong>
+                        }
                       }
                       else
                       {
@@ -49,6 +56,9 @@
                 }
               }
             </div>
+      </div>
+
+      <div>
 
       </div>
 
@@ -65,6 +75,8 @@
 </div>
 
 <script>
+
+
   let sidebar_buttons = document.getElementsByClassName("sidebar_button");
   for (let i = 0; i < sidebar_buttons.length; i++) {
     sidebar_buttons[i].addEventListener("click", function () {
@@ -75,7 +87,6 @@
   
       if (!current_button.classList.contains("active")) {
         $.post(text, function (data) {
-          // append vervangen met replace with als het niet goed genoeg functioneerd
           $('#messages').replaceWith(data);
         });
         var current_chatRoom = chatRoomId;

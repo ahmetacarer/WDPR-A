@@ -40,31 +40,21 @@ public class SelfHelpGroupController : Controller
 
         if (!String.IsNullOrEmpty(subject) && !String.IsNullOrEmpty(ageCategory.ToString()))
         {
-            lijst = lijst.Where(c => c.IsPrivate == false && c.Subject.ToLower().Substring(0, subject.Length) == subject.ToLower() && c.AgeCategory == ageCategory);
+            lijst = lijst.Where(c => c.Subject.ToLower().Substring(0, subject.Length) == subject.ToLower() && c.AgeCategory == ageCategory);
         }
 
         return lijst;
     }
 
-    public async Task<IQueryable<Chat>> ClientSearch(IQueryable<Chat> lijst, string subject, AgeCategory? ageCategory)
+    public async Task<IQueryable<Chat>> ClientSearch(IQueryable<Chat> lijst, string subject)
     {
         IdentityUser user = await _userManager.GetUserAsync(User);
         var currentUser = await _context.Clients.FindAsync(user.Id);
-        lijst = lijst.Where(c => c.IsPrivate == false && c.Condition == currentUser.Condition);
+        lijst = lijst.Where(c => c.Condition == currentUser.Condition && c.AgeCategory == currentUser.AgeCategory);
 
         if (!String.IsNullOrEmpty(subject))
         {
             lijst = lijst.Where(c => c.Subject.ToLower().Substring(0, subject.Length) == subject.ToLower());
-        }
-
-        if (!String.IsNullOrEmpty(ageCategory.ToString()))
-        {
-            lijst = lijst.Where(c => c.AgeCategory == ageCategory);
-        }
-
-        if (!String.IsNullOrEmpty(subject) && !String.IsNullOrEmpty(ageCategory.ToString()))
-        {
-            lijst = lijst.Where(c => c.IsPrivate == false && c.Subject.ToLower().Substring(0, subject.Length) == subject.ToLower() && c.AgeCategory == ageCategory);
         }
 
         return lijst;
@@ -73,7 +63,7 @@ public class SelfHelpGroupController : Controller
     public async Task<IActionResult> Index(string subject, AgeCategory? ageCategory)
     {
 
-        var lijst = _context.Chats.Where(c => c.IsPrivate == false);
+        var lijst = _context.Chats.Where(c => !c.IsPrivate);
 
         if (User.IsInRole("Orthopedagogue"))
         {
@@ -82,7 +72,7 @@ public class SelfHelpGroupController : Controller
 
         if (User.IsInRole("Client"))
         {
-            lijst = await ClientSearch(lijst, subject, ageCategory);
+            lijst = await ClientSearch(lijst, subject);
         }
 
         if (lijst.Count() == 0)

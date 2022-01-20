@@ -8,25 +8,29 @@
 <br>
 
 <form method="get">
-    <div class="container"> 
+    <div class="container">
         <div class="row">
-            <div class="col-sm-5">
+            <div class="col-sm-auto">
                 <label for="subject" class="form-label">Onderwerp:</label>
                 <input type="text" name="subject" />
             </div>
-            <div class="col-sm-5">
-                <div class="input-group mb-3">
-                    <label class="input-group-text" for="ageCategory">Leeftijdscategorie</label>
-                    <select class="form-select" id="ageCategory" name="ageCategory">
-                    <option value="">Kies...</option>
-                    <option value="@AgeCategory.Jongste">Jongste</option>
-                    <option value="@AgeCategory.Middelste">Middelste</option>
-                    <option value="@AgeCategory.Oudste">Oudste</option>
-                    </select>
-                </div>
-            </div>
 
-            <div class="col-sm-2">
+            @if (User.IsInRole("Orthopedagogue"))
+            {
+                <div class="col-sm-auto">
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="ageCategory">Leeftijdscategorie</label>
+                        <select class="form-select" id="ageCategory" name="ageCategory">
+                            <option value="">Kies...</option>
+                            <option value="@AgeCategory.Jongste">Jongste</option>
+                            <option value="@AgeCategory.Middelste">Middelste</option>
+                            <option value="@AgeCategory.Oudste">Oudste</option>
+                        </select>
+                    </div>
+                </div>
+            }
+
+            <div class="col-sm-auto">
                 <input type="submit" value="Filter" class="btn btn-primary">
             </div>
         </div>
@@ -35,35 +39,37 @@
 
 <table class="table">
     <tr>
-      <th>Onderwerp</th>
-      <th>Leeftijdscategorie</th>
-      <th>Aandoening</th>
+        <th>Onderwerp</th>
+        <th>Leeftijdscategorie</th>
+        <th>Aandoening</th>
     </tr>
-    @foreach (var chat in Model) {
-     <tr>
-          <td>
+    @foreach (var chat in Model)
+    {
+        <tr>
+            <td>
                 @Html.DisplayFor(modelItem => chat.Subject)
-          </td>
-          <td>
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => chat.AgeCategory)
-          </td>
-          <td>
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => chat.Condition)
-          </td>
-          @if (User.IsInRole("Client") && !chat.Clients.Where(c => c.Email == User.Identity.Name).Any())
-          {
-          <td>
-                <form asp-action="Join" asp-controller="SelfHelpGroup" method="post">
-                <input type="text" class="form-control" aria-describedby="basic-addon1" value="@chat.RoomId" name="roomId" hidden>
-                <input type="submit" class="btn btn-primary" value="Deelnemen">
-                </form>
-          </td>
-          }
-     </tr>
+            </td>
+            @if (User.IsInRole("Client") && !chat.Clients.Where(c => c.Email == User.Identity.Name).Any())
+            {
+                <td>
+                    <form asp-action="Join" asp-controller="SelfHelpGroup" method="post">
+                        <input type="text" class="form-control" aria-describedby="basic-addon1" value="@chat.RoomId"
+                    name="roomId" hidden>
+                        <input type="submit" class="btn btn-primary" value="Deelnemen">
+                    </form>
+                </td>
+            }
+        </tr>
     }
 </table>
 @ViewData["Melding"]
-@if(User.IsInRole("Orthopedagogue"))
+@if (User.IsInRole("Orthopedagogue"))
 {
     <p><a asp-action="Create">Aanmaken van een nieuwe zelfhulpgroep</a></p>
 }

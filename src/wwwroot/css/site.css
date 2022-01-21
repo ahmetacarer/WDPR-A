@@ -45,6 +45,18 @@ footer {
   width: 150px;
 }
 
+.accordion-button:hover {
+  color: white;
+}
+
+.accordion-button:active {
+  color: white;
+}
+
+.accordion-button:focus {
+  color: white;
+}
+
 footer {
   background-color: #3e424f;
   height: 7.5%;

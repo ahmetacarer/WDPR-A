@@ -20,5 +20,7 @@ namespace WDPR_A.Models
 
         [Required]
         public Chat Chat { get; set; }
+
+        public int ReportCount { get; set; }
     }
 }

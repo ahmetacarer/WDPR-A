@@ -27,15 +27,6 @@ public class ModeratorController : Controller
     }
     public async Task<IActionResult> Dashboard(string? waarde)
     {
-        // IdentityUser user = await _userManager.GetUserAsync(User);
-        // var currentUser = _context.Orthopedagogues.Find(user.Id);
-        // var role = await _context.Roles.SingleAsync(r => r.Name == "Moderator");
-        // var moderatorIds = await _context.UserRoles.Where(u => u.RoleId == role.Id).ToListAsync();
-        // var orthopedagogues = await _context.Orthopedagogues.Include(c => c.Chats)
-        //                                               .ThenInclude(c => c.Messages)
-        //                                               .ThenInclude(m => m.Sender)
-        //                                               .Where(u => u.Id != currentUser.Id).ToListAsync();
-
         return View();
     }
 

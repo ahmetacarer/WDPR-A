@@ -38,7 +38,7 @@ public class OrthopedagogueController : Controller
         IdentityUser user = await _userManager.GetUserAsync(User);
         var currentUser = await _context.Orthopedagogues.FindAsync(user.Id);
         ViewData["Naam"] = currentUser.FirstName.FirstOrDefault() + ". " + currentUser.LastName;
-        List<Appointment> appointments = await _context.Appointments.Include(a => a.IncomingClient).Include(a => a.Guardians).Include(c => c.Orthopedagogue).Where(a => a.OrthopedagogueId == currentUser.Id).OrderBy(a => a.AppointmentDate).ToListAsync();
+        List<Appointment> appointments = await _context.Appointments.Include(a => a.IncomingClient).Include(a => a.Guardians).Include(c => c.Orthopedagogue).Where(a => a.OrthopedagogueId == currentUser.Id && !a.IsVerified).OrderBy(a => a.AppointmentDate).ToListAsync();
         if (appointments.Count() == 0)
         {
             ViewData["Melding"] = "Er zijn momenteel geen afspraken ingepland.";
@@ -99,11 +99,19 @@ public class OrthopedagogueController : Controller
                 protocol: Request.Scheme);
             await EmailSender.SendEmail(guardian.Email, "Wachtwoord Aanmaken", $"Maak je wachtwoord aan door <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>hier</a> te klikken.");
         }
-        
-        await _context.Chats.AddAsync(new Chat { RoomId = Guid.NewGuid().ToString(), Subject = $"Prive Behandeling {appointment.IncomingClient.FirstName} {appointment.IncomingClient.LastName}", 
-                                    Condition = appointment.IncomingClient.Condition, IsPrivate = true, AgeCategory = appointment.IncomingClient.AgeCategory, 
-                                    Orthopedagogue = appointment.Orthopedagogue, Clients = new List<Client>{appointment.IncomingClient}});
-        _context.Appointments.Remove(appointment);
+
+        await _context.Chats.AddAsync(new Chat
+        {
+            RoomId = Guid.NewGuid().ToString(),
+            Subject = $"Prive Behandeling {appointment.IncomingClient.FirstName} {appointment.IncomingClient.LastName}",
+            Condition = appointment.IncomingClient.Condition,
+            IsPrivate = true,
+            AgeCategory = appointment.IncomingClient.AgeCategory,
+            Orthopedagogue = appointment.Orthopedagogue,
+            Clients = new List<Client> { appointment.IncomingClient }
+        });
+
+        appointment.IsVerified = true;
         await _context.SaveChangesAsync();
         return RedirectToAction("Dashboard");
     }

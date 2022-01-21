@@ -32,6 +32,19 @@
                         {
                             @if (!User.IsInRole("Guardian"))
                             {
+                                @if (User.IsInRole("Orthopedagogue"))
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-controller="Orthopedagogue"
+                                asp-action="Dashboard">Dashboard</a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-controller="Orthopedagogue"
+                                asp-action="ClientCheck">Dossier</a>
+                                    </li>
+                                }
+
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-controller="Chat" asp-action="Index">Chat</a>
                                 </li>
@@ -67,6 +80,14 @@
                                     <strong>Log uit</strong>
                                 </button>
                             </li>
+                            
+                            @if (User.IsInRole("Moderator"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Moderator"
+                                asp-action="Dashboard">Moderator</a>
+                                </li>
+                            }
                         }
                         else
                         {
@@ -75,6 +96,11 @@
                             </li> <br>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-controller="Home" asp-action="OverOns">Over ons</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Specialismen"
+                                asp-action="Index">Specialismen</a>
                             </li>
                             <li>
                                 <button type="button" class="btn LoginButton border-dark border-1 rounded-3"
@@ -99,7 +125,6 @@
         </main>
         <div style="height:150px;"></div>
     </div>
-
 
     <footer class="border-top footer text-muted">
         <div class="container" id="footertext">

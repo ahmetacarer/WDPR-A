@@ -48,6 +48,17 @@ public class ChatController : Controller
         return View(chats);
     }
 
+    [HttpPost]
+    public async void ReportClient(int messageId)
+    {
+        var reportedMessage = await _context.Messages.FindAsync(messageId);
+        if (reportedMessage != null)
+        {
+            reportedMessage.ReportCount++;
+            await _context.SaveChangesAsync();
+        }
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
@@ -68,7 +79,7 @@ public class ChatController : Controller
                                  .Where(c => c.RoomId == chatRoomId)
                                  .SingleOrDefault();
 
-        ViewData["CurrentUserID"] =(await _userManager.GetUserAsync(User)).Id;
+        ViewData["CurrentUserID"] = (await _userManager.GetUserAsync(User)).Id;
         return PartialView("_ChatPartial", chat);
     }
 }

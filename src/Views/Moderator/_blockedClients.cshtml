@@ -1,0 +1,48 @@
+@model List<WDPR_A.Models.Client>
+
+
+<div id="listClient">
+    <table class="table table-hover">
+        <tr>
+            <th>Aandoening</th>
+            <th>Leeftijdscategorie</th>
+            <th>Woonplaats</th>
+            <th>Deblokkeren</th>
+        </tr>
+        @foreach (var client in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => client.Condition)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => client.AgeCategory)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => client.Residence)
+                </td>
+                <td>
+                    <button class="btn btn-warning" onclick="deblockClient('@(client.Id)')">deblokkeren</button>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+<script>
+    function deblockClient(clientId) {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("showAllBlockClients")",
+            data: {
+                clientId: clientId
+            },
+            success: function (msg) {
+                $("#listClient").replaceWith(msg);
+            },
+            error: function (req, status, error) {
+                console.log(error)
+            }
+        });
+    }
+</script>

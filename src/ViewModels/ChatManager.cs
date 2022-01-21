@@ -31,11 +31,4 @@ public class ChatManager
         var chat = _context.Chats.SingleOrDefault(c => c.RoomId == roomId);
         _context.Chats.Remove(chat);
     }
-
-    public async Task CreateChatAsync(Orthopedagogue orthopedagogue, Client client)
-    {
-        var chat = new Chat() { Orthopedagogue = orthopedagogue };
-        await _context.Chats.AddAsync(chat);
-        await _context.SaveChangesAsync();
-    }
 }

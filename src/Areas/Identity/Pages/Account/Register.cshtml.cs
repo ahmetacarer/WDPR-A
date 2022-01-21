@@ -89,12 +89,12 @@ namespace WDPR_A.Areas.Identity.Pages.Account
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
-        { 
+        {
             var identityUser = _context.Users.SingleOrDefault(i => i.Id == Input.UserId);
-            var client =  _context.Clients.SingleOrDefault(c => c.Id == Input.UserId);
+            var client = _context.Clients.SingleOrDefault(c => c.Id == Input.UserId);
             var guardian = _context.Guardians.SingleOrDefault(g => g.Id == Input.UserId);
             if (Input.UserId == null || (client == null && guardian == null) || identityUser.PasswordHash != null || !identityUser.EmailConfirmed)
-                RedirectToAction("Index","Home");
+                return RedirectToAction("Index", "Home");
 
             if (client != null)
             {
@@ -106,7 +106,7 @@ namespace WDPR_A.Areas.Identity.Pages.Account
                 await CompleteAccount(guardian, Input);
                 await _roleSystem.AddUserToRole(guardian, "Guardian");
             }
-            return RedirectToAction("Succes", "Appointment");
+            return RedirectToPage("Login");
         }
 
         private async Task CompleteAccount(IdentityUser user, InputModel input)

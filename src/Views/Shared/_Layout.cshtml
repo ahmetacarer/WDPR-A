@@ -14,58 +14,72 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img class="img-fluid" id="logo" src="/img/ZMDH-logo.png" alt="Logo van de kliniek Zorg Maatschap Den Haag"/></a>
-                <button class="navbar-toggler ZMDHButton" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img class="img-fluid"
+                        id="logo" src="/img/ZMDH-logo.png" alt="Logo van de kliniek Zorg Maatschap Den Haag" /></a>
+                <button class="navbar-toggler ZMDHButton" type="button" data-bs-toggle="collapse"
+                    data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Specialismen" asp-action="Index">Specialismen</a>
-                            </li>
-                        @if (User.Identity.IsAuthenticated) {
-                            @if(!User.IsInRole("Guardian"))
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Specialismen"
+                                asp-action="Index">Specialismen</a>
+                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            @if (!User.IsInRole("Guardian"))
                             {
                                 <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Chat" asp-action="Index">Chat</a> 
+                                    <a class="nav-link text-dark" asp-controller="Chat" asp-action="Index">Chat</a>
                                 </li>
 
                                 <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="SelfHelpGroup" asp-action="Index">Zelfhulpgroepen</a> 
+                                    <a class="nav-link text-dark" asp-controller="SelfHelpGroup"
+                                asp-action="Index">Zelfhulpgroepen</a>
                                 </li>
-                                @if(User.IsInRole("Orthopedagogue"))
+                                @if (User.IsInRole("Orthopedagogue"))
                                 {
-                                    <li class="nav-item">                      
-                                    <a class="nav-link text-dark" asp-controller="Orthopedagogue" asp-action="ClientCheck">Dossier</a>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-controller="Orthopedagogue"
+                                asp-action="ClientCheck">Dossier</a>
                                     </li>
 
-                                    <li class="nav-item">                      
-                                        <a class="nav-link text-dark" asp-controller="Orthopedagogue" asp-action="Dashboard">Dashboard</a>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-controller="Orthopedagogue"
+                                asp-action="Dashboard">Dashboard</a>
                                     </li>
-                                    
+
                                 }
                             }
 
                             @if (User.IsInRole("Guardian"))
-                                {
-                                    <li class="nav-item">                      
-                                    <a class="nav-link text-dark" asp-controller="Guardian" asp-action="Dashboard">Dashboard</a>
-                                    </li>
-                                }
+                            {
                                 <li class="nav-item">
-                                    <button type="button" class="btn LoginButton border-dark border-1 rounded-3" onclick="location.href='/identity/account/logout'">
-                                        <strong>Log uit</strong> 
-                                    </button>
+                                    <a class="nav-link text-dark" asp-controller="Guardian" asp-action="Dashboard">Dashboard</a>
                                 </li>
-                        } else {
+                            }
+                            <li class="nav-item">
+                                <button type="button" class="btn LoginButton border-dark border-1 rounded-3"
+                                onclick="location.href='/identity/account/logout'">
+                                    <strong>Log uit</strong>
+                                </button>
+                            </li>
+                        }
+                        else
+                        {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-controller="Appointment" asp-action="Index">Intake</a>
+                            </li> <br>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Home" asp-action="OverOns">Over ons</a>
                             </li>
                             <li>
-                                <button type="button" class="btn LoginButton border-dark border-1 rounded-3" onclick="location.href='/identity/account/login'">
-                                    <strong>Login</strong> 
+                                <button type="button" class="btn LoginButton border-dark border-1 rounded-3"
+                                onclick="location.href='/identity/account/login'">
+                                    <strong>Login</strong>
                                 </button>
                             </li>
                         }
@@ -74,9 +88,10 @@
             </div>
         </nav>
     </header>
-    @if (ViewContext.RouteData.Values["controller"] != null && ViewContext.RouteData.Values["controller"].ToString() == "Chat")
+    @if (ViewContext.RouteData.Values["controller"] != null && ViewContext.RouteData.Values["controller"].ToString() ==
+    "Chat")
     {
-        <partial name="../Chat/_ChatSideBarPartial"/>
+        <partial name="../Chat/_ChatSideBarPartial" />
     }
     <div class="container">
         <main role="main" class="pb-3">
@@ -85,11 +100,17 @@
         <div style="height:150px;"></div>
     </div>
 
-    <footer class="border-top footer text-muted" >
+
+    <footer class="border-top footer text-muted">
         <div class="container" id="footertext">
-            <strong>&copy; 2021 - @DateTime.Now.Year ZMDH</strong>
+                    <strong>&copy; 2021 - @DateTime.Now.Year ZMDH</strong>
+                    <a asp-controller="Home" asp-action="Privacy"
+                        style=" text-decoration: none; color: white; position: relative; left: 5%;"><strong>Privacy</strong></a>
         </div>
+
+
     </footer>
+
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

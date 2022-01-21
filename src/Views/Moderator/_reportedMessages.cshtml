@@ -20,10 +20,21 @@
                 <td>
                     @Html.DisplayFor(modelItem => message.Chat.Subject)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => message.ReportCount)
 
-                </td>
+                @if (message.ReportCount > 4)
+                {
+                    <td>
+                        5+
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => message.ReportCount)
+
+                    </td>
+                }
+
                 <td>
                     <button class="btn btn-danger" onclick="blockClient('@(message.Sender.Id)')">Blokkeren</button>
                 </td>

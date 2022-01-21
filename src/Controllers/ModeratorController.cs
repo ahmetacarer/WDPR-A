@@ -68,6 +68,15 @@ public class ModeratorController : Controller
         return PartialView("_reportedMessages", reportedMessages);
     }
 
+    public async Task<Boolean> EmailPosting(Client client)
+    {
+        var orthopedagogue = _context.Orthopedagogues.FirstOrDefault(o => o.Specialty == client.Condition);
+        await EmailSender.SendEmail(orthopedagogue.Email, "Uw client vertoont grof gedrag en is daarom geblokkeerd",
+        $"Uw client: <strong>{client.FirstName} {client.LastName}</strong> had grof gedrag en verkeerd taalgebruik vertoont in de chat en is bij deze geblokkeerd op {DateTime.Now}");
+
+        return true;
+    }
+
     public async Task<Boolean> BlockClient(string clientId)
     {
         var client = await _context.Clients.SingleOrDefaultAsync(c => c.Id == clientId);
@@ -77,6 +86,8 @@ public class ModeratorController : Controller
         _context.Messages.RemoveRange(messages);
 
         await _context.SaveChangesAsync();
+
+        var input = await EmailPosting(client);
 
         return true;
     }

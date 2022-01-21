@@ -36,11 +36,13 @@
                 }
 
                 <td>
-                    <button class="btn btn-danger" onclick="blockClient('@(message.Sender.Id)')">Blokkeren</button>
+                    <button class="btn btn-danger" onclick="blockClient('@(message.Sender.Id)')"
+                    id="blockButton">Blokkeren</button>
                 </td>
 
                 <td>
-                    <button class="btn btn-warning" onclick="ignoreMessage('@(message.Id)')">Negeren</button>
+                    <button class="btn btn-warning" onclick="ignoreMessage('@(message.Id)')"
+                    id="ignoreButton">Negeren</button>
                 </td>
             </tr>
         }
@@ -67,7 +69,7 @@
     function ignoreMessage(messageId) {
         $.ajax({
             type: "POST",
-            url: "@Url.Action("IgnoreMessage")",
+            url: "@Url.Action("showAllReportedMessages")",
             data: {
                 messageId: messageId
             },

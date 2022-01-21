@@ -45,9 +45,17 @@ public class ModeratorController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> showAllReportedMessages(string clientId)
+    public async Task<IActionResult> showAllReportedMessages(string clientId, string messageId)
     {
-        var result = BlockClient(clientId);
+        if (!String.IsNullOrEmpty(clientId))
+        {
+            var result = BlockClient(clientId);
+        }
+
+        if (!String.IsNullOrEmpty(messageId))
+        {
+            var result = IgnoreMessage(messageId);
+        }
 
         var reportedMessages = await _context.Messages.Include(c => c.Sender)
                                             .Include(c => c.Chat)
@@ -75,25 +83,6 @@ public class ModeratorController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> IgnoreMessage(string messageId)
-    {
-        var message = await _context.Messages.SingleOrDefaultAsync(c => c.Id == Int32.Parse(messageId));
-
-        if (messageId == null) RedirectToAction("Panel", "Moderator");
-
-        message.ReportCount = 0;
-
-        await _context.SaveChangesAsync();
-
-        var reportedMessages = await _context.Messages.Include(c => c.Sender)
-                                            .Include(c => c.Chat)
-                                            .ThenInclude(c => c.Clients)
-                                            .Where(c => c.ReportCount > 0 && c.Chat.Clients.Any(cl => cl.Id == c.Sender.Id && (cl.IsBlocked == null || cl.IsBlocked == false)))
-                                            .ToListAsync();
-        return PartialView("_reportedMessages", reportedMessages);
-    }
-
-    [HttpPost]
     public async Task<Boolean> UnblockClient(string clientId)
     {
         var client = await _context.Clients.SingleOrDefaultAsync(c => c.Id == clientId);
@@ -103,6 +92,20 @@ public class ModeratorController : Controller
         client.IsBlocked = false;
         _context.Messages.Where(c => c.Sender.Id == client.Id).ToList().ForEach(c => c.ReportCount = 0);
         await _context.SaveChangesAsync();
+        return true;
+    }
+
+    [HttpPost]
+    public async Task<Boolean> IgnoreMessage(string messageId)
+    {
+        var message = await _context.Messages.SingleOrDefaultAsync(c => c.Id == Int32.Parse(messageId));
+
+        if (messageId == null) RedirectToAction("Panel", "Moderator");
+
+        message.ReportCount = 0;
+
+        await _context.SaveChangesAsync();
+
         return true;
     }
 

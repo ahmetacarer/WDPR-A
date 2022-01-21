@@ -69,12 +69,12 @@
                             @if (User.IsInRole("Moderator"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-controller="Moderator"
-                                asp-action="Dashboard">MDashboard</a>
+                                    <a class="nav-link text-dark" asp-controller="Moderator" asp-action="Panel">ModPaneel</a>
                                 </li>
 
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-controller="Moderator" asp-action="Panel">MPaneel</a>
+                                    <a class="nav-link text-dark" asp-controller="Moderator"
+                                asp-action="Dashboard">ModDashboard</a>
                                 </li>
                             }
                         }

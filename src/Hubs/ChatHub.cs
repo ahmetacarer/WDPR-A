@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -20,31 +21,31 @@ namespace WDPR_A.Hubs
         public string GetConnectionId() => Context.ConnectionId;
 
         public Task JoinRoom(string roomId) => Groups.AddToGroupAsync(Context.ConnectionId, roomId);
-        
-        public async Task RemoveFromGroup(string groupName)
-        {
-            await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
-        }
-        
-        public async Task RemoveFromGroupIfBlocked(string userId, string roomId)
+
+        public async Task<bool> IsBlocked(string userId, string roomId)
         {
             var client = await _context.Clients.FindAsync(userId);
             var chat = await _context.Chats.SingleOrDefaultAsync(c => c.RoomId == roomId);
-            if (client == null || !client.IsBlocked || chat.IsPrivate) return;
-            await RemoveFromGroup(roomId);
+            if (client == null || !client.IsBlocked || chat.IsPrivate)
+                return false;
+            return true;
         }
-
-
+        //
         public async Task SendMessage(string text, string roomId)
         {
             var currentUser = await _userManager.GetUserAsync(Context.User);
-            var contextUser = _context.InheritedUsers.SingleOrDefault(u => u.Id == currentUser.Id);
-            await RemoveFromGroupIfBlocked(contextUser.Id, roomId);
+            var contextUser = await _context.InheritedUsers.SingleOrDefaultAsync(u => u.Id == currentUser.Id);
+            var blockedStatus = await IsBlocked(contextUser.Id, roomId);
+
             var name = $"{contextUser.FirstName[0]}. {contextUser.LastName}";
             var date = DateTime.Now;
-            await Clients.Groups(roomId).SendAsync("ReceiveMessage", name, text, date.ToString("HH:mm"));
-            await _context.Messages.AddAsync(new Message { Sender = contextUser, Text = text, When = date, ChatRoomId = roomId });
-            await _context.SaveChangesAsync();
+            await Clients.Group(roomId).SendAsync("ReceiveMessage", name, text, date.ToString("HH:mm"));
+            if (!blockedStatus)
+            {
+
+                await _context.Messages.AddAsync(new Message { Sender = contextUser, Text = text, When = date, ChatRoomId = roomId });
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

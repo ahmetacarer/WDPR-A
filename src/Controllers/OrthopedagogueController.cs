@@ -83,26 +83,35 @@ public class OrthopedagogueController : Controller
             return RedirectToAction("Dashboard");
 
 
-        var callbackUrl = Url.Page(
+        var callBackUrlClient = Url.Page(
             "/Account/Register",
             pageHandler: null,
             values: new { area = "Identity", userId = appointment.IncomingClientId, returnUrl = "~/" },
             protocol: Request.Scheme);
-        await EmailSender.SendEmail(appointment.IncomingClient.Email, "Wachtwoord Aanmaken", $"Maak je wachtwoord aan door <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>hier</a> te klikken.");
+            
+        await EmailSender.SendEmail(appointment.IncomingClient.Email, "Wachtwoord Aanmaken", $"Maak je wachtwoord aan door <a href='{HtmlEncoder.Default.Encode(callBackUrlClient)}'>hier</a> te klikken.");
 
         foreach (var guardian in appointment.Guardians.Where(g => g.PasswordHash == null && g.Clients.Count == 1))
         {
-            callbackUrl = Url.Page(
+            var callBackUrlGuardian = Url.Page(
                 "/Account/Register",
                 pageHandler: null,
-                values: new { area = "Identity", userId = guardian.Email, returnUrl = "~/" },
+                values: new { area = "Identity", userId = guardian.Id, returnUrl = "~/" },
                 protocol: Request.Scheme);
-            await EmailSender.SendEmail(guardian.Email, "Wachtwoord Aanmaken", $"Maak je wachtwoord aan door <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>hier</a> te klikken.");
+
+            await EmailSender.SendEmail(guardian.Email, "Wachtwoord Aanmaken", $"Maak je wachtwoord aan door <a href='{HtmlEncoder.Default.Encode(callBackUrlGuardian)}'>hier</a> te klikken.");
         }
-        
-        await _context.Chats.AddAsync(new Chat { RoomId = Guid.NewGuid().ToString(), Subject = $"Prive Behandeling {appointment.IncomingClient.FirstName} {appointment.IncomingClient.LastName}", 
-                                    Condition = appointment.IncomingClient.Condition, IsPrivate = true, AgeCategory = appointment.IncomingClient.AgeCategory, 
-                                    Orthopedagogue = appointment.Orthopedagogue, Clients = new List<Client>{appointment.IncomingClient}});
+
+        await _context.Chats.AddAsync(new Chat
+        {
+            RoomId = Guid.NewGuid().ToString(),
+            Subject = $"Prive Behandeling {appointment.IncomingClient.FirstName} {appointment.IncomingClient.LastName}",
+            Condition = appointment.IncomingClient.Condition,
+            IsPrivate = true,
+            AgeCategory = appointment.IncomingClient.AgeCategory,
+            Orthopedagogue = appointment.Orthopedagogue,
+            Clients = new List<Client> { appointment.IncomingClient }
+        });
         _context.Appointments.Remove(appointment);
         await _context.SaveChangesAsync();
         return RedirectToAction("Dashboard");

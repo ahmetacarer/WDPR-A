@@ -7,7 +7,7 @@ using WDPR_A.Models;
 
 namespace WDPR_A.Controllers;
 
-// [Authorize(Roles = "Moderator")]
+[Authorize(Roles = "Moderator")]
 public class ModeratorController : Controller
 {
     private readonly WDPRContext _context;
@@ -25,7 +25,7 @@ public class ModeratorController : Controller
     {
         return RedirectToAction("Dashboard");
     }
-    public async Task<IActionResult> Panel(string? waarde)
+    public IActionResult Panel()
     {
         return View();
     }
@@ -38,7 +38,10 @@ public class ModeratorController : Controller
     [HttpPost]
     public async Task<IActionResult> showAllBlockClients(string clientId)
     {
-        var result = UnblockClient(clientId);
+        if (!String.IsNullOrEmpty(clientId))
+        {
+            var result = UnblockClient(clientId);
+        }
 
         var clients = await _context.Clients.Where(c => c.IsBlocked).ToListAsync();
         return PartialView("_blockedClients", clients);
@@ -65,14 +68,10 @@ public class ModeratorController : Controller
         return PartialView("_reportedMessages", reportedMessages);
     }
 
-    [HttpPost]
     public async Task<Boolean> BlockClient(string clientId)
     {
         var client = await _context.Clients.SingleOrDefaultAsync(c => c.Id == clientId);
         var messages = await _context.Messages.Where(m => client.Id == m.Sender.Id && m.ReportCount > 0).ToListAsync();
-
-        if (client == null) return false;
-        if (messages == null) return false;
 
         client.IsBlocked = true;
         _context.Messages.RemoveRange(messages);
@@ -82,7 +81,6 @@ public class ModeratorController : Controller
         return true;
     }
 
-    [HttpPost]
     public async Task<Boolean> UnblockClient(string clientId)
     {
         var client = await _context.Clients.SingleOrDefaultAsync(c => c.Id == clientId);
@@ -95,7 +93,6 @@ public class ModeratorController : Controller
         return true;
     }
 
-    [HttpPost]
     public async Task<Boolean> IgnoreMessage(string messageId)
     {
         var message = await _context.Messages.SingleOrDefaultAsync(c => c.Id == Int32.Parse(messageId));

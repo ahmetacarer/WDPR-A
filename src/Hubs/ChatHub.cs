@@ -29,7 +29,8 @@ namespace WDPR_A.Hubs
         public async Task RemoveFromGroupIfBlocked(string userId, string roomId)
         {
             var client = await _context.Clients.FindAsync(userId);
-            if (client == null || !client.IsBlocked) return;
+            var chat = await _context.Chats.SingleOrDefaultAsync(c => c.RoomId == roomId);
+            if (client == null || !client.IsBlocked || chat.IsPrivate) return;
             await RemoveFromGroup(roomId);
         }
 

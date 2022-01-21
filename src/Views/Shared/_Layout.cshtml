@@ -24,10 +24,6 @@
 
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Specialismen"
-                                asp-action="Index">Specialismen</a>
-                        </li>
                         @if (User.Identity.IsAuthenticated)
                         {
                             @if (!User.IsInRole("Guardian"))
@@ -53,19 +49,6 @@
                                     <a class="nav-link text-dark" asp-controller="SelfHelpGroup"
                                 asp-action="Index">Zelfhulpgroepen</a>
                                 </li>
-                                @if (User.IsInRole("Orthopedagogue"))
-                                {
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-controller="Orthopedagogue"
-                                asp-action="ClientCheck">Dossier</a>
-                                    </li>
-
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-controller="Orthopedagogue"
-                                asp-action="Dashboard">Dashboard</a>
-                                    </li>
-
-                                }
                             }
 
                             @if (User.IsInRole("Guardian"))
@@ -132,9 +115,9 @@
 
     <footer class="border-top footer text-muted">
         <div class="container" id="footertext">
-                    <strong>&copy; 2021 - @DateTime.Now.Year ZMDH</strong>
-                    <a asp-controller="Home" asp-action="Privacy"
-                        style=" text-decoration: none; color: white; position: relative; left: 5%;"><strong>Privacy</strong></a>
+            <strong>&copy; 2021 - @DateTime.Now.Year ZMDH</strong>
+            <a asp-controller="Home" asp-action="Privacy"
+                style=" text-decoration: none; color: white; position: relative; left: 5%;"><strong>Privacy</strong></a>
         </div>
 
 

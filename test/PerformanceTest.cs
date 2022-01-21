@@ -22,7 +22,7 @@ public class PerformanceTest
     public void AverageResponseTime_HomepageTest_True()
     {
         var allResponseTimes = new List<(DateTime Start, DateTime End)>();
-        for (var i = 0; i < 1000; i++)
+        for (var i = 0; i < 100; i++)
         {
             using (var client = new HttpClient())
             {
@@ -42,12 +42,12 @@ public class PerformanceTest
     public void AverageResponseTime_AppointmentTest_True()
     {
         var allResponseTimes = new List<(DateTime Start, DateTime End)>();
-        for (var i = 0; i < 1000; i++)
+        for (var i = 0; i < 100; i++)
         {
             using (var client = new HttpClient())
             {
                 var start = DateTime.Now;
-                var response = client.GetAsync("https://localhost:7181/Appointment");
+                var response = client.GetAsync("https://zmdh-hhs.azurewebsites.net/Appointment");
                 var end = DateTime.Now;
                 allResponseTimes.Add((start, end));
             }

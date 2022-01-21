@@ -25,7 +25,12 @@ public class ModeratorController : Controller
     {
         return RedirectToAction("Dashboard");
     }
-    public async Task<IActionResult> Dashboard(string? waarde)
+    public async Task<IActionResult> Panel(string? waarde)
+    {
+        return View();
+    }
+
+    public async Task<IActionResult> Dashboard()
     {
         return View();
     }

@@ -65,12 +65,17 @@
                                     <strong>Log uit</strong>
                                 </button>
                             </li>
-                            
+
                             @if (User.IsInRole("Moderator"))
                             {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-controller="Moderator"
-                                asp-action="Dashboard">Moderator</a>
+                                asp-action="Dashboard">Moderator-Dashboard</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Moderator"
+                                asp-action="Panel">Moderator-Paneel</a>
                                 </li>
                             }
                         }

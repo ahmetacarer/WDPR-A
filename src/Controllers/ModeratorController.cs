@@ -96,9 +96,7 @@ public class ModeratorController : Controller
 
         client.IsBlocked = true;
         _context.Messages.RemoveRange(messages);
-
         await _context.SaveChangesAsync();
-
         var input = await EmailPosting(client);
 
         return true;
@@ -108,22 +106,17 @@ public class ModeratorController : Controller
     {
         var client = await _context.Clients.SingleOrDefaultAsync(c => c.Id == clientId);
 
-        if (client == null) return false;
-
         client.IsBlocked = false;
         _context.Messages.Where(c => c.Sender.Id == client.Id).ToList().ForEach(c => c.ReportCount = 0);
         await _context.SaveChangesAsync();
+
         return true;
     }
 
     public async Task<Boolean> IgnoreMessage(string messageId)
     {
         var message = await _context.Messages.SingleOrDefaultAsync(c => c.Id == Int32.Parse(messageId));
-
-        if (messageId == null) RedirectToAction("Panel", "Moderator");
-
         message.ReportCount = 0;
-
         await _context.SaveChangesAsync();
 
         return true;

@@ -38,6 +38,10 @@
                 <td>
                     <button class="btn btn-danger" onclick="blockClient('@(message.Sender.Id)')">Blokkeren</button>
                 </td>
+
+                <td>
+                    <button class="btn btn-warning" onclick="ignoreMessage('@(message.Id)')">Negeren</button>
+                </td>
             </tr>
         }
     </table>
@@ -50,6 +54,22 @@
             url: "@Url.Action("showAllReportedMessages")",
             data: {
                 clientId: clientId
+            },
+            success: function (msg) {
+                $("#listClient").replaceWith(msg);
+            },
+            error: function (req, status, error) {
+                console.log(error)
+            }
+        });
+    }
+
+    function ignoreMessage(messageId) {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("IgnoreMessage")",
+            data: {
+                messageId: messageId
             },
             success: function (msg) {
                 $("#listClient").replaceWith(msg);

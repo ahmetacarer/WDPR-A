@@ -30,9 +30,21 @@ public class ModeratorController : Controller
         return View();
     }
 
-    public async Task<IActionResult> Dashboard()
+    public async Task<IActionResult> Dashboard(string searchString)
     {
-        return View();
+        var list = _context.Appointments.Include(c => c.IncomingClient).Include(c => c.Orthopedagogue).Where(c => c.IsVerified);
+
+        if (!String.IsNullOrEmpty(searchString))
+        {
+            list = list.Where(c => c.IncomingClient.FirstName.ToLower().Substring(0, searchString.Length) == searchString.ToLower());
+        }
+
+        if (list.Count() == 0)
+        {
+            ViewData["Melding"] = "Er zijn helaas geen behandelingen gevonden door de opgegeven naam.";
+        }
+
+        return View(await list.ToListAsync());
     }
 
     [HttpPost]

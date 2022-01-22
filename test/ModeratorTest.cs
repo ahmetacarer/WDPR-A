@@ -11,15 +11,23 @@ namespace test;
 
 public class ModeratorTest
 {
+
+    public WDPRContext GetWDPRContext()
+    {
+        var options = new DbContextOptionsBuilder<WDPRContext>().EnableSensitiveDataLogging().
+                        UseInMemoryDatabase("MijnDatabase")
+                        .Options;
+        var context = new WDPRContext(options);
+        return context;
+    }
+
     //15
 
     [Fact]
     public async Task BlockClient_BlocktheClient_True()
     {
-        DbContextOptions<WDPRContext> options = new DbContextOptionsBuilder<WDPRContext>().UseInMemoryDatabase("MijnDatabase").Options;
-        WDPRContext WDPRContext = new WDPRContext(options);
-
-        var controller = new ModeratorController(null, WDPRContext, GuardianTest.TestUserManager<IdentityUser>());
+        var context = GetWDPRContext();
+        var controller = new ModeratorController(null, context, GuardianTest.TestUserManager<IdentityUser>());
 
         var client = new Client
         {
@@ -34,8 +42,8 @@ public class ModeratorTest
             Residence = "The Hague",
             IsBlocked = false
         };
-        WDPRContext.Clients.Add(client);
-        await WDPRContext.SaveChangesAsync();
+        context.Clients.Add(client);
+        await context.SaveChangesAsync();
 
         await controller.BlockClient(client.Id);
 
@@ -47,14 +55,13 @@ public class ModeratorTest
     [Fact]
     public async Task UnBlockClient_UnBlocktheClient_False()
     {
-        DbContextOptions<WDPRContext> options = new DbContextOptionsBuilder<WDPRContext>().UseInMemoryDatabase("MijnDatabase").Options;
-        WDPRContext WDPRContext = new WDPRContext(options);
+        var context = GetWDPRContext();
 
-        var controller = new ModeratorController(null, WDPRContext, GuardianTest.TestUserManager<IdentityUser>());
+        var controller = new ModeratorController(null, context, GuardianTest.TestUserManager<IdentityUser>());
 
         var client = new Client
         {
-            Id = "1",
+            Id = "2",
             FirstName = "Henkie",
             LastName = "Penkie",
             Condition = "ADHD",
@@ -65,8 +72,10 @@ public class ModeratorTest
             Residence = "The Hague",
             IsBlocked = false
         };
-        WDPRContext.Clients.Add(client);
-        await WDPRContext.SaveChangesAsync();
+        context.Clients.Add(client);
+        await context.SaveChangesAsync();
+
+        await controller.BlockClient(client.Id);
 
         await controller.UnblockClient(client.Id);
 

@@ -80,53 +80,6 @@ public class ModeratorTest
         Assert.False(client.IsBlocked);
     }
 
-
-    //NameOfMethod_Scenario_Expected
-
-    [Fact]
-    public async Task ModeratorDashboard_ViewDataTest_NoSearchResultFound()
-    {
-        var context = GetWDPRContext();
-
-        var controller = new ModeratorController(null, context, ManagerContainer.TestUserManager<IdentityUser>());
-
-        var orthopedagogue = new Orthopedagogue
-        {
-            Id = Guid.NewGuid().ToString(),
-            FirstName = "Jacob",
-            LastName = "Lans",
-            Specialty = "Dyslexie",
-        };
-
-        var client = new Client
-        {
-            Id = Guid.NewGuid().ToString(),
-            FirstName = "Dennis",
-            LastName = "Steen",
-            Condition = "Dyslexie",
-            AgeCategory = AgeCategory.Oudste,
-            Guardians = null,
-            Chats = null,
-            Address = "Street 23",
-            Residence = "The Hague",
-            IsBlocked = false,
-            Email = "dsteen@voorbeeld.nl",
-            UserName = "dsteen@voorbeeld.nl",
-        };
-
-        context.Orthopedagogues.Add(orthopedagogue);
-        context.Clients.Add(client);
-        await context.SaveChangesAsync();
-
-        var result = await controller.Dashboard("EenOnvindbareNaam");
-        var viewResult = Assert.IsType<ViewResult>(result);
-
-        Assert.Equal("Er zijn geen behandelingen gevonden.", viewResult.ViewData["Melding"].ToString());
-
-        var count = Assert.IsType<List<Appointment>>(viewResult.Model).Count;
-        Assert.True(count == 0);
-    }
-
     [Fact]
     public async Task ModeratorDashboard_ViewDataTest_SearchResultFound()
     {
@@ -178,5 +131,49 @@ public class ModeratorTest
 
         var count = Assert.IsType<List<Appointment>>(viewResult.Model).Count;
         Assert.True(count == 1);
+    }
+
+    [Fact]
+    public async Task ModeratorDashboard_ViewDataTest_NoSearchResultFound()
+    {
+        var context = GetWDPRContext();
+
+        var controller = new ModeratorController(null, context, ManagerContainer.TestUserManager<IdentityUser>());
+
+        var orthopedagogue = new Orthopedagogue
+        {
+            Id = Guid.NewGuid().ToString(),
+            FirstName = "Jacob",
+            LastName = "Lans",
+            Specialty = "Dyslexie",
+        };
+
+        var client = new Client
+        {
+            Id = Guid.NewGuid().ToString(),
+            FirstName = "Dennis",
+            LastName = "Steen",
+            Condition = "Dyslexie",
+            AgeCategory = AgeCategory.Oudste,
+            Guardians = null,
+            Chats = null,
+            Address = "Street 23",
+            Residence = "The Hague",
+            IsBlocked = false,
+            Email = "dsteen@voorbeeld.nl",
+            UserName = "dsteen@voorbeeld.nl",
+        };
+
+        context.Orthopedagogues.Add(orthopedagogue);
+        context.Clients.Add(client);
+        await context.SaveChangesAsync();
+
+        var result = await controller.Dashboard("EenOnvindbareNaam");
+        var viewResult = Assert.IsType<ViewResult>(result);
+
+        Assert.Equal("Er zijn geen behandelingen gevonden.", viewResult.ViewData["Melding"].ToString());
+
+        var count = Assert.IsType<List<Appointment>>(viewResult.Model).Count;
+        Assert.True(count == 0);
     }
 }

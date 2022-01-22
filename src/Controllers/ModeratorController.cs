@@ -52,7 +52,7 @@ public class ModeratorController : Controller
     {
         if (!String.IsNullOrEmpty(clientId))
         {
-            var result = UnblockClient(clientId);
+            var result = await UnblockClient(clientId);
         }
 
         var clients = await _context.Clients.Where(c => c.IsBlocked).ToListAsync();
@@ -64,12 +64,12 @@ public class ModeratorController : Controller
     {
         if (!String.IsNullOrEmpty(clientId))
         {
-            var result = BlockClient(clientId);
+            var result = await BlockClient(clientId);
         }
 
         if (!String.IsNullOrEmpty(messageId))
         {
-            var result = IgnoreMessage(messageId);
+            var result = await IgnoreMessage(messageId);
         }
 
         var reportedMessages = await _context.Messages.Include(c => c.Sender)

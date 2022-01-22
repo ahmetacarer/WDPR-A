@@ -32,7 +32,7 @@ public class ModeratorController : Controller
 
     public async Task<IActionResult> Dashboard(string searchString)
     {
-        var list = _context.Appointments.Include(c => c.IncomingClient).Include(c => c.Orthopedagogue).Where(c => c.IsVerified);
+        var list = _context.Appointments.Include(c => c.IncomingClient).Include(c => c.Orthopedagogue).Where(c => c.AppointmentDate != null);
 
         if (!String.IsNullOrEmpty(searchString))
         {

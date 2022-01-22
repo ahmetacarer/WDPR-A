@@ -30,21 +30,37 @@ namespace WDPR_A.Hubs
                 return false;
             return true;
         }
-        //
+
+        public async Task NotifyBlockedUser(string roomId)
+        {
+            var currentUser = await _userManager.GetUserAsync(Context.User);
+            var isBlocked = await IsBlocked(currentUser.Id, roomId);
+            if (!isBlocked) 
+                return;
+            await Clients.Caller.SendAsync("ReceiveBlockedNotification");
+        }
+        
         public async Task SendMessage(string text, string roomId)
         {
             var currentUser = await _userManager.GetUserAsync(Context.User);
             var contextUser = await _context.InheritedUsers.SingleOrDefaultAsync(u => u.Id == currentUser.Id);
             var blockedStatus = await IsBlocked(contextUser.Id, roomId);
 
+            var isModerator = await _userManager.IsInRoleAsync(currentUser, "Moderator");
             var name = $"{contextUser.FirstName[0]}. {contextUser.LastName}";
             var date = DateTime.Now;
-            await Clients.Group(roomId).SendAsync("ReceiveMessage", name, text, date.ToString("HH:mm"));
             if (!blockedStatus)
             {
-
+                /* fix berichten door middel van extra sendmethode */
+                // moet nog gefixt worden dat het lijkt alsof dezelfde persoon een bericht stuurt
+                // await Clients.Caller.SendAsync("ReceiveSentMessage", isModerator , text, date.ToString("dd-MM-yyyy HH:mm");
+                await Clients.GroupExcept(roomId, GetConnectionId()).SendAsync("ReceiveMessage", name, text, date.ToString("dd-MM-yyyy HH:mm"));
                 await _context.Messages.AddAsync(new Message { Sender = contextUser, Text = text, When = date, ChatRoomId = roomId });
                 await _context.SaveChangesAsync();
+            }
+            else
+            {
+                await NotifyBlockedUser(roomId);
             }
         }
     }

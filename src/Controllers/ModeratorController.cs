@@ -97,7 +97,7 @@ public class ModeratorController : Controller
         client.IsBlocked = true;
         _context.Messages.RemoveRange(messages);
         await _context.SaveChangesAsync();
-        var input = await EmailPosting(client);
+        // var input = await EmailPosting(client);
 
         return true;
     }

@@ -83,6 +83,7 @@
       let current_button = sidebar_buttons[i]
       var chatRoomId = current_button.id;
       connection.invoke("JoinRoom", chatRoomId);
+      connection.invoke("NotifyBlockedUser", chatRoomId);
       var text = "@Url.Action("OnGetChatPartial", new { chatRoomId = "name"})";
       text = text.replace("name", chatRoomId);
       if (!current_button.classList.contains("active")) {

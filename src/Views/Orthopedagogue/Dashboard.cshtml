@@ -30,17 +30,18 @@
                 <div class="accordion-body">
                   <p>Client voornaam: @Model[i].IncomingClient.FirstName</p>
                   <p>Client achternaam: @Model[i].IncomingClient.LastName</p>
+                  <p>Client email: @Model[i].IncomingClient.Email</p>
 
 
                   @if (Model[i].Guardians.Any())
                   {
-                    <p>Ouders/voogden Email:</p>
-                    @foreach (var guardian in Model[i].Guardians.Where(c => c.EmailConfirmed == null))
+                    @foreach (var guardian in Model[i].Guardians.Where(c => c.EmailConfirmed != null))
                     {
-                      <p>@guardian.Email</p>
+                      <p>Ouders/voogden email: @guardian.Email</p>
                     }
                   }
-                  @if (Model[i].IncomingClient.EmailConfirmed && !Model[i].IsVerified)
+                  @if (Model[i].IncomingClient.EmailConfirmed && (Model[i].IncomingClient.AgeCategory ==
+                 AgeCategory.Oudste || Model[i].Guardians.Any(c => c.EmailConfirmed) && !Model[i].IsVerified))
                   {
                     <form asp-action="AcceptClient" asp-route-appointmentId="@Model[i].Id" method="post">
                       <button type="submit" class="btn btn-success">Accepteren</button>

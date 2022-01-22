@@ -34,7 +34,7 @@ public class AppointmentController : Controller
 
 
     [HttpPost]
-    public async Task<IActionResult> Index([Bind("FirstName, LastName, Email, Condition, Address, Residence")] Client client, DateTime appointmentDate, DateTime appointmentTime, AgeCategory AgeCategory, string? emailOfParent = null)
+    public async Task<IActionResult> Index([Bind("FirstName, LastName, Email, Condition, Address, Residence, AgeCategory")] Client client, DateTime appointmentDate, DateTime appointmentTime, string? emailOfParent = null)
     {
 
         if (_context.Users.Any(b => b.Email == client.Email))

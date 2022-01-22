@@ -82,9 +82,9 @@
     sidebar_buttons[i].addEventListener("click", function () {
       let current_button = sidebar_buttons[i]
       var chatRoomId = current_button.id;
+      connection.invoke("JoinRoom", chatRoomId);
       var text = "@Url.Action("OnGetChatPartial", new { chatRoomId = "name"})";
       text = text.replace("name", chatRoomId);
-  
       if (!current_button.classList.contains("active")) {
         $.post(text, function (data) {
           $('#messages').replaceWith(data);

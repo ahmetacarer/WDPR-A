@@ -41,7 +41,7 @@ public class ModeratorController : Controller
 
         if (list.Count() == 0)
         {
-            ViewData["Melding"] = "Er zijn helaas geen behandelingen gevonden door de opgegeven naam.";
+            ViewData["Melding"] = "Er zijn geen behandelingen gevonden.";
         }
 
         return View(await list.ToListAsync());
@@ -88,7 +88,7 @@ public class ModeratorController : Controller
 
         return true;
     }
-
+    [HttpPost]
     public async Task<Boolean> BlockClient(string clientId)
     {
         var client = await _context.Clients.SingleOrDefaultAsync(c => c.Id == clientId);

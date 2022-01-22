@@ -1,6 +1,9 @@
 @model List<WDPR_A.Models.Message>
 
 <div id="listClient">
+    <br>
+    <h2>Gerapporteerde berichten</h2>
+    <br>
     <table class="table table-hover">
         <tr>
             <th>De verzender</th>
@@ -12,7 +15,10 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => message.Sender.FirstName)
+                    @{
+                        string fullName = message.Sender.FirstName + " " + message.Sender.LastName;
+                        @Html.DisplayFor(modelItem => fullName)
+                    }
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => message.Text)
@@ -20,12 +26,32 @@
                 <td>
                     @Html.DisplayFor(modelItem => message.Chat.Subject)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => message.ReportCount)
 
-                </td>
+                @if (message.ReportCount > 4)
+                {
+                    <td>
+                        @{
+                            string max = "5+";
+                            @Html.DisplayFor(modelItem => max)
+                        }
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => message.ReportCount)
+
+                    </td>
+                }
+
                 <td>
-                    <button class="btn btn-danger" onclick="blockClient('@(message.Sender.Id)')">Blokkeren</button>
+                    <button class="btn btn-danger" onclick="blockClient('@(message.Sender.Id)')"
+                    id="blockButton">Blokkeren</button>
+                </td>
+
+                <td>
+                    <button class="btn btn-warning" onclick="ignoreMessage('@(message.Id)')"
+                    id="ignoreButton">Negeer bericht</button>
                 </td>
             </tr>
         }
@@ -39,6 +65,22 @@
             url: "@Url.Action("showAllReportedMessages")",
             data: {
                 clientId: clientId
+            },
+            success: function (msg) {
+                $("#listClient").replaceWith(msg);
+            },
+            error: function (req, status, error) {
+                console.log(error)
+            }
+        });
+    }
+
+    function ignoreMessage(messageId) {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("showAllReportedMessages")",
+            data: {
+                messageId: messageId
             },
             success: function (msg) {
                 $("#listClient").replaceWith(msg);

@@ -1,63 +1,90 @@
-@model List<WDPR_A.Models.Orthopedagogue>
-
+@model List<WDPR_A.Models.Appointment>
 @{
-    ViewData["Title"] = "Moderator dashboard";
+    ViewData["Title"] = "Moderator Dashboard";
 }
 
-<div class="container">
-    <div class="row">
-        <div class="col-sm">
-            <div class="input-group col-3">
-                <label class="input-group-text" for="category">Filter op</label>
-                <select class="form-select" id="category" name="Category">
-                    <option value="">Keuze...</option>
-                    <option value="blockedClients">Laat alle geblokkeerde gebruikers zien</option>
-                    <option value="reportedMessages">Laat alle gerapporteerde berichten zien</option>
-                </select>
+<div class="text-center">
+    <h1 class="display-4"><strong>Moderator Dashboard</strong></h1>
+</div>
+<br>
+
+<form method="get">
+    <div class="container">
+        <div class="row">
+            <div class="col-auto">
+                <label for="searchString" class="form-label">Naam Client:</label>
+                <input type="text" name="searchString" />
+            </div>
+
+            <div class="col-auto">
+                <input type="submit" value="Zoek" class="btn btn-primary">
             </div>
         </div>
     </div>
-</div>
+</form>
 
-<div class="row">
-    <div id="listClient"></div>
-</div>
+<table class="table table-hover">
+    <tr>
+        <th>Orthopedagoog</th>
+        <th>Aandoening</th>
+        <th>Client</th>
+        <th>Status</th>
+    </tr>
 
-@section scripts 
-{
-<script>
-    $("#category").on('change', function () {
-        var selectedVal = $(this).val();
-        switch (selectedVal) {
-            case 'blockedClients':
-                $.ajax({
-                    type: "POST",
-                    url: "@Url.Action("showAllBlockClients")",
-                    data: {},
-                    dataType: "text",
-                    success: function (msg) {
-                        $("#listClient").replaceWith(msg);
-                    },
-                    error: function (req, status, error) {
-                        console.log(error)
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        <tr>
+            <td>
+                @{
+                    var fullNameOrthopedagogue = Model[i].Orthopedagogue.FirstName + " " +
+                    Model[i].Orthopedagogue.LastName;
+
+                    @Html.DisplayFor(modelItem => fullNameOrthopedagogue)
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model[i].IncomingClient.Condition)
+            </td>
+            <td>
+                @{
+                    var fullNameClient = Model[i].IncomingClient.FirstName + " " +
+                    Model[i].IncomingClient.LastName;
+
+                    @Html.DisplayFor(modelItem => fullNameClient)
+                }
+            </td>
+
+            @if (!Model[i].IncomingClient.EmailConfirmed)
+            {
+                <td>
+                    @{
+                        var status = "Email moet nog geverifieerd worden";
+                        @Html.DisplayFor(modelItem => status)
                     }
-                });
-                break;
-            case 'reportedMessages':
-                $.ajax({
-                    type: "POST",
-                    url: "@Url.Action("showAllReportedMessages")",
-                    data: {},
-                    dataType: "text",
-                    success: function (msg) {
-                        $("#listClient").replaceWith(msg);
-                    },
-                    error: function (req, status, error) {
-                        console.log(error)
+                </td>
+            }
+
+            @if (Model[i].IncomingClient.EmailConfirmed && Model[i].IncomingClient.PasswordHash == null)
+            {
+                <td>
+                    @{
+                        var status = "Wachtwoord moet nog aangemaakt worden";
+                        @Html.DisplayFor(modelItem => status)
                     }
-                });
-                break;
-        }
-    });
-</script>
-}
+                </td>
+            }
+
+            @if (Model[i].IncomingClient.EmailConfirmed && Model[i].IncomingClient.PasswordHash != null)
+            {
+                <td>
+                    @{
+                        var status = "Is in behandeling";
+                        @Html.DisplayFor(modelItem => status)
+                    }
+                </td>
+            }
+        </tr>
+
+    }
+</table>
+@ViewData["Melding"]

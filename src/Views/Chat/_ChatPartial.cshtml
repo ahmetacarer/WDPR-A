@@ -35,9 +35,9 @@
 
                     @if (User.IsInRole("Moderator"))
                     {
-                        <form onsubmit="reportUser(); return false">
+                        <form onsubmit='blockUser("@message.Sender.Id"); return false'>
                             <input type="hidden" name="messageId" value="@message.Id" id="@message.Id">
-                            <input type="submit" value="Rapporteer">
+                            <input type="submit" value="Blokkeer">
                         </form>
                     }
                     <strong class="card-title">@message.Sender.FirstName @message.Sender.LastName</strong>
@@ -53,6 +53,24 @@
 
 
 <script>
+
+    function blockUser(senderId) {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("BlockClient", "Moderator")",
+            data: {
+                clientId: senderId
+            },
+            success: function (msg) {
+                // wat moet hier komen als het succes is????
+                console.log("gebruiker is geblokkeerd");
+            },
+            error: function (req, status, error) {
+                console.log(error)
+            }
+        });
+    }
+
     function reportUser() {
         $.ajax({
             type: "POST",

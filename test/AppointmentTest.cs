@@ -62,10 +62,10 @@ public class AppointmentTest
         //Arrange
         var sut = new AppointmentController(null,WDPRContext, null, null);
 
-        var client = new Client {FirstName = "Hansie", LastName = "Bassie", Email = "testEmaghfghfghil@gmail.com", Condition = "ADHD"};
+        var client = new Client {FirstName = "Hansie", LastName = "Bassie", Email = "testEmail@gmail.com", Condition = "ADHD"};
 
         //Act
-        sut.Index(client, DateTime.Now, AgeCategory.Jongste, "Ouder@email.com");
+        sut.Index(client, DateTime.Now.Date, DateTime.Parse(DateTime.Now.ToString("hh:mm")), AgeCategory.Jongste, "Ouder@email.com");
         
 
         //Assert
@@ -92,7 +92,7 @@ public class AppointmentTest
         var client = new Client { FirstName = "Hansie", LastName = "Bassie", Email = "testEmaghfghfghil@gmail.com", Condition = "ADHD" };
 
         //Act
-        sut.Index(client, DateTime.Now, AgeCategory.Jongste, null);
+        sut.Index(client, DateTime.Now.Date, DateTime.Parse(DateTime.Now.ToString("hh:mm")), AgeCategory.Jongste, null);
 
 
         //Assert
@@ -115,7 +115,7 @@ public class AppointmentTest
         var client = new Client { FirstName = "Hansie", LastName = "Bassie", Email = "testEmaghfghfghil@gmail.com", Condition = "ADHD" };
 
         //Act
-        sut.Index(client, DateTime.Now, AgeCategory.Jongste, "Ouder@email.com");
+        sut.Index(client, DateTime.Now.Date, DateTime.Parse(DateTime.Now.ToString("hh:mm")), AgeCategory.Jongste, "Ouder@email.com");
 
 
         //Assert

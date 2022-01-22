@@ -49,7 +49,11 @@ public class AppointmentController : Controller
         client.LastName = client.LastName.ToLower();
 
         if (emailOfParent != null)
+        {
+
             client.Guardians = new List<Guardian>() { new Guardian { Email = emailOfParent } };
+            await _userStore.SetUserNameAsync(client.Guardians[0], emailOfParent, CancellationToken.None);
+        }
 
         var orthopedagogue = _context.Orthopedagogues.FirstOrDefault(o => o.Specialty == client.Condition);
         Appointment appointment = new Appointment()
@@ -73,27 +77,29 @@ public class AppointmentController : Controller
         _context.Appointments.Add(appointment);
         _context.SaveChanges();
 
-        var code = await _userManager.GenerateEmailConfirmationTokenAsync(client);
-        code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-        var callbackUrl = Url.Page(
+        var clientToken = await _userManager.GenerateEmailConfirmationTokenAsync(client);
+        clientToken = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(clientToken));
+        var callBackUrlClient = Url.Page(
             "/Account/ConfirmEmail",
             pageHandler: null,
-            values: new { area = "Identity", userId = client.Id, code = code, returnUrl = "~/" },
+            values: new { area = "Identity", userId = client.Id, code = clientToken, returnUrl = "~/" },
             protocol: Request.Scheme);
 
-        string datum = appointmentDate.ToString("dd/MM/yyyy hh:mm");
+        string datum = appointment.AppointmentDate.ToString("dd/MM/yyyy HH:mm");
         await EmailSender.SendEmail(client.Email, "Bevestig je mail",
-            $"Bevestig je mail door te <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>klikken</a>.</br>Jouw intake-gesprek vindt plaats op {datum}");
+            $"Bevestig je mail door te <a href='{HtmlEncoder.Default.Encode(callBackUrlClient)}'>klikken</a>.</br>Jouw intake-gesprek vindt plaats op {datum}");
 
         if (emailOfParent != null)
         {
-            var guardianUrl = Url.Page(
+            var guardianToken = await _userManager.GenerateEmailConfirmationTokenAsync(client.Guardians[0]);
+            guardianToken = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(guardianToken));
+            var callBackUrlGuardian = Url.Page(
             "/Account/ConfirmEmail",
             pageHandler: null,
-            values: new { area = "Identity", userId = client.Guardians[0].Id, code = code, returnUrl = "~/" },
+            values: new { area = "Identity", userId = client.Guardians[0].Id, code = guardianToken, returnUrl = "~/" },
             protocol: Request.Scheme);
             await EmailSender.SendEmail(emailOfParent, "Bevestig je mail",
-                $"Bevestig je mail door te <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>klikken</a>.</br>Jouw intake-gesprek vindt plaats op {datum}");
+                $"Bevestig je mail door te <a href='{HtmlEncoder.Default.Encode(callBackUrlGuardian)}'>klikken</a>.</br>Jouw intake-gesprek vindt plaats op {datum}");
         }
         return RedirectToAction("SuccessAppointment");
     }

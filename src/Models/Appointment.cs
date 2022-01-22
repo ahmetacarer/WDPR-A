@@ -14,9 +14,11 @@ namespace WDPR_A.Models
         [Required]
         public string? IncomingClientId { get; set; }
 
+        public bool IsVerified { get; set; }
+
         public IList<Guardian>? Guardians { get; set; }
 
-        [Required] 
+        [Required]
         public string? OrthopedagogueId { get; set; }
 
         [Required]

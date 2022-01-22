@@ -88,7 +88,7 @@ public class ModeratorController : Controller
 
         return true;
     }
-
+    [HttpPost]
     public async Task<Boolean> BlockClient(string clientId)
     {
         var client = await _context.Clients.SingleOrDefaultAsync(c => c.Id == clientId);

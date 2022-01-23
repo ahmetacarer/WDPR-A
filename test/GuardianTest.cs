@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using System.Security.Principal;
+using System.Linq;
 
 namespace test;
 
@@ -62,29 +63,39 @@ public class GuardianTest
         await context.SaveChangesAsync();
     }
 
-    // guardian can't read messages of client
-    // [Fact]
-    // public async Task Dashboard_GuardianWithClientUnderSixteen_FrequencyMessagesAsync()
-    // {
-    //     var context = GetWDPRContext();
-    //     var orthopedagogue = new Orthopedagogue { Id = Guid.NewGuid().ToString(), FirstName = "", LastName = "", Specialty = "ADHD" };
-    //     var client = new Client { Id = "1", FirstName = "aa", LastName = "aa", Address = "", Residence = "", Condition = "ADHD", AgeCategory = AgeCategory.Middelste, Guardians = new List<Guardian> { }, Chats = new List<Chat> { new Chat { Orthopedagogue = orthopedagogue, Messages = new HashSet<Message> { }, RoomId = Guid.NewGuid().ToString() } } };
-    //     var guardian = new Guardian { Id = Guid.NewGuid().ToString(), Clients = new List<Client> { client }, FirstName = "John", LastName = "Doe", UserName = "john@doe.com" };
-    //     var message = new Message { ChatRoomId = client.Chats[0].RoomId, Text = "test bericht", Sender = client };
-    //     context.Add(orthopedagogue);
-    //     context.Add(client);
-    //     context.Add(guardian);
-    //     context.Add(message);
-    //     await context.SaveChangesAsync();
+    //guardian can't read messages of client
+    [Fact]
+    public async Task Dashboard_GuardianWithClientUnderSixteen_FrequencyMessagesAsync()
+    {
+        var context = GetWDPRContext();
+        var orthopedagogue = new Orthopedagogue { Id = Guid.NewGuid().ToString(), FirstName = "", LastName = "", Specialty = "ADHD" };
+        var client = new Client { Id = "1", FirstName = "aa", LastName = "aa", Address = "", Residence = "", Condition = "ADHD", AgeCategory = AgeCategory.Middelste, Guardians = new List<Guardian> { }, Chats = new List<Chat> { new Chat { Orthopedagogue = orthopedagogue, Messages = new HashSet<Message> { }, RoomId = Guid.NewGuid().ToString() } } };
+        var guardian = new Guardian { Id = "100", Clients = new List<Client> { client }, FirstName = "John", LastName = "Doe", UserName = "john@doe.com" };
+        var message = new Message { ChatRoomId = client.Chats[0].RoomId, Text = "test bericht", Sender = client };
+        context.Add(orthopedagogue);
+        context.Add(client);
+        context.Add(guardian);
+        context.Add(message);
+        await context.SaveChangesAsync();
 
-    //     var userManagerMock = TestUserManager<IdentityUser>();
-    //     var principal = new GenericPrincipal(new ClaimsIdentity(guardian.UserName), new[] { "Guardian" });
-    //     var controllerContext = new ControllerContext { HttpContext = new DefaultHttpContext { User = principal }};
+        Assert.NotNull(context.Guardians.First());
+        var principal = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+        {
+            new Claim(ClaimTypes.NameIdentifier, "100"),
+        }));
+        var mockUserStore = new Mock<IUserStore<IdentityUser>>();
+        var mockUserManager = new Mock<UserManager<IdentityUser>>(mockUserStore.Object, null, null, null, null, null, null, null, null);
+        mockUserManager
+            .Setup(_ => _.GetUserAsync(principal))
+            .ReturnsAsync(guardian);
+        var controllerContext = new ControllerContext { HttpContext = new DefaultHttpContext { User = principal } };
 
-    //     var sut = new GuardianController(null, context, userManagerMock);
-    //     sut.ControllerContext = controllerContext;
-    //     var action = await sut.Dashboard();
-    //     var model = Assert.IsType<ViewResult>(action).Model;
-    // }
+        var sut = new GuardianController(null, context, mockUserManager.Object);
+        sut.ControllerContext = controllerContext;
+        var action = await sut.Dashboard();
+        var viewResult = Assert.IsType<ViewResult>(action);
+        var model = Assert.IsType<Guardian>(viewResult.Model);
+        Assert.Equal(1, model.Clients[0].Chats.Sum(c => c.Messages.Count()));
+    }
 
 }

@@ -15,19 +15,10 @@ namespace test;
 
 public class OrthopedagogueTest
 {
-    public WDPRContext GetWDPRContext()
-    {
-        var options = new DbContextOptionsBuilder<WDPRContext>().EnableSensitiveDataLogging().
-                        UseInMemoryDatabase("MijnDatabase")
-                        .Options;
-        var context = new WDPRContext(options);
-        return context;
-    }
-
     [Fact]
     public async Task OrthopedagogueDashboard_ViewDataTest_AppointmentsFound()
     {
-        var context = GetWDPRContext();
+        var context = ManagerContainer.GetWDPRContext();
 
         var orthopedagogue = new Orthopedagogue
         {
@@ -96,7 +87,7 @@ public class OrthopedagogueTest
     [Fact]
     public async Task OrthopedagogueDashboard_ViewDataTest_NoAppointmentsFound()
     {
-        var context = GetWDPRContext();
+        var context = ManagerContainer.GetWDPRContext();
 
         var orthopedagogue = new Orthopedagogue
         {
@@ -162,7 +153,4 @@ public class OrthopedagogueTest
         Assert.True(count == 0);
         Assert.False(count > 0);
     }
-
-
-    
 }

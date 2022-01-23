@@ -21,17 +21,6 @@ public class ChatTest
 {
 
     //NameOfMethod_Scenario_Expected
-    public async Task<WDPRContext> GetWDPRContextAsync()
-    {
-        var options = new DbContextOptionsBuilder<WDPRContext>().EnableSensitiveDataLogging().
-                        UseInMemoryDatabase("MijnDatabase")
-                        .Options;
-        var context = new WDPRContext(options);
-        //await context.AddAsync(GetDummyGuardian);
-        // await context.AddAsync(GetDummyClient);
-        // await context.SaveChangesAsync();
-        return context;
-    }
 
     public Guardian GetDummyGuardian()
     {

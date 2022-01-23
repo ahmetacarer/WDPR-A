@@ -15,15 +15,6 @@ namespace test;
 public class ChatControllerTest
 {
 
-    public WDPRContext GetWDPRContext()
-    {
-        var options = new DbContextOptionsBuilder<WDPRContext>().EnableSensitiveDataLogging().
-                        UseInMemoryDatabase(Guid.NewGuid().ToString())
-                        .Options;
-        var context = new WDPRContext(options);
-        return context;
-    }
-
     public async Task SeedData(WDPRContext context)
     {
         var client = new Client
@@ -66,7 +57,7 @@ public class ChatControllerTest
     [Fact]
     public async Task Index_ClientWithOneChat_ReturnsOneChatInListAsync()
     {
-        var context = GetWDPRContext();
+        var context = ManagerContainer.GetWDPRContext();
         await SeedData(context);
         var testedClient = await context.Clients.FirstAsync();
         var principal = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
@@ -94,7 +85,7 @@ public class ChatControllerTest
     [Fact]
     public async Task Index_GuardianWithOneChat_ReturnsOneChatInListAsync()
     {
-        var context = GetWDPRContext();
+        var context = ManagerContainer.GetWDPRContext();
         await SeedData(context);
         var fakeOrthopedagogue = await context.Orthopedagogues.FirstAsync();
         var principal = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
@@ -121,7 +112,7 @@ public class ChatControllerTest
     [Fact]
     public async Task ReportClient_ReportsAnonymously_MessageReportCountGoesUp()
     {
-        var context = GetWDPRContext();
+        var context = ManagerContainer.GetWDPRContext();
         await SeedData(context);
 
         var mockUserStore = new Mock<IUserStore<IdentityUser>>();

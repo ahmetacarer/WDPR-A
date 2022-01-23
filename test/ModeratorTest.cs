@@ -12,20 +12,10 @@ namespace test;
 
 public class ModeratorTest
 {
-
-    public WDPRContext GetWDPRContext()
-    {
-        var options = new DbContextOptionsBuilder<WDPRContext>().EnableSensitiveDataLogging().
-                        UseInMemoryDatabase("MijnDatabase")
-                        .Options;
-        var context = new WDPRContext(options);
-        return context;
-    }
-
     [Fact]
     public async Task BlockClient_BlocktheClient_True()
     {
-        var context = GetWDPRContext();
+        var context = ManagerContainer.GetWDPRContext();
         var controller = new ModeratorController(null, context, ManagerContainer.TestUserManager<IdentityUser>());
 
         var client = new Client
@@ -52,7 +42,7 @@ public class ModeratorTest
     [Fact]
     public async Task UnBlockClient_UnBlocktheClient_False()
     {
-        var context = GetWDPRContext();
+        var context = ManagerContainer.GetWDPRContext();
 
         var controller = new ModeratorController(null, context, ManagerContainer.TestUserManager<IdentityUser>());
 
@@ -82,13 +72,13 @@ public class ModeratorTest
     [Fact]
     public async Task ModeratorDashboard_ViewDataTest_SearchResultFound()
     {
-        var context = GetWDPRContext();
+        var context = ManagerContainer.GetWDPRContext();
 
         var controller = new ModeratorController(null, context, ManagerContainer.TestUserManager<IdentityUser>());
 
         var orthopedagogue = new Orthopedagogue
         {
-            Id = Guid.NewGuid().ToString(),
+            Id = "54545454223",
             FirstName = "Jacob",
             LastName = "Lans",
             Specialty = "Dyslexie",
@@ -96,7 +86,7 @@ public class ModeratorTest
 
         var client = new Client
         {
-            Id = Guid.NewGuid().ToString(),
+            Id = "54554445",
             FirstName = "Dennis",
             LastName = "Steen",
             Condition = "Dyslexie",
@@ -135,7 +125,7 @@ public class ModeratorTest
     [Fact]
     public async Task ModeratorDashboard_ViewDataTest_NoSearchResultFound()
     {
-        var context = GetWDPRContext();
+        var context = ManagerContainer.GetWDPRContext();
 
         var controller = new ModeratorController(null, context, ManagerContainer.TestUserManager<IdentityUser>());
 

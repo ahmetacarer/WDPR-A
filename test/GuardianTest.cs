@@ -20,19 +20,10 @@ namespace test;
 
 public class GuardianTest
 {
-    public WDPRContext GetWDPRContext()
-    {
-        var options = new DbContextOptionsBuilder<WDPRContext>().EnableSensitiveDataLogging().
-                        UseInMemoryDatabase(Guid.NewGuid().ToString())
-                        .Options;
-        var context = new WDPRContext(options);
-        return context;
-    }
-
     [Fact]
     public void Index_RedirectToDashboard_True()
     {
-        var context = GetWDPRContext();
+        var context = ManagerContainer.GetWDPRContext();
         var sut = new GuardianController(null, context, null);
         var result = sut.Index();
 
@@ -44,7 +35,7 @@ public class GuardianTest
     [Fact]
     public void GuardianController_NoCurrentUser_Null()
     {
-        var context = GetWDPRContext();
+        var context = ManagerContainer.GetWDPRContext();
         var userManager = ManagerContainer.TestUserManager<IdentityUser>();
         var sut = new GuardianController(null, context, userManager);
         Assert.Null(sut.User);
@@ -67,7 +58,7 @@ public class GuardianTest
     [Fact]
     public async Task Dashboard_GuardianWithClientUnderSixteen_FrequencyMessagesAsync()
     {
-        var context = GetWDPRContext();
+        var context = ManagerContainer.GetWDPRContext();
         var orthopedagogue = new Orthopedagogue { Id = Guid.NewGuid().ToString(), FirstName = "", LastName = "", Specialty = "ADHD" };
         var client = new Client { Id = "1", FirstName = "aa", LastName = "aa", Address = "", Residence = "", Condition = "ADHD", AgeCategory = AgeCategory.Middelste, Guardians = new List<Guardian> { }, Chats = new List<Chat> { new Chat { Orthopedagogue = orthopedagogue, Messages = new HashSet<Message> { }, RoomId = Guid.NewGuid().ToString() } } };
         var guardian = new Guardian { Id = "100", Clients = new List<Client> { client }, FirstName = "John", LastName = "Doe", UserName = "john@doe.com" };

@@ -35,6 +35,7 @@ public class GenerateTest
         Assert.Equal("number must be bigger or equal to 0", exception.Message);
     }
 
+    [Fact]
     public void RandomChatCode_Length_MustBeEight()
     {
         int expectedLength = 8;

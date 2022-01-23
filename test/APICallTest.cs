@@ -12,18 +12,6 @@ namespace test;
 
 public class APICallTest {
 
-
-    //NameOfMethod_Scenario_Expected
-    public WDPRContext GetWDPRContext()
-    {
-        var options = new DbContextOptionsBuilder<WDPRContext>().EnableSensitiveDataLogging().
-                        UseInMemoryDatabase("MijnDatabase")
-                        .Options;
-        var context = new WDPRContext(options);
-        return context;
-    }  
-
-
     [Fact]
     public async Task GetClientFile_EmptyDateWithNegativeBSN_Error () {
         string birthDate = "10-06-2010";

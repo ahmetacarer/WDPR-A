@@ -47,7 +47,7 @@ namespace WDPR_A.Hubs
             var blockedStatus = await IsBlocked(contextUser.Id, roomId);
 
             var isModerator = await _userManager.IsInRoleAsync(currentUser, "Moderator");
-            var name = $"{contextUser.FirstName}. {contextUser.LastName}";
+            var name = $"{contextUser.FirstName} {contextUser.LastName}";
             var date = DateTime.Now;
             if (!blockedStatus)
             {

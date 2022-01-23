@@ -23,7 +23,7 @@ public class GuardianTest
     public WDPRContext GetWDPRContext()
     {
         var options = new DbContextOptionsBuilder<WDPRContext>().EnableSensitiveDataLogging().
-                        UseInMemoryDatabase("MijnDatabase")
+                        UseInMemoryDatabase(Guid.NewGuid().ToString())
                         .Options;
         var context = new WDPRContext(options);
         return context;
@@ -97,5 +97,7 @@ public class GuardianTest
         var model = Assert.IsType<Guardian>(viewResult.Model);
         Assert.Equal(1, model.Clients[0].Chats.Sum(c => c.Messages.Count()));
     }
+
+
 
 }

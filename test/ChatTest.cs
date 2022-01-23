@@ -12,7 +12,7 @@ using WDPR_A.Models;
 using Xunit;
 
 namespace test;
-public class ChatControllerTest
+public class ChatTest
 {
 
     public async Task SeedData(WDPRContext context)

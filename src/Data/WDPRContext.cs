@@ -45,9 +45,9 @@ public class WDPRContext : IdentityDbContext
     public List<Orthopedagogue> GetOrthopedagogues()
     {
         return new List<Orthopedagogue> {
-            new Orthopedagogue { Id = "13198681-ef68-4acf-bd7e-544e12fed291", FirstName = "Karin", LastName = "Kemper", Specialty = "ADHD", NormalizedEmail = "KKEMPER@ZMDH.NL", Email = "kkemper@zmdh.nl", NormalizedUserName = "KKEMPER@ZMDH.NL", UserName = "kkemper@zmdh.nl", PasswordHash = "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==" },
+            new Orthopedagogue { Id = "13198681-ef68-4acf-bd7e-544e12fed291", FirstName = "Karin", LastName = "Kemper", Specialty = "ADHD", NormalizedEmail = "18046533@STUDENT.HHS.NL", Email = "18046533@student.hhs.nl", NormalizedUserName = "18046533@STUDENT.HHS.NL", UserName = "18046533@student.hhs.nl", PasswordHash = "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==" },
 
-            new Orthopedagogue { Id = "7d028f6c-929e-45b0-8493-573078b85f79", FirstName = "Johan", LastName = "Lo", Specialty = "Faalangst", NormalizedEmail = "JLO@ZMDH.NL", Email = "jlo@zmdh.nl", NormalizedUserName = "JLO@ZMDH.NL", UserName = "jlo@zmdh.nl", PasswordHash = "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==" },
+            new Orthopedagogue { Id = "7d028f6c-929e-45b0-8493-573078b85f79", FirstName = "Johan", LastName = "Lo", Specialty = "Faalangst", NormalizedEmail = "ZMDH.HHS@GMAIL.COM", Email = "zmdh.hhs@gmail.com", NormalizedUserName = "ZMDH.HHS@GMAIL.COM", UserName = "zmdh.hhs@gmail.com", PasswordHash = "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==" },
 
             new Orthopedagogue { Id = "1988e216-9179-42a1-8243-2b6bf362b1b4", FirstName = "Steven", LastName = "Ito", Specialty = "Eetstoornis", NormalizedEmail = "SITO@ZMDH.NL", Email = "sito@zmdh.nl", NormalizedUserName = "SITO@ZMDH.NL", UserName = "sito@zmdh.nl", PasswordHash = "AQAAAAEAACcQAAAAECliP0eZF/dtPcZTjNEfC7Sh+XjlLTW0LhuATCboH6s/1GZZsLvr9LiQEpMOLZ7pQA==" },
 

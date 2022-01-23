@@ -1,144 +1,127 @@
-using Xunit;
-using Moq;
 using System;
-using WDPR_A.ViewModels;
-using Microsoft.EntityFrameworkCore;
-using WDPR_A.Controllers;
-using Microsoft.AspNetCore.Identity;
-using src.Controllers;
-using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Moq;
+using WDPR_A.Controllers;
 using WDPR_A.Models;
-using WDPR_A.Hubs;
-using Microsoft.Extensions.Options;
-using Microsoft.Extensions.Logging;
-using System.Dynamic;
-using Microsoft.AspNetCore.SignalR;
+using Xunit;
 
 namespace test;
-
-public class ChatTest
+public class ChatControllerTest
 {
 
-    //NameOfMethod_Scenario_Expected
-
-    public Guardian GetDummyGuardian()
+    public async Task SeedData(WDPRContext context)
     {
-        return new Guardian { Clients = new List<Client> { GetDummyClient() }, FirstName = "Henkie", LastName = "Penkie" };
+        var client = new Client
+        {
+            Id = "1",
+            AgeCategory = AgeCategory.Oudste,
+            FirstName = "",
+            LastName = "",
+            Condition = "ADHD",
+            Address = "",
+            Residence = ""
+        };
+        var orthopedagogue = new Orthopedagogue
+        {
+            Id = Guid.NewGuid().ToString(),
+            FirstName = "",
+            LastName = "",
+            Specialty = "ADHD"
+        };
+        var chat = new Chat
+        {
+            RoomId = Guid.NewGuid().ToString(),
+            Orthopedagogue = orthopedagogue,
+            Clients = new List<Client> { client }
+        };
+        var message = new Message
+        {
+            Sender = client,
+            Text = "slur",
+            When = DateTime.Now,
+            ChatRoomId = chat.RoomId
+        };
+        await context.Clients.AddAsync(client);
+        await context.Orthopedagogues.AddAsync(orthopedagogue);
+        await context.Chats.AddAsync(chat);
+        await context.Messages.AddAsync(message);
+        await context.SaveChangesAsync();
+
+    }
+    [Fact]
+    public async Task Index_ClientWithOneChat_ReturnsOneChatInListAsync()
+    {
+        var context = ManagerContainer.GetWDPRContext();
+        await SeedData(context);
+        var testedClient = await context.Clients.FirstAsync();
+        var principal = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+        {
+            new Claim(ClaimTypes.NameIdentifier, testedClient.Id),
+            new Claim(ClaimTypes.Role, "Client")
+        }));
+        var mockUserStore = new Mock<IUserStore<IdentityUser>>();
+        var mockUserManager = new Mock<UserManager<IdentityUser>>(mockUserStore.Object, null, null, null, null, null, null, null, null);
+        mockUserManager
+            .Setup(_ => _.GetUserAsync(principal))
+            .ReturnsAsync(testedClient);
+        var controllerContext = new ControllerContext { HttpContext = new DefaultHttpContext { User = principal } };
+
+        var sut = new ChatController(null, context, mockUserManager.Object);
+        sut.ControllerContext = controllerContext;
+
+        var action = await sut.Index();
+        var viewResult = Assert.IsType<ViewResult>(action);
+        var model = Assert.IsType<List<Chat>>(viewResult.Model);
+        Assert.True(model.Count == 1);
     }
 
-    public Client GetDummyClient()
+
+    [Fact]
+    public async Task Index_OrthopedagogueWithOneChat_ReturnsOneChatInListAsync()
     {
-        var client = new Client { Id = new Guid().ToString(), AgeCategory = AgeCategory.Jongste, Condition = "ADHD", FirstName = "John", LastName = "Penkie" };
-        client.Chats = new List<Chat> { new Chat { RoomId = "1", Subject = "ADHD", AgeCategory = AgeCategory.Oudste } };
-        client.Chats[0].Messages.Add(new Message { Sender = client, Text = "Hello World", When = DateTime.Now, ChatRoomId = client.Chats[0].RoomId });
-        return client;
+        var context = ManagerContainer.GetWDPRContext();
+        await SeedData(context);
+        var fakeOrthopedagogue = await context.Orthopedagogues.FirstAsync();
+        var principal = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+        {
+            new Claim(ClaimTypes.NameIdentifier, fakeOrthopedagogue.Id),
+            new Claim(ClaimTypes.Role, "Orthopedagogue", "Moderator")
+        }));
+        var mockUserStore = new Mock<IUserStore<IdentityUser>>();
+        var mockUserManager = new Mock<UserManager<IdentityUser>>(mockUserStore.Object, null, null, null, null, null, null, null, null);
+        mockUserManager
+            .Setup(_ => _.GetUserAsync(principal))
+            .ReturnsAsync(fakeOrthopedagogue);
+        var controllerContext = new ControllerContext { HttpContext = new DefaultHttpContext { User = principal } };
+
+        var sut = new ChatController(null, context, mockUserManager.Object);
+        sut.ControllerContext = controllerContext;
+
+        var action = await sut.Index();
+        var viewResult = Assert.IsType<ViewResult>(action);
+        var model = Assert.IsType<List<Chat>>(viewResult.Model);
+        Assert.True(model.Count == 1);
     }
 
-
-    public static UserManager<TUser> TestUserManager<TUser>() where TUser : class
+    [Fact]
+    public async Task ReportClient_ReportsAnonymously_MessageReportCountGoesUp()
     {
-        var store = new Mock<IUserStore<TUser>>().Object;
-        var options = new Mock<IOptions<IdentityOptions>>();
-        var idOptions = new IdentityOptions();
-        idOptions.Lockout.AllowedForNewUsers = false;
-        options.Setup(o => o.Value).Returns(idOptions);
-        var userValidators = new List<IUserValidator<TUser>>();
-        var validator = new Mock<IUserValidator<TUser>>();
-        userValidators.Add(validator.Object);
-        var pwdValidators = new List<PasswordValidator<TUser>>();
-        pwdValidators.Add(new PasswordValidator<TUser>());
-        var userManager = new UserManager<TUser>(store, options.Object, new PasswordHasher<TUser>(),
-            userValidators, pwdValidators, new UpperInvariantLookupNormalizer(),
-            new IdentityErrorDescriber(), null,
-            new Mock<ILogger<UserManager<TUser>>>().Object);
-        validator.Setup(v => v.ValidateAsync(userManager, It.IsAny<TUser>()))
-            .Returns(Task.FromResult(IdentityResult.Success)).Verifiable();
-        return userManager;
+        var context = ManagerContainer.GetWDPRContext();
+        await SeedData(context);
+
+        var mockUserStore = new Mock<IUserStore<IdentityUser>>();
+        var mockUserManager = new Mock<UserManager<IdentityUser>>(mockUserStore.Object, null, null, null, null, null, null, null, null);
+        var sut = new ChatController(null, context, mockUserManager.Object);
+
+        var message = await context.Messages.FirstAsync();
+        Assert.Equal(0, message.ReportCount);
+        sut.ReportClient(message.Id);
+        Assert.Equal(1, message.ReportCount);
     }
-
-    //5
-
-    // [Fact]
-    // public async Task HubsAreMockableViaDynamic()
-    // {
-    //     bool sendCalled = false;
-    //     var hub = new ChatHub(TestUserManager<IdentityUser>(), await GetWDPRContextAsync());
-    //     var mockClients = new Mock<IHubCallerClients>();
-    //     hub.Clients = mockClients.Object;
-    //     dynamic all = new ExpandoObject();
-    //     all.broadcastMessage = new Action<string, string>((name, message) =>
-    //     {
-    //         sendCalled = true;
-    //     });
-    //     mockClients.Setup(m => m.All).Returns(all);
-    //     await hub.SendMessage("TestUser", "1");
-    //     Assert.True(sendCalled);
-    // }
-
-    // [Fact]
-    // public async Task SendNotification()
-    // {
-    //     Mock<IHubClients> mockClients = new Mock<IHubClients>();
-    //     Mock<IClientProxy> mockClientProxy = new Mock<IClientProxy>();
-    //     mockClients.Setup(clients => clients.All).Returns(mockClientProxy.Object);
-
-    //     var hubContext = new Mock<IHubContext<ChatHub>>();
-    //     hubContext.Setup(x => x.Clients).Returns(() => mockClients.Object);
-
-    //     //var db = MyDBMock.GetMock();
-    //     ChatHub hub = new ChatHub(hubContext.Object, db);
-
-    //     await hub.Clients.All("Yo! This is the unit test.");
-
-    //     mockClients.Verify(clients => clients.All, Times.Once);
-    // }
-
-    // [Fact]
-    // public async Task SignalR_OnConnect_ShouldReturn3Messages()
-
-    // {
-    //     // arrange
-    //     Mock<IHubCallerClients> mockClients = new Mock<IHubCallerClients>();
-    //     Mock<IClientProxy> mockClientProxy = new Mock<IClientProxy>();
-
-    //     mockClients.Setup(clients => clients.All).Returns(mockClientProxy.Object);
-
-
-    //     ChatHub simpleHub = new ChatHub()
-    //     {
-    //         Clients = mockClients.Object
-    //     };
-
-    //     // act
-    //     mockClients.simpleHub.Clients.All;
-
-
-    //     // assert
-    //     mockClients.Verify(clients => clients.All, Times.Once);
-
-    //     mockClientProxy.Verify(
-    //         clientProxy => clientProxy.SendCoreAsync(
-    //             "welcome",
-    //             It.Is<object[]>(o => o != null && o.Length == 1 && ((object[])o[0]).Length == 3),
-    //             default(CancellationToken)),
-    //         Times.Once);
-    // }
-
-
-    // [Fact]
-    // public async Task TestAsync() 
-    // {
-    //     var context = await GetWDPRContextAsync();
-    //     var userManagerMock = new Mock<UserManager<IdentityUser>>();
-
-    //     var controller = new ChatController(null, context, userManagerMock.Object);
-    //     var sut = controller.Index();
-    // }
-
-    // requirement 6 testen
-    //Guardian aanmakenm
-    //controller anmaken
-    //guardian de controllermethod Index laten oproepen
-    //Assert verwacht een Access Denied View
 }

@@ -26,7 +26,7 @@ namespace WDPR_A.Hubs
         {
             var client = await _context.Clients.FindAsync(userId);
             var chat = await _context.Chats.SingleOrDefaultAsync(c => c.RoomId == roomId);
-            if (client == null || !client.IsBlocked || chat.IsPrivate)
+            if (client == null || !client.IsBlocked)
                 return false;
             return true;
         }

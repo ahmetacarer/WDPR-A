@@ -98,34 +98,7 @@ public class OrthopedagogueTest
             EmailConfirmed = true
         };
 
-        var client = new Client
-        {
-            Id = Guid.NewGuid().ToString(),
-            FirstName = "Dennis",
-            LastName = "Steen",
-            Condition = "Dyslexie",
-            AgeCategory = AgeCategory.Oudste,
-            Guardians = null,
-            Chats = null,
-            Address = "Street 23",
-            Residence = "The Hague",
-            IsBlocked = false,
-            Email = "dsteen@voorbeeld.nl",
-            UserName = "dsteen@voorbeeld.nl",
-            EmailConfirmed = false
-        };
-
-        var appointment = new Appointment
-        {
-            Id = 23,
-            Orthopedagogue = orthopedagogue,
-            IncomingClient = client,
-            IsVerified = true
-        };
-
         context.Orthopedagogues.Add(orthopedagogue);
-        context.Clients.Add(client);
-        context.Appointments.Add(appointment);
         await context.SaveChangesAsync();
 
 
@@ -151,6 +124,5 @@ public class OrthopedagogueTest
 
         var count = Assert.IsType<List<Appointment>>(viewResult.Model).Count;
         Assert.True(count == 0);
-        Assert.False(count > 0);
     }
 }

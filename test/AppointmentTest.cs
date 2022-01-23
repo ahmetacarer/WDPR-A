@@ -18,31 +18,13 @@ public class AppointmentTest
     //NameOfMethod_Scenario_Expected
 
     [Fact]
-    public void Index_ViewResultTest_True()
-    {
-
-        DbContextOptions<WDPRContext> options = new DbContextOptionsBuilder<WDPRContext>().UseInMemoryDatabase("MijnDatabase").Options;
-        WDPRContext WDPRContext = new WDPRContext(options);
-
-        //Arrange
-        var controller = new AppointmentController(null, WDPRContext, null, null);
-
-        //Act
-        var result = controller.Index();
-
-        //Assert
-        var viewResult = Assert.IsType<ViewResult>(result);
-    }
-
-    [Fact]
     public void MakeFirstNameCapitalLetter_MakeCapitalLetter_True()
     {
 
-        DbContextOptions<WDPRContext> options = new DbContextOptionsBuilder<WDPRContext>().UseInMemoryDatabase("MijnDatabase").Options;
-        WDPRContext WDPRContext = new WDPRContext(options);
+        var context = ManagerContainer.GetWDPRContext();
 
         //Arrange
-        var controller = new AppointmentController(null, WDPRContext, null, null);
+        var controller = new AppointmentController(null, context, null, null);
 
         var firstName = "hAns";
 
@@ -59,11 +41,10 @@ public class AppointmentTest
     public void Index_WithParent_NotNull()
     {
 
-        DbContextOptions<WDPRContext> options = new DbContextOptionsBuilder<WDPRContext>().UseInMemoryDatabase("MijnDatabase").Options;
-        WDPRContext WDPRContext = new WDPRContext(options);
+        var context = ManagerContainer.GetWDPRContext();
 
         //Arrange
-        var sut = new AppointmentController(null, WDPRContext, null, null);
+        var sut = new AppointmentController(null, context, null, null);
 
         var client = new Client { FirstName = "Hansie", LastName = "Bassie", Email = "testEmail@gmail.com", Condition = "ADHD", AgeCategory = AgeCategory.Jongste };
 
@@ -72,42 +53,40 @@ public class AppointmentTest
 
 
         //Assert
-        Assert.NotNull(WDPRContext.Appointments.Where(c => c.IncomingClientId == client.Id).Select(g => g.Guardians));
+        Assert.NotNull(context.Appointments.Where(c => c.IncomingClientId == client.Id).Select(g => g.Guardians));
     }
 
     [Fact]
     public void Index_WithoutParent_Zero()
     {
 
-        DbContextOptions<WDPRContext> options = new DbContextOptionsBuilder<WDPRContext>().UseInMemoryDatabase("MijnDatabase").Options;
-        WDPRContext WDPRContext = new WDPRContext(options);
+        var context = ManagerContainer.GetWDPRContext();
 
         //Arrange
         var expected = 0;
 
-        var sut = new AppointmentController(null, WDPRContext, null, null);
+        var sut = new AppointmentController(null, context, null, null);
 
-        var client = new Client { FirstName = "Hansie", LastName = "Bassie", Email = "testEmaghfghfghil@gmail.com", Condition = "ADHD", AgeCategory = AgeCategory.Jongste };
+        var client = new Client { FirstName = "Hansie", LastName = "Bassie", Email = "testEmaghfghfghil@gmail.com", Condition = "ADHD", AgeCategory = AgeCategory.Oudste };
 
         //Act
         sut.Index(client, DateTime.Now.Date, DateTime.Parse(DateTime.Now.ToString("hh:mm")), null);
 
 
         //Assert
-        Assert.Equal(expected, WDPRContext.Appointments.Where(c => c.IncomingClientId == client.Id).Select(g => g.Guardians).Count());
+        Assert.Equal(expected, context.Appointments.Where(c => c.IncomingClientId == client.Id).Select(g => g.Guardians).Count());
     }
 
     [Fact]
     public void Index_AppointmentInContext_NotNull()
     {
 
-        DbContextOptions<WDPRContext> options = new DbContextOptionsBuilder<WDPRContext>().UseInMemoryDatabase("MijnDatabase").Options;
-        WDPRContext WDPRContext = new WDPRContext(options);
+        var context = ManagerContainer.GetWDPRContext();
 
         //Arrange
         var expected = 0;
 
-        var sut = new AppointmentController(null, WDPRContext, null, null);
+        var sut = new AppointmentController(null, context, null, null);
 
         var client = new Client { FirstName = "Hansie", LastName = "Bassie", Email = "testEmaghfghfghil@gmail.com", Condition = "ADHD", AgeCategory = AgeCategory.Jongste };
 
@@ -116,7 +95,7 @@ public class AppointmentTest
 
 
         //Assert
-        Assert.NotNull(WDPRContext.Appointments);
+        Assert.NotNull(context.Appointments);
     }
 
 }

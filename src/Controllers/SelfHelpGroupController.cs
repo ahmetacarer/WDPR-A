@@ -28,7 +28,7 @@ public class SelfHelpGroupController : Controller
     {
         if (!String.IsNullOrEmpty(subject))
         {
-            lijst = lijst.Where(c => c.Subject.ToLower().Substring(0, subject.Length) == subject.ToLower());
+            lijst = lijst.Where(c => c.Subject.ToLower().Contains(subject.ToLower()));
         }
 
         if (!String.IsNullOrEmpty(ageCategory.ToString()))
@@ -38,7 +38,7 @@ public class SelfHelpGroupController : Controller
 
         if (!String.IsNullOrEmpty(subject) && !String.IsNullOrEmpty(ageCategory.ToString()))
         {
-            lijst = lijst.Where(c => c.Subject.ToLower().Substring(0, subject.Length) == subject.ToLower() && c.AgeCategory == ageCategory);
+            lijst = lijst.Where(c => c.Subject.ToLower().Contains(subject.ToLower()) && c.AgeCategory == ageCategory);
         }
 
         return lijst;
@@ -52,7 +52,7 @@ public class SelfHelpGroupController : Controller
 
         if (!String.IsNullOrEmpty(subject))
         {
-            lijst = lijst.Where(c => c.Subject.ToLower().Substring(0, subject.Length) == subject.ToLower());
+            lijst = lijst.Where(c => c.Subject.ToLower().Contains(subject.ToLower()));
         }
 
         return lijst;

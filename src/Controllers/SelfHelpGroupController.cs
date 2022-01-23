@@ -14,15 +14,13 @@ public class SelfHelpGroupController : Controller
     private readonly ILogger<SelfHelpGroupController> _logger;
     private readonly WDPRContext _context;
     private readonly UserManager<IdentityUser> _userManager;
-    private readonly RoleSystem _roleSystem;
     private readonly ChatManager _chatManager;
 
-    public SelfHelpGroupController(ILogger<SelfHelpGroupController> logger, WDPRContext context, UserManager<IdentityUser> userManager, RoleSystem roleSystem, ChatManager chatManager)
+    public SelfHelpGroupController(ILogger<SelfHelpGroupController> logger, WDPRContext context, UserManager<IdentityUser> userManager, ChatManager chatManager)
     {
         _logger = logger;
         _context = context;
         _userManager = userManager;
-        _roleSystem = roleSystem;
         _chatManager = chatManager;
     }
 

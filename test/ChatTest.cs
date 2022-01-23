@@ -70,22 +70,22 @@ public class ChatTest
 
     //5
 
-    [Fact]
-    public async Task HubsAreMockableViaDynamic()
-    {
-        bool sendCalled = false;
-        var hub = new ChatHub(TestUserManager<IdentityUser>(), await GetWDPRContextAsync());
-        var mockClients = new Mock<IHubCallerClients>();
-        hub.Clients = mockClients.Object;
-        dynamic all = new ExpandoObject();
-        all.broadcastMessage = new Action<string, string>((name, message) =>
-        {
-            sendCalled = true;
-        });
-        mockClients.Setup(m => m.All).Returns(all);
-        await hub.SendMessage("TestUser", "1");
-        Assert.True(sendCalled);
-    }
+    // [Fact]
+    // public async Task HubsAreMockableViaDynamic()
+    // {
+    //     bool sendCalled = false;
+    //     var hub = new ChatHub(TestUserManager<IdentityUser>(), await GetWDPRContextAsync());
+    //     var mockClients = new Mock<IHubCallerClients>();
+    //     hub.Clients = mockClients.Object;
+    //     dynamic all = new ExpandoObject();
+    //     all.broadcastMessage = new Action<string, string>((name, message) =>
+    //     {
+    //         sendCalled = true;
+    //     });
+    //     mockClients.Setup(m => m.All).Returns(all);
+    //     await hub.SendMessage("TestUser", "1");
+    //     Assert.True(sendCalled);
+    // }
 
     // [Fact]
     // public async Task SendNotification()

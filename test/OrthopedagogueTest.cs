@@ -76,6 +76,11 @@ public class OrthopedagogueTest
     }
 
     [Fact]
+    public async Task OrthopedagogueDashboard_fi_True () {
+        
+    }
+
+    [Fact]
     public async Task OrthopedagogueDashboard_ViewDataTest_NoAppointmentsFound()
     {
         var context = GetWDPRContext();

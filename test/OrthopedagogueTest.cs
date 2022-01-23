@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Moq;
 using WDPR_A.Controllers;
 using WDPR_A.Models;
 using Xunit;
@@ -26,8 +29,6 @@ public class OrthopedagogueTest
     {
         var context = GetWDPRContext();
 
-        var controller = new OrthopedagogueController(null, context, ManagerContainer.TestUserManager<IdentityUser>());
-
         var orthopedagogue = new Orthopedagogue
         {
             Id = Guid.NewGuid().ToString(),
@@ -40,8 +41,8 @@ public class OrthopedagogueTest
         var client = new Client
         {
             Id = Guid.NewGuid().ToString(),
-            FirstName = "Dennis",
-            LastName = "Steen",
+            FirstName = "Jordy",
+            LastName = "van Dijk",
             Condition = "Dyslexie",
             AgeCategory = AgeCategory.Oudste,
             Guardians = null,
@@ -51,14 +52,15 @@ public class OrthopedagogueTest
             IsBlocked = false,
             Email = "dsteen@voorbeeld.nl",
             UserName = "dsteen@voorbeeld.nl",
-            EmailConfirmed = true
+            EmailConfirmed = false
         };
 
         var appointment = new Appointment
         {
-            Id = 1,
+            Id = 22,
             Orthopedagogue = orthopedagogue,
             IncomingClient = client,
+            IsVerified = false
         };
 
         context.Orthopedagogues.Add(orthopedagogue);
@@ -66,8 +68,24 @@ public class OrthopedagogueTest
         context.Appointments.Add(appointment);
         await context.SaveChangesAsync();
 
-        var result = await controller.Dashboard();
-        var viewResult = Assert.IsType<ViewResult>(result);
+
+        var principal = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+        {
+            new Claim(ClaimTypes.NameIdentifier, orthopedagogue.Id),
+        }));
+        var mockUserStore = new Mock<IUserStore<IdentityUser>>();
+        var mockUserManager = new Mock<UserManager<IdentityUser>>(mockUserStore.Object, null, null, null, null, null, null, null, null);
+        mockUserManager
+            .Setup(_ => _.GetUserAsync(principal))
+            .ReturnsAsync(orthopedagogue);
+
+        var controllerContext = new ControllerContext { HttpContext = new DefaultHttpContext { User = principal } };
+
+        var sut = new OrthopedagogueController(null, context, mockUserManager.Object);
+        sut.ControllerContext = controllerContext;
+        var action = await sut.Dashboard();
+
+        var viewResult = Assert.IsType<ViewResult>(action);
 
         Assert.Null(viewResult.ViewData["Melding"]);
 
@@ -76,16 +94,9 @@ public class OrthopedagogueTest
     }
 
     [Fact]
-    public async Task OrthopedagogueDashboard_fi_True () {
-        
-    }
-
-    [Fact]
     public async Task OrthopedagogueDashboard_ViewDataTest_NoAppointmentsFound()
     {
         var context = GetWDPRContext();
-
-        var controller = new OrthopedagogueController(null, context, ManagerContainer.TestUserManager<IdentityUser>());
 
         var orthopedagogue = new Orthopedagogue
         {
@@ -113,12 +124,37 @@ public class OrthopedagogueTest
             EmailConfirmed = false
         };
 
+        var appointment = new Appointment
+        {
+            Id = 23,
+            Orthopedagogue = orthopedagogue,
+            IncomingClient = client,
+            IsVerified = true
+        };
+
         context.Orthopedagogues.Add(orthopedagogue);
         context.Clients.Add(client);
+        context.Appointments.Add(appointment);
         await context.SaveChangesAsync();
 
-        var result = await controller.Dashboard();
-        var viewResult = Assert.IsType<ViewResult>(result);
+
+        var principal = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+        {
+            new Claim(ClaimTypes.NameIdentifier, orthopedagogue.Id),
+        }));
+        var mockUserStore = new Mock<IUserStore<IdentityUser>>();
+        var mockUserManager = new Mock<UserManager<IdentityUser>>(mockUserStore.Object, null, null, null, null, null, null, null, null);
+        mockUserManager
+            .Setup(_ => _.GetUserAsync(principal))
+            .ReturnsAsync(orthopedagogue);
+
+        var controllerContext = new ControllerContext { HttpContext = new DefaultHttpContext { User = principal } };
+
+        var sut = new OrthopedagogueController(null, context, mockUserManager.Object);
+        sut.ControllerContext = controllerContext;
+        var action = await sut.Dashboard();
+
+        var viewResult = Assert.IsType<ViewResult>(action);
 
         Assert.Equal("Er zijn momenteel geen afspraken ingepland.", viewResult.ViewData["Melding"].ToString());
 

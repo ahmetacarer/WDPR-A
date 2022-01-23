@@ -18,13 +18,14 @@ public class AppointmentTest
     //NameOfMethod_Scenario_Expected
 
     [Fact]
-    public void Index_ViewResultTest_True () {
+    public void Index_ViewResultTest_True()
+    {
 
         DbContextOptions<WDPRContext> options = new DbContextOptionsBuilder<WDPRContext>().UseInMemoryDatabase("MijnDatabase").Options;
         WDPRContext WDPRContext = new WDPRContext(options);
 
         //Arrange
-        var controller = new AppointmentController(null,WDPRContext, null, null);
+        var controller = new AppointmentController(null, WDPRContext, null, null);
 
         //Act
         var result = controller.Index();
@@ -34,13 +35,14 @@ public class AppointmentTest
     }
 
     [Fact]
-    public void MakeFirstNameCapitalLetter_MakeCapitalLetter_True () {
+    public void MakeFirstNameCapitalLetter_MakeCapitalLetter_True()
+    {
 
         DbContextOptions<WDPRContext> options = new DbContextOptionsBuilder<WDPRContext>().UseInMemoryDatabase("MijnDatabase").Options;
         WDPRContext WDPRContext = new WDPRContext(options);
 
         //Arrange
-        var controller = new AppointmentController(null,WDPRContext, null, null);
+        var controller = new AppointmentController(null, WDPRContext, null, null);
 
         var firstName = "hAns";
 
@@ -54,27 +56,23 @@ public class AppointmentTest
     }
 
     [Fact]
-    public void Index_WithParent_NotNull () {
+    public void Index_WithParent_NotNull()
+    {
 
         DbContextOptions<WDPRContext> options = new DbContextOptionsBuilder<WDPRContext>().UseInMemoryDatabase("MijnDatabase").Options;
         WDPRContext WDPRContext = new WDPRContext(options);
 
         //Arrange
-        var sut = new AppointmentController(null,WDPRContext, null, null);
+        var sut = new AppointmentController(null, WDPRContext, null, null);
 
-        var client = new Client {FirstName = "Hansie", LastName = "Bassie", Email = "testEmail@gmail.com", Condition = "ADHD"};
+        var client = new Client { FirstName = "Hansie", LastName = "Bassie", Email = "testEmail@gmail.com", Condition = "ADHD", AgeCategory = AgeCategory.Jongste };
 
         //Act
-        sut.Index(client, DateTime.Now.Date, DateTime.Parse(DateTime.Now.ToString("hh:mm")), AgeCategory.Jongste, "Ouder@email.com");
-        
+        sut.Index(client, DateTime.Now.Date, DateTime.Parse(DateTime.Now.ToString("hh:mm")), "Ouder@email.com");
+
 
         //Assert
         Assert.NotNull(WDPRContext.Appointments.Where(c => c.IncomingClientId == client.Id).Select(g => g.Guardians));
-        
-
-
-        
-        
     }
 
     [Fact]
@@ -87,17 +85,16 @@ public class AppointmentTest
         //Arrange
         var expected = 0;
 
-        var sut = new AppointmentController(null,WDPRContext, null, null);
+        var sut = new AppointmentController(null, WDPRContext, null, null);
 
-        var client = new Client { FirstName = "Hansie", LastName = "Bassie", Email = "testEmaghfghfghil@gmail.com", Condition = "ADHD" };
+        var client = new Client { FirstName = "Hansie", LastName = "Bassie", Email = "testEmaghfghfghil@gmail.com", Condition = "ADHD", AgeCategory = AgeCategory.Jongste };
 
         //Act
-        sut.Index(client, DateTime.Now.Date, DateTime.Parse(DateTime.Now.ToString("hh:mm")), AgeCategory.Jongste, null);
+        sut.Index(client, DateTime.Now.Date, DateTime.Parse(DateTime.Now.ToString("hh:mm")), null);
 
 
         //Assert
         Assert.Equal(expected, WDPRContext.Appointments.Where(c => c.IncomingClientId == client.Id).Select(g => g.Guardians).Count());
-
     }
 
     [Fact]
@@ -110,12 +107,12 @@ public class AppointmentTest
         //Arrange
         var expected = 0;
 
-        var sut = new AppointmentController(null,WDPRContext, null, null);
+        var sut = new AppointmentController(null, WDPRContext, null, null);
 
-        var client = new Client { FirstName = "Hansie", LastName = "Bassie", Email = "testEmaghfghfghil@gmail.com", Condition = "ADHD" };
+        var client = new Client { FirstName = "Hansie", LastName = "Bassie", Email = "testEmaghfghfghil@gmail.com", Condition = "ADHD", AgeCategory = AgeCategory.Jongste };
 
         //Act
-        sut.Index(client, DateTime.Now.Date, DateTime.Parse(DateTime.Now.ToString("hh:mm")), AgeCategory.Jongste, "Ouder@email.com");
+        sut.Index(client, DateTime.Now.Date, DateTime.Parse(DateTime.Now.ToString("hh:mm")), "Ouder@email.com");
 
 
         //Assert

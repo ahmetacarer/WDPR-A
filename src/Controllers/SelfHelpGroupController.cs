@@ -14,15 +14,13 @@ public class SelfHelpGroupController : Controller
     private readonly ILogger<SelfHelpGroupController> _logger;
     private readonly WDPRContext _context;
     private readonly UserManager<IdentityUser> _userManager;
-    private readonly RoleSystem _roleSystem;
     private readonly ChatManager _chatManager;
 
-    public SelfHelpGroupController(ILogger<SelfHelpGroupController> logger, WDPRContext context, UserManager<IdentityUser> userManager, RoleSystem roleSystem, ChatManager chatManager)
+    public SelfHelpGroupController(ILogger<SelfHelpGroupController> logger, WDPRContext context, UserManager<IdentityUser> userManager, ChatManager chatManager)
     {
         _logger = logger;
         _context = context;
         _userManager = userManager;
-        _roleSystem = roleSystem;
         _chatManager = chatManager;
     }
 
@@ -30,7 +28,7 @@ public class SelfHelpGroupController : Controller
     {
         if (!String.IsNullOrEmpty(subject))
         {
-            lijst = lijst.Where(c => c.Subject.ToLower().Substring(0, subject.Length) == subject.ToLower());
+            lijst = lijst.Where(c => c.Subject.ToLower().Contains(subject.ToLower()));
         }
 
         if (!String.IsNullOrEmpty(ageCategory.ToString()))
@@ -40,7 +38,7 @@ public class SelfHelpGroupController : Controller
 
         if (!String.IsNullOrEmpty(subject) && !String.IsNullOrEmpty(ageCategory.ToString()))
         {
-            lijst = lijst.Where(c => c.Subject.ToLower().Substring(0, subject.Length) == subject.ToLower() && c.AgeCategory == ageCategory);
+            lijst = lijst.Where(c => c.Subject.ToLower().Contains(subject.ToLower()) && c.AgeCategory == ageCategory);
         }
 
         return lijst;
@@ -54,7 +52,7 @@ public class SelfHelpGroupController : Controller
 
         if (!String.IsNullOrEmpty(subject))
         {
-            lijst = lijst.Where(c => c.Subject.ToLower().Substring(0, subject.Length) == subject.ToLower());
+            lijst = lijst.Where(c => c.Subject.ToLower().Contains(subject.ToLower()));
         }
 
         return lijst;

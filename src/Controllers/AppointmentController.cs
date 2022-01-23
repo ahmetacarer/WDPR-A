@@ -34,7 +34,7 @@ public class AppointmentController : Controller
 
 
     [HttpPost]
-    public async Task<IActionResult> Index([Bind("FirstName, LastName, Email, Condition, Address, Residence")] Client client, DateTime appointmentDate, DateTime appointmentTime, AgeCategory AgeCategory, string? emailOfParent = null)
+    public async Task<IActionResult> Index([Bind("FirstName, LastName, Email, Condition, Address, Residence, AgeCategory")] Client client, DateTime appointmentDate, DateTime appointmentTime, string? emailOfParent = null)
     {
 
         if (_context.Users.Any(b => b.Email == client.Email))
@@ -61,17 +61,10 @@ public class AppointmentController : Controller
             AppointmentDate = appointmentDate.Date + new TimeSpan(appointmentTime.Hour, appointmentTime.Minute, 0),
             IncomingClient = client,
             IncomingClientId = client.Id,
-            Guardians = client.Guardians, // misschien null reference zonder parent
+            Guardians = client.Guardians,
             Orthopedagogue = orthopedagogue,
             OrthopedagogueId = orthopedagogue.Id,
         };
-
-        // SendEmailThroughMailhog(client.Email, appointmentDate, false);
-
-        // if (emailOfParent != null)
-        // {
-        //     SendEmailThroughMailhog(emailOfParent, appointmentDate, true);
-        // }
 
         await _userStore.SetUserNameAsync(client, client.Email, CancellationToken.None);
         _context.Appointments.Add(appointment);
@@ -108,56 +101,6 @@ public class AppointmentController : Controller
     {
         return View();
     }
-
-
-    // public void SendEmailThroughMailhog(string receiverEmail, DateTime AppointmentDate, bool isParent)
-    // {
-    //     //AppointmentDate.ToString("MM/dd/yyyy hh:mm");
-    //     string datum = AppointmentDate.ToString("MM/dd/yyyy");
-    //     string tijd = AppointmentDate.ToString("HH:mm");
-
-    //     //execute powershell cmdlets or scripts using command arguments as process
-    //     ProcessStartInfo processInfo = new ProcessStartInfo();
-    //     processInfo.FileName = @"powershell.exe";
-    //     //execute powershell script using script file
-    //     //processInfo.Arguments = @"& {c:\temp\Get-EventLog.ps1}";
-    //     //execute powershell command
-
-    //     if (isParent)
-    //     {
-    //         processInfo.Arguments = $@"& Send-MailMessage -To '{receiverEmail}' -From 'no-reply@ZMDHKliniek.com' -Subject 'ZMDH intakegesprek bevestiging' -Body 'U kind heeft zich aangemeld voor een intakegesprek op {datum} om {tijd}' -SmtpServer 'localhost' -Port 1025";
-    //     }
-
-    //     //execute powershell cmdlets or scripts using command arguments as process
-    //     ProcessStartInfo processInfo = new ProcessStartInfo();
-    //     processInfo.FileName = @"powershell.exe";
-    //     //execute powershell script using script file
-    //     //processInfo.Arguments = @"& {c:\temp\Get-EventLog.ps1}";
-    //     //execute powershell command
-
-    //     if (isParent)
-    //     {
-    //         processInfo.Arguments = $@"& Send-MailMessage -To '{receiverEmail}' -From 'no-reply@ZMDHKliniek.com' -Subject 'ZMDH intakegesprek bevestiging' -Body 'U kind heeft zich aangemeld voor een intakegesprek op {datum} om {tijd}' -SmtpServer 'localhost' -Port 1025";
-
-    //     }
-    //     else
-    //     {
-    //         processInfo.Arguments = $@"& Send-MailMessage -To '{receiverEmail}' -From 'no-reply@ZMDHKliniek.com' -Subject 'ZMDH intakegesprek bevestiging' -Body 'Je hebt jezelf aangemeld voor een intakegesprek op {datum} om {tijd}' -SmtpServer 'localhost' -Port 1025";
-
-    //     }
-
-    //     //processInfo.Arguments = $@"& Send-MailMessage -To '{receiverEmail}' -From 'no-reply@ZMDHKliniek.com' -Subject 'ZMDH intakegesprek bevestiging' -Body 'Je hebt jezelf aangemeld voor een intakegesprek op {AppointmentDate} met email {receiverEmail}' -SmtpServer 'localhost' -Port 1025";
-    //     processInfo.RedirectStandardError = true;
-    //     processInfo.RedirectStandardOutput = true;
-    //     processInfo.UseShellExecute = false;
-    //     processInfo.CreateNoWindow = true;
-
-    //     //start powershell process using process start info
-    //     Process process = new Process();
-    //     process.StartInfo = processInfo;
-    //     process.Start();
-    //     process.Close();
-    // }
 
     public string MakeFirstNameCapitalLetter(string firstName)
     {

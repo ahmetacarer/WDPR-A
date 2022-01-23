@@ -24,8 +24,6 @@ footer {
   color: #eee;
 }
 
-
-
 .list-group-item.active {
   background-color: gray;
   border-color: gray;
@@ -100,7 +98,7 @@ button:focus {
   color: white;
 }
 
-@media (min-width: 576px) {
+@media (min-width: 975px) {
   .LoginButton {
     position: absolute;
     justify-content: right;

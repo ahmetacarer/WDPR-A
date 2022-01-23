@@ -32,11 +32,11 @@ public class ModeratorController : Controller
 
     public async Task<IActionResult> Dashboard(string searchString)
     {
-        var list = _context.Appointments.Include(c => c.IncomingClient).Include(c => c.Orthopedagogue).Where(c => c.IsVerified);
+        var list = _context.Appointments.Include(c => c.IncomingClient).Include(c => c.Orthopedagogue).Where(c => c.AppointmentDate != null);
 
         if (!String.IsNullOrEmpty(searchString))
         {
-            list = list.Where(c => c.IncomingClient.FirstName.ToLower().Substring(0, searchString.Length) == searchString.ToLower());
+            list = list.Where(c => c.IncomingClient.FirstName.ToLower().Contains(searchString.ToLower()));
         }
 
         if (list.Count() == 0)
@@ -52,7 +52,7 @@ public class ModeratorController : Controller
     {
         if (!String.IsNullOrEmpty(clientId))
         {
-            var result = UnblockClient(clientId);
+            var result = await UnblockClient(clientId);
         }
 
         var clients = await _context.Clients.Where(c => c.IsBlocked).ToListAsync();
@@ -64,12 +64,12 @@ public class ModeratorController : Controller
     {
         if (!String.IsNullOrEmpty(clientId))
         {
-            var result = BlockClient(clientId);
+            var result = await BlockClient(clientId);
         }
 
         if (!String.IsNullOrEmpty(messageId))
         {
-            var result = IgnoreMessage(messageId);
+            var result = await IgnoreMessage(messageId);
         }
 
         var reportedMessages = await _context.Messages.Include(c => c.Sender)
@@ -92,12 +92,17 @@ public class ModeratorController : Controller
     public async Task<Boolean> BlockClient(string clientId)
     {
         var client = await _context.Clients.SingleOrDefaultAsync(c => c.Id == clientId);
+        if (client.IsBlocked) return false;
         var messages = await _context.Messages.Where(m => client.Id == m.Sender.Id && m.ReportCount > 0).ToListAsync();
 
         client.IsBlocked = true;
         _context.Messages.RemoveRange(messages);
         await _context.SaveChangesAsync();
-        // var input = await EmailPosting(client);
+
+        if (!EmailSender.ApiKeyIsNull())
+        {
+            var input = await EmailPosting(client);
+        }
 
         return true;
     }

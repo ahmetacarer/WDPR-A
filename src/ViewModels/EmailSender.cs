@@ -5,7 +5,7 @@ using SendGrid.Helpers.Mail;
 
 public class EmailSender
 {
-    private static string? _ApiKey { get; set; } 
+    private static string? _ApiKey { get; set; }
 
     public static async Task SendEmail(string receiver, string subject, string body)
     {
@@ -18,9 +18,15 @@ public class EmailSender
     }
 
     public static async Task SetApiKey(string kvUri, string secretName)
-    { 
+    {
         var client = new SecretClient(new Uri(kvUri), new DefaultAzureCredential());
         var secret = await client.GetSecretAsync(secretName);
         _ApiKey = secret.Value.Value;
+    }
+
+    public static Boolean ApiKeyIsNull()
+    {
+
+        return _ApiKey == null;
     }
 }

@@ -1,5 +1,4 @@
 @model List<Chat>
-
 <div class="container">
   <div class="row">&nbsp;</div>
   <div class="row">
@@ -47,7 +46,39 @@
   //Disable the send button until connection is established.
   document.getElementById("sendButton").disabled = true;
 
-  connection.on("ReceiveMessage", function (user, message, date) {
+  connection.on("ReceiveMessage", function (senderIsModerator, messageId, senderId, name, message, date) {
+    const messageList = document.getElementById("messages");
+    const card = document.createElement("div");
+    card.classList.add("card", "col-6", "offset-0"); 
+    const cardBody = document.createElement("div");
+    cardBody.classList.add("card-body");
+    cardBody.style.backgroundColor = "lightblue";
+    const cardTitle = document.createElement("strong");
+    cardTitle.classList.add("card-title");
+    cardTitle.innerText = name;
+    const cardText = document.createElement("h6");
+    cardText.style.color = "#4F4F4F";
+    cardText.classList.add("card-text");
+    cardText.innerText = "" + message;
+    const cardDate = document.createElement("p");
+    cardDate.style.color = "#4F4F4F";
+    cardDate.classList.add("card-text");
+    cardDate.innerText = "" + date;
+    card.appendChild(cardBody);
+    cardBody.appendChild(cardTitle);
+    cardBody.appendChild(cardText);
+    cardBody.appendChild(cardDate);
+
+
+    const br = document.createElement("span");
+    br.innerHTML = "<br/>";
+    messageList.appendChild(card);
+    messageList.appendChild(br);
+    messageList.appendChild(br);
+  });
+  
+
+ connection.on("ReceiveSentMessage", function (message, date) {
     const messageList = document.getElementById("messages");
     const card = document.createElement("div");
     card.classList.add("card", "col-6", "offset-6"); 
@@ -78,6 +109,8 @@
     messageList.appendChild(br);
     messageList.appendChild(br);
   });
+
+
 
   connection.on("ReceiveBlockedNotification", function(message){
     const myModal = new bootstrap.Modal(document.getElementById('confirmationModal'), {});

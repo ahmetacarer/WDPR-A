@@ -1,0 +1,148 @@
+@model List<Chat>
+<div class="container">
+  <div class="row">&nbsp;</div>
+  <br>
+  <br>
+  <div class="row">
+    <div class="col-2">Bericht</div>
+
+    <div class="form-floating">
+      <textarea class="form-control" placeholder="Verstuur een bericht" id="messageInput" style="height: 100px"></textarea>
+      <label for="messageInput">invoer</label>
+    </div>
+  </div>
+  <div class="row">&nbsp;</div>
+  <div class="row">
+    <div class="col-6">
+      <input type="button" id="sendButton" value="verzenden" />
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <hr />
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Je kan niet chatten in een zelfhulpgroep</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      Je bent geblokkeerd, neem contact met je hulpverlener voor meer detail      
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">sluit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+
+<script>
+  "use strict";
+
+  var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+  //Disable the send button until connection is established.
+  document.getElementById("sendButton").disabled = true;
+
+  connection.on("ReceiveMessage", function (senderIsModerator, messageId, senderId, name, message, date) {
+    const messageList = document.getElementById("messages");
+    const card = document.createElement("div");
+    card.classList.add("card", "col-6", "offset-0"); 
+    const cardBody = document.createElement("div");
+    cardBody.classList.add("card-body");
+    cardBody.style.backgroundColor = "lightblue";
+    const cardTitle = document.createElement("strong");
+    cardTitle.classList.add("card-title");
+    cardTitle.innerText = name;
+    const cardText = document.createElement("h6");
+    cardText.style.color = "#4F4F4F";
+    cardText.classList.add("card-text");
+    cardText.innerText = "" + message;
+    const cardDate = document.createElement("p");
+    cardDate.style.color = "#4F4F4F";
+    cardDate.classList.add("card-text");
+    cardDate.innerText = "" + date;
+    card.appendChild(cardBody);
+    cardBody.appendChild(cardTitle);
+    cardBody.appendChild(cardText);
+    cardBody.appendChild(cardDate);
+
+
+    const br = document.createElement("span");
+    br.innerHTML = "<br/>";
+    messageList.appendChild(card);
+    messageList.appendChild(br);
+    messageList.appendChild(br);
+  });
+  
+
+ connection.on("ReceiveSentMessage", function (message, date) {
+    const messageList = document.getElementById("messages");
+    const card = document.createElement("div");
+    card.classList.add("card", "col-6", "offset-6"); 
+    const cardBody = document.createElement("div");
+    cardBody.classList.add("card-body");
+    cardBody.style.backgroundColor = "lightgreen";
+    const cardTitle = document.createElement("strong");
+    cardTitle.classList.add("card-title");
+    cardTitle.innerText = "Jij";
+    const cardText = document.createElement("h6");
+    cardText.style.color = "#4F4F4F";
+    cardText.classList.add("card-text");
+    cardText.innerText = "" + message;
+    const cardDate = document.createElement("p");
+    cardDate.style.color = "#4F4F4F";
+    cardDate.classList.add("card-text");
+    cardDate.innerText = "" + date;
+
+    card.appendChild(cardBody);
+    cardBody.appendChild(cardTitle);
+    cardBody.appendChild(cardText);
+    cardBody.appendChild(cardDate);
+
+
+    const br = document.createElement("span");
+    br.innerHTML = "<br/>";
+    messageList.appendChild(card);
+    messageList.appendChild(br);
+    messageList.appendChild(br);
+  });
+
+
+
+  connection.on("ReceiveBlockedNotification", function(message){
+    const myModal = new bootstrap.Modal(document.getElementById('confirmationModal'), {});
+    document.getElementById("sendButton").disabled = true;
+    document.getElementById("messageInput").disabled = true;
+    myModal.show();
+  })
+
+  connection
+    .start()
+    .then(function () {
+      document.getElementById("sendButton").disabled = false;
+    })
+    .catch(function (err) {
+      return console.error(err.toString());
+    });
+
+  document
+    .getElementById("sendButton")
+    .addEventListener("click", function (event) {
+      var text = document.getElementById("messageInput").value;
+      var roomId = Array.from(document.getElementsByClassName("sidebar_button")).find(button => button.classList.contains("active")).id;
+      connection.invoke("SendMessage", text, roomId).catch(function (err) {
+        return console.error(err.toString());
+      });
+      event.preventDefault();
+      document.getElementById("messageInput").value = "";
+    });
+</script>

@@ -1,0 +1,89 @@
+@model Chat
+
+
+<div id="messages" class="overflow-auto" style="max-height: 25em;">
+    @foreach (var message in Model.Messages)
+    {
+        @if (message.Sender.Id == ViewData["CurrentUserID"].ToString())
+        {
+            <div class="card col-6 offset-6">
+                <div class="card-body" style="background-color: lightgreen;">
+                    <strong class="card-title">Jij</strong> <br>
+                    <h6 class="card-text" style="color: #4F4F4F;">@message.Text</h6>
+                    <p class="card-text" style="color: #4F4F4F;">@message.When.ToString("dd-MM-yyyy HH:mm")</p>
+                </div>
+            </div>
+            <br>
+        }
+        else
+        {
+            <div class="card col-6 offset-0">
+                <div class="card-body" style="background-color: lightblue;">
+                    @if (User.IsInRole("Client"))
+                    {
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                                ...
+                            </button>
+                            <input type="hidden" name="messageId" value="@message.Id" id="@message.Id" />
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" type="submit" onclick="">Rapporteer</a></li>
+                            </ul>
+                        </div>
+                    }
+
+                    @if (User.IsInRole("Moderator"))
+                    {
+                        <form onsubmit='blockUser("@message.Sender.Id"); return false'>
+                            <input type="hidden" name="messageId" value="@message.Id" id="@message.Id">
+                            <input type="submit" value="Blokkeer">
+                        </form>
+                    }
+                    <strong class="card-title">@message.Sender.FirstName @message.Sender.LastName</strong>
+                    <br>
+                    <h6 class="card-text" style="color: #4F4F4F;">@message.Text</h6>
+                    <p class="card-text" style="color: #4F4F4F;">@message.When</p>
+                </div>
+            </div>
+            <br>
+        }
+    }
+</div>
+
+
+<script>
+
+    function blockUser(senderId) {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("BlockClient", "Moderator")",
+            data: {
+                clientId: senderId
+            },
+            success: function (msg) {
+                // wat moet hier komen als het succes is????
+                console.log("gebruiker is geblokkeerd");
+            },
+            error: function (req, status, error) {
+                console.log(error)
+            }
+        });
+    }
+
+    function reportUser() {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("ReportClient", "Chat")",
+            data: {
+                messageId: $('input').val()
+            },
+            success: function (msg) {
+                // wat moet hier komen als het succes is????
+            },
+            error: function (req, status, error) {
+                console.log(error)
+            }
+        });
+    }
+</script>

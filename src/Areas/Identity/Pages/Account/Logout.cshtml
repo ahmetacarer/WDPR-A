@@ -1,0 +1,21 @@
+﻿@page
+@model WDPR_A.Areas.Identity.Pages.Account.LogoutModel
+@{
+    ViewData["Title"] = "Uitloggen";
+}
+
+<header>
+    <h1>@ViewData["Title"]</h1>
+    @{
+        if (User.Identity.IsAuthenticated)
+        {
+            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+                <button type="submit" class="nav-link btn btn-link text-light ZMDHButton">Klik hier om uit te loggen</button>
+            </form>
+        }
+        else
+        {
+            <p>U bent succesvol uitgelogd uit de webapplicatie</p>
+        }
+    }
+</header>

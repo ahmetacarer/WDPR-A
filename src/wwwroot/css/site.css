@@ -1,0 +1,108 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+footer {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  color: #eee;
+}
+
+.list-group-item.active {
+  background-color: gray;
+  border-color: gray;
+}
+
+.OrthopedagogueImage {
+  width: 368px;
+  height: 368px;
+}
+
+.a-no-underline {
+  text-decoration: none;
+  color: black;
+}
+
+#logo {
+  width: 150px;
+}
+
+.accordion-button:hover {
+  color: white;
+}
+
+.accordion-button:active {
+  color: white;
+}
+
+.accordion-button:focus {
+  color: white;
+}
+
+footer {
+  background-color: #3e424f;
+  height: 7.5%;
+}
+
+#footertext {
+  color: white;
+  margin-top: 1.75%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ZMDHButton,
+button {
+  background-color: #3e424f;
+  padding: 0.75% 5% 0.75% 5%;
+}
+
+.ZMDHButton:hover,
+button:hover {
+  background-color: #3e424f;
+}
+
+.ZMDHButton:active,
+button:active {
+  background-color: #3e424f;
+}
+
+.ZMDHButton:focus,
+button:focus {
+  background-color: #3e424f;
+}
+
+.LoginButton {
+  margin: 0 5% 0 0;
+  padding: 0.5% 2% 0.5% 2%;
+}
+
+.LoginButton:hover {
+  color: white;
+}
+
+@media (min-width: 975px) {
+  .LoginButton {
+    position: absolute;
+    justify-content: right;
+    align-items: right;
+    right: 3%;
+  }
+}

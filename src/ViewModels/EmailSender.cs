@@ -10,7 +10,7 @@ public class EmailSender
     public static async Task SendEmail(string receiver, string subject, string body)
     {
         var client = new SendGridClient(_ApiKey);
-        var from = new EmailAddress("zmdh.hhs@gmail.com", "ZMDH Kliniek");  //Voer verzender email in
+        var from = new EmailAddress("20119046@student.hhs.nl", "ZMDH Kliniek");  //Voer verzender email in
         var to = new EmailAddress(receiver, "Intakegesprek cliënt");
         var plainTextContent = "";
         var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, body);
